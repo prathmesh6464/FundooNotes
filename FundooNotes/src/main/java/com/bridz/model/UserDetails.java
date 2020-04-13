@@ -69,6 +69,5 @@ public class UserDetails {
 	public synchronized final void setPassword(String password) {
 		
 		this.password = password;
-	}
-	
+	}	
 }
