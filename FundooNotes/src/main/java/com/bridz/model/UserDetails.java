@@ -1,73 +1,78 @@
 package com.bridz.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class UserDetails {
 
+	@Id
 	private String firstName;
 	private String lastName;
 	private String userName;
 	private String password;
-	
+
 	/**
 	 * @return the firstName
 	 */
-	public synchronized final String getFirstName() {
-		
+	public String getFirstName() {
+
 		return firstName;
 	}
-	
+
 	/**
 	 * @param firstName the firstName to set
 	 */
-	public synchronized final void setFirstName(String firstName) {
-		
+	public void setFirstName(String firstName) {
+
 		this.firstName = firstName;
 	}
-	
+
 	/**
 	 * @return the lastName
 	 */
-	public synchronized final String getLastName() {
-		
+	public String getLastName() {
+
 		return lastName;
 	}
-	
+
 	/**
 	 * @param lastName the lastName to set
 	 */
-	public synchronized final void setLastName(String lastName) {
-		
+	public void setLastName(String lastName) {
+
 		this.lastName = lastName;
 	}
-	
+
 	/**
 	 * @return the userName
 	 */
-	public synchronized final String getUserName() {
-		
+	public String getUserName() {
+
 		return userName;
 	}
-	
+
 	/**
 	 * @param userName the userName to set
 	 */
-	public synchronized final void setUserName(String userName) {
-		
+	public void setUserName(String userName) {
+
 		this.userName = userName;
 	}
-	
+
 	/**
 	 * @return the password
 	 */
-	public synchronized final String getPassword() {
-		
+	public String getPassword() {
+
 		return password;
 	}
-	
+
 	/**
 	 * @param password the password to set
 	 */
-	public synchronized final void setPassword(String password) {
-		
+	public void setPassword(String password) {
+
 		this.password = password;
-	}	
+	}
 }
