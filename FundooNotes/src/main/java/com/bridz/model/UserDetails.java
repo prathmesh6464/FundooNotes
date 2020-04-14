@@ -12,6 +12,9 @@ public class UserDetails {
 	private String lastName;
 	private String userName;
 	private String password;
+	private long mobileNumber;
+	private String secretEmergencyWord;
+	private long firstMobileNumber;
 
 	//@return the firstName	 
 	public String getFirstName() {
@@ -59,5 +62,42 @@ public class UserDetails {
 	public void setPassword(String password) {
 
 		this.password = password;
+	}
+
+	//@return the mobileNumber
+	public long getMobileNumber() {
+		
+		return mobileNumber;
+	}
+
+	//@param mobileNumber the mobileNumber to set
+	public void setMobileNumber(long mobileNumber) {
+		
+		this.mobileNumber = mobileNumber;
+	}
+
+	//@return the firstMobileNumber
+	public long getFirstMobileNumber() {
+		
+		return firstMobileNumber;
+	}
+
+	//@param firstMobileNumber the firstMobileNumber to set
+	public void setFirstMobileNumber(long firstMobileNumber) {
+
+		this.firstMobileNumber = firstMobileNumber;
+	}
+	
+	//@return the secretEmergencyWord
+	
+	public String getSecretEmergencyWord() {
+		
+		return secretEmergencyWord;
+	}
+
+	//@param secretEmergencyWord the secretEmergencyWord to set
+	public void setSecretEmergencyWord(String secretEmergencyWord) {
+		
+		this.secretEmergencyWord = secretEmergencyWord;
 	}
 }
