@@ -1,10 +1,16 @@
 package com.bridz.controller;
 import com.bridz.model.*;
+import com.bridz.repository.*;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class UserLoginControl {
+	
+	@Autowired
+	UserRepository userRepository;
 	
 	@GetMapping("/userLogin")
 	public  LoginData userLogin(LoginData loginData) {
@@ -13,8 +19,9 @@ public class UserLoginControl {
 	}
 
 	@GetMapping("/userRegistration")
-	public UserDetails userRegistration(UserDetails userData) {
+	public String userRegistration(UserDetails userData) {
 
-		return userData;
+		userRepository.save(userData);
+		return "Successfully uploaded";
 	}
 } 
