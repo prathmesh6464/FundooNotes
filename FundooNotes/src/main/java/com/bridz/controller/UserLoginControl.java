@@ -64,7 +64,6 @@ public class UserLoginControl {
 			} catch (Exception e) {
 				return "Successfully password changed";
 			}
-
 		}
 
 		return "Confirm password and password not matched";
