@@ -54,13 +54,13 @@ public class UserLoginControl {
 	}
 
 	@RequestMapping(value = "/resetPassword", method = { RequestMethod.PUT })
-	public String restPassword(ResetPasswordData resetPasswordData) {
+	public String resetPassword(ResetPasswordData resetPasswordData) {
 
 		// Storing user's edited information to data base
 		if (resetPasswordData.getPassword().equals(resetPasswordData.getConfirmPassword())) {
 
 			try {
-				userRepository.updateUserDetails(resetPasswordData.getPassword(), secretWord);
+				userRepository.setPassword(resetPasswordData.getPassword(), secretWord);
 			} catch (Exception e) {
 				return "Successfully password changed";
 			}
