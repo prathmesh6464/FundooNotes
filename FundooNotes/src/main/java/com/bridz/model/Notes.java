@@ -13,6 +13,7 @@ public class Notes {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long noteId;
 	private String message;
+	
 	@ManyToOne
 	private UserDetails userDetails;
 
