@@ -2,8 +2,10 @@ package com.bridz.controller;
 
 import com.bridz.model.UserDetails;
 import com.bridz.model.LoginData;
+import com.bridz.model.Notes;
 import com.bridz.model.ResetPasswordData;
 import com.bridz.model.SecretInformation;
+import com.bridz.repository.NotesRepository;
 import com.bridz.repository.UserRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,10 @@ public class UserLoginControl {
 	// Created object of user repository
 	@Autowired
 	UserRepository userRepository;
+
+	@Autowired
+	NotesRepository notesRepository;
+
 	String secretWord;
 
 	@GetMapping("/userLogin")
@@ -67,5 +73,13 @@ public class UserLoginControl {
 		}
 
 		return "Confirm password and password not matched";
+	}
+
+	@RequestMapping(value = "/addNote", method = { RequestMethod.POST })
+	public String addUserNote(Notes userNote) {
+
+		// Storing user note data into data base
+		notesRepository.save(userNote);
+		return "Successfully uploaded";
 	}
 }
