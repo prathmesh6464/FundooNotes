@@ -1,13 +1,21 @@
 package com.bridz.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class UserDetails {
 
 	// Variables
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long userId;
 	private String firstName;
 	private String lastName;
 	private String userName;
@@ -15,6 +23,9 @@ public class UserDetails {
 	private long mobileNumber;
 	private String secretEmergencyWord;
 	private long firstMobileNumber;
+	
+	@OneToMany(mappedBy = "userDetails")
+	private List<Notes> notes = new ArrayList<>();
 
 	// @return the firstName
 	public String getFirstName() {
@@ -99,5 +110,17 @@ public class UserDetails {
 	public void setSecretEmergencyWord(String secretEmergencyWord) {
 
 		this.secretEmergencyWord = secretEmergencyWord;
+	}
+
+	// @return the notes
+	public List<Notes> getNotes() {
+
+		return notes;
+	}
+
+	// @param notes the notes to set
+	public void setNotes(List<Notes> notes) {
+
+		this.notes = notes;
 	}
 }
