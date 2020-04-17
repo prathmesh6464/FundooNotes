@@ -1,5 +1,8 @@
 package com.bridz.service;
 
+import com.bridz.model.UserDetails;
+
 public interface UserService {
-	Object registerUser();
+	
+	void registerUser(UserDetails userDetails);
 }
