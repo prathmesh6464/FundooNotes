@@ -1,12 +1,6 @@
-<<<<<<< HEAD
-package com.bridz.model;
-
-public class ResetPasswordData {
-=======
 package com.bridz.dto;
 
 public class ResetPasswordDto {
->>>>>>> 1.Developement
 
 	private String password;
 	private String confirmPassword;
@@ -34,8 +28,4 @@ public class ResetPasswordDto {
 
 		this.confirmPassword = confirmPassword;
 	}
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 1.Developement
