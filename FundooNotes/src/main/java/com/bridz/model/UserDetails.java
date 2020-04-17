@@ -15,7 +15,7 @@ public class UserDetails {
 	// Variables
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long userId;
+	private long id;
 	private String firstName;
 	private String lastName;
 	private String userName;
@@ -25,7 +25,22 @@ public class UserDetails {
 	private long firstMobileNumber;
 	
 	@OneToMany(mappedBy = "userDetails")
-	private List<Notes> notes = new ArrayList<>();
+	private List<NotesData> notesData = new ArrayList<>();
+	
+	// Constructor
+	public UserDetails(String firstName, String lastName, String userName, String password, long mobileNumber,
+			String secretEmergencyWord, long firstMobileNumber, List<NotesData> notesData) {
+
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.userName = userName;
+		this.password = password;
+		this.mobileNumber = mobileNumber;
+		this.secretEmergencyWord = secretEmergencyWord;
+		this.firstMobileNumber = firstMobileNumber;
+		this.notesData = notesData;
+	}
 
 	// @return the firstName
 	public String getFirstName() {
@@ -112,15 +127,15 @@ public class UserDetails {
 		this.secretEmergencyWord = secretEmergencyWord;
 	}
 
-	// @return the notes
-	public List<Notes> getNotes() {
+	// @return the notesData
+	public List<NotesData> getNotes() {
 
-		return notes;
+		return notesData;
 	}
 
-	// @param notes the notes to set
-	public void setNotes(List<Notes> notes) {
+	// @param notesData the notesData to set
+	public void setNotes(List<NotesData> notesData) {
 
-		this.notes = notes;
+		this.notesData = notesData;
 	}
 }
