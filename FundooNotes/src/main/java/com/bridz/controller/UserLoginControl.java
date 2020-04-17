@@ -8,7 +8,6 @@ import com.bridz.model.NotesData;
 import com.bridz.repository.NotesRepository;
 import com.bridz.repository.UserRepository;
 import com.bridz.response.Response;
-import com.bridz.service.RegisterUser;
 import com.bridz.service.UserService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
