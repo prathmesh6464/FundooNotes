@@ -7,26 +7,34 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Notes {
+public class NotesData {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long noteId;
+	private long id;
 	private String message;
-	
+
 	@ManyToOne
 	private UserDetails userDetails;
+
+	// Constructor
+	public NotesData(String message, UserDetails userDetails) {
+
+		super();
+		this.message = message;
+		this.userDetails = userDetails;
+	}
 
 	// @return the noteId
 	public long getNoteId() {
 
-		return noteId;
+		return id;
 	}
 
 	// @param noteId the noteId to set
 	public void setNoteId(long noteId) {
 
-		this.noteId = noteId;
+		this.id = noteId;
 	}
 
 	// @return the message
@@ -54,3 +62,4 @@ public class Notes {
 	}
 
 }
+
