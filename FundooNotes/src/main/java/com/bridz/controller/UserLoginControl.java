@@ -1,10 +1,10 @@
 package com.bridz.controller;
 
 import com.bridz.model.UserDetails;
-import com.bridz.model.LoginData;
-import com.bridz.model.Notes;
-import com.bridz.model.ResetPasswordData;
-import com.bridz.model.SecretInformation;
+import com.bridz.dto.LoginDataDto;
+import com.bridz.dto.ResetPasswordDto;
+import com.bridz.dto.SecretInformationDto;
+import com.bridz.model.NotesData;
 import com.bridz.repository.NotesRepository;
 import com.bridz.repository.UserRepository;
 import java.util.List;
@@ -27,13 +27,13 @@ public class UserLoginControl {
 	String secretWord;
 
 	@GetMapping("/userLogin")
-	public List<UserDetails> userLogin(LoginData loginData) {
+	public List<UserDetails> userLogin(LoginDataDto loginDataDto) {
 
 		// Checking user name and password is valid or not
-		if (userRepository.findByUserName(loginData.getUserName())
-				.equals(userRepository.findByPassword(loginData.getPassword()))) {
+		if (userRepository.findByUserName(loginDataDto.getUserName())
+				.equals(userRepository.findByPassword(loginDataDto.getPassword()))) {
 
-			return userRepository.findByPassword(loginData.getPassword());
+			return userRepository.findByPassword(loginDataDto.getPassword());
 		}
 
 		return null;
@@ -48,7 +48,7 @@ public class UserLoginControl {
 	}
 
 	@GetMapping("/forgetPassword")
-	public boolean forgetPassword(SecretInformation secretInformationData) {
+	public boolean forgetPassword(SecretInformationDto secretInformationData) {
 
 		secretWord = secretInformationData.getSecretEmergencyWord();
 		// Checking secret information is valid or not
@@ -60,13 +60,13 @@ public class UserLoginControl {
 	}
 
 	@RequestMapping(value = "/resetPassword", method = { RequestMethod.PUT })
-	public String resetPassword(ResetPasswordData resetPasswordData) {
+	public String resetPassword(ResetPasswordDto resetPasswordDto) {
 
 		// Storing user's edited information to data base
-		if (resetPasswordData.getPassword().equals(resetPasswordData.getConfirmPassword())) {
+		if (resetPasswordDto.getPassword().equals(resetPasswordDto.getConfirmPassword())) {
 
 			try {
-				userRepository.setPassword(resetPasswordData.getPassword(), secretWord);
+				userRepository.setPassword(resetPasswordDto.getPassword(), secretWord);
 			} catch (Exception e) {
 				return "Successfully password changed";
 			}
@@ -76,10 +76,18 @@ public class UserLoginControl {
 	}
 
 	@RequestMapping(value = "/addNote", method = { RequestMethod.POST })
-	public String addUserNote(Notes userNote) {
+	public String addUserNote(NotesData userNote) {
 
 		// Storing user note data into data base
 		notesRepository.save(userNote);
-		return "Successfully uploaded";
+		return "Note added successfully";
+	}
+	
+	@RequestMapping(value = "/deleteNote", method = { RequestMethod.DELETE })
+	public String deleteUserNote(NotesData userNote) {
+
+		// Storing user note data into data base
+		//notesRepository.delete();
+		return "Note deleted successfully";
 	}
 }
