@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 @Entity
 public class NotesData {
@@ -14,15 +13,11 @@ public class NotesData {
 	private long id;
 	private String message;
 
-	@ManyToOne
-	private UserDetails userDetails;
-
 	// Constructor
-	public NotesData(String message, UserDetails userDetails) {
+	public NotesData(String message) {
 
 		super();
 		this.message = message;
-		this.userDetails = userDetails;
 	}
 
 	// @return the noteId
@@ -48,17 +43,4 @@ public class NotesData {
 
 		this.message = message;
 	}
-
-	// @return the userDetails
-	public UserDetails getUserDetails() {
-
-		return userDetails;
-	}
-
-	// @param userDetails the userDetails to set
-	public void setUserDetails(UserDetails userDetails) {
-
-		this.userDetails = userDetails;
-	}
-
 }
