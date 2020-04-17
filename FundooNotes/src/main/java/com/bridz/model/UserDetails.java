@@ -2,10 +2,6 @@ package com.bridz.model;
 
 import java.util.ArrayList;
 import java.util.List;
-<<<<<<< HEAD
-
-=======
->>>>>>> 1.Developement
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,17 +22,10 @@ public class UserDetails {
 	private long mobileNumber;
 	private String secretEmergencyWord;
 	private long firstMobileNumber;
-<<<<<<< HEAD
-	
-	@OneToMany(mappedBy = "userDetails")
-	private List<NotesData> notesData = new ArrayList<>();
-	
-=======
 
 	@OneToMany(mappedBy = "userDetails")
 	private List<NotesData> notesData = new ArrayList<>();
 
->>>>>>> 1.Developement
 	// Constructor
 	public UserDetails(String firstName, String lastName, String userName, String password, long mobileNumber,
 			String secretEmergencyWord, long firstMobileNumber, List<NotesData> notesData) {
@@ -100,11 +89,7 @@ public class UserDetails {
 		this.password = password;
 	}
 
-<<<<<<< HEAD
-	// @return the mobileNumber 
-=======
 	// @return the mobileNumber
->>>>>>> 1.Developement
 	public long getMobileNumber() {
 
 		return mobileNumber;
