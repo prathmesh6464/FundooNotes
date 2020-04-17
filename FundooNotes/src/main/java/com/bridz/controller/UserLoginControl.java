@@ -55,8 +55,13 @@ public class UserLoginControl {
 
 		UserDetails userDetailsObject = new UserDetails(firstName, lastName, userName, password, mobileNumber,
 				secretEmergencyWord, firstMobileNumber);
+<<<<<<< HEAD
 		// Storing user data into data base
 
+=======
+		
+		// Storing user data into data base
+>>>>>>> 1.Developement
 		userServiceObject.registerUser(userDetailsObject);
 		return new Response(200, "Successfully uploaded");
 	}
