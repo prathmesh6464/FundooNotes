@@ -1,12 +1,9 @@
 package com.bridz.model;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 @Entity
 public class UserDetails {
@@ -23,22 +20,18 @@ public class UserDetails {
 	private String secretEmergencyWord;
 	private long firstMobileNumber;
 
-	@OneToMany(mappedBy = "userDetails")
-	private List<NotesData> notesData = new ArrayList<>();
-
 	// Constructor
-	public UserDetails(String firstName, String lastName, String userName, String password, long mobileNumber,
-			String secretEmergencyWord, long firstMobileNumber, List<NotesData> notesData) {
+	public UserDetails(String firstName, String lastName, String userName, String password, long mobileNumber2,
+			String secretEmergencyWord, long firstMobileNumber2) {
 
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.userName = userName;
 		this.password = password;
-		this.mobileNumber = mobileNumber;
+		this.mobileNumber = mobileNumber2;
 		this.secretEmergencyWord = secretEmergencyWord;
-		this.firstMobileNumber = firstMobileNumber;
-		this.notesData = notesData;
+		this.firstMobileNumber = firstMobileNumber2;
 	}
 
 	// @return the firstName
@@ -124,17 +117,5 @@ public class UserDetails {
 	public void setSecretEmergencyWord(String secretEmergencyWord) {
 
 		this.secretEmergencyWord = secretEmergencyWord;
-	}
-
-	// @return the notesData
-	public List<NotesData> getNotes() {
-
-		return notesData;
-	}
-
-	// @param notesData the notesData to set
-	public void setNotes(List<NotesData> notesData) {
-
-		this.notesData = notesData;
 	}
 }
