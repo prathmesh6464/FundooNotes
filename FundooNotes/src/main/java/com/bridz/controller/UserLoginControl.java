@@ -7,15 +7,22 @@ import com.bridz.dto.SecretInformationDto;
 import com.bridz.model.NotesData;
 import com.bridz.repository.NotesRepository;
 import com.bridz.repository.UserRepository;
+import com.bridz.response.Response;
+import com.bridz.service.RegisterUser;
+import com.bridz.service.UserService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class UserLoginControl {
+
+	@Autowired
+	UserService userServiceObject;
 
 	// Created object of user repository
 	@Autowired
@@ -40,11 +47,18 @@ public class UserLoginControl {
 	}
 
 	@RequestMapping(value = "/userRegistration", method = { RequestMethod.POST })
-	public String userRegistration(UserDetails userData) {
+	public Response userRegistration(@RequestParam("firstName") String firstName,
+			@RequestParam("lastName") String lastName, @RequestParam("userName") String userName,
+			@RequestParam("password") String password, @RequestParam("mobileNumber") long mobileNumber,
+			@RequestParam("secretEmergencyWord") String secretEmergencyWord,
+			@RequestParam("firstMobileNumber") long firstMobileNumber) {
 
+		UserDetails userDetailsObject = new UserDetails(firstName, lastName, userName, password, mobileNumber,
+				secretEmergencyWord, firstMobileNumber);
+		
 		// Storing user data into data base
-		userRepository.save(userData);
-		return "Successfully uploaded";
+		userServiceObject.registerUser(userDetailsObject);
+		return new Response(200, "Successfully uploaded");
 	}
 
 	@GetMapping("/forgetPassword")
@@ -82,12 +96,12 @@ public class UserLoginControl {
 		notesRepository.save(userNote);
 		return "Note added successfully";
 	}
-	
+
 	@RequestMapping(value = "/deleteNote", method = { RequestMethod.DELETE })
 	public String deleteUserNote(NotesData userNote) {
 
 		// Storing user note data into data base
-		//notesRepository.delete();
+		// notesRepository.delete();
 		return "Note deleted successfully";
 	}
 }
