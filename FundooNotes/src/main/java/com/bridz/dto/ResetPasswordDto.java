@@ -2,6 +2,7 @@ package com.bridz.dto;
 
 public class ResetPasswordDto {
 
+	//Variables
 	private String password;
 	private String confirmPassword;
 
