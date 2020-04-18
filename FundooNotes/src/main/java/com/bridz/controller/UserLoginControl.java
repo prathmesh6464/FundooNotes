@@ -26,9 +26,9 @@ public class UserLoginControl {
 
 	@GetMapping("/userLogin")
 	@ResponseBody
-	public List<UserDetails> userLogin(@RequestBody LoginData userLoginDtoObject) {
+	public List<UserDetails> userLogin(@RequestBody LoginData userLoginObject) {
 
-		return userServiceObject.userLogin(userLoginDtoObject);
+		return userServiceObject.userLogin(userLoginObject);
 	}
 
 	@RequestMapping(value = "/userRegistration", method = { RequestMethod.POST })
@@ -60,9 +60,9 @@ public class UserLoginControl {
 
 	@RequestMapping(value = "/resetPassword", method = { RequestMethod.PUT })
 	@ResponseBody
-	public Response resetPassword(@RequestBody ResetPasswordData resetPasswordDto) {
+	public Response resetPassword(@RequestBody ResetPasswordData resetPassword) {
 
-		return userServiceObject.resetPassword(resetPasswordDto, secretWord);
+		return userServiceObject.resetPassword(resetPassword, secretWord);
 	}
 
 	//	@RequestMapping(value = "/addNote", method = { RequestMethod.POST })
