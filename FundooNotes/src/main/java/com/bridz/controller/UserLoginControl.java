@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class UserLoginControl {
 
-	@Autowired
+	@Autowired 
 	UserService userServiceObject;
 
 	String secretWord;
