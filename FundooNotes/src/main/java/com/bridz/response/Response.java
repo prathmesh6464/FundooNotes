@@ -6,7 +6,7 @@ public class Response {
 	private String responseMessage;
 
 	// Constructor
-	public Response(int responseStatus, String responseMessage) {
+	public Response(String responseMessage, int responseStatus) {
 		super();
 		this.responseStatus = responseStatus;
 		this.responseMessage = responseMessage;

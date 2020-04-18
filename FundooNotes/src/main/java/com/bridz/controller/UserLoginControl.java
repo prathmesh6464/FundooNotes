@@ -14,9 +14,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -28,35 +30,44 @@ public class UserLoginControl {
 	String secretWord;
 
 	@GetMapping("/userLogin")
-	public List<UserDetails> userLogin(LoginDataDto userLoginDtoObject) {
+	@ResponseBody
+	public List<UserDetails> userLogin(@RequestBody LoginDataDto userLoginDtoObject) {
 
 		return userServiceObject.userLogin(userLoginDtoObject);
 	}
 
 	@RequestMapping(value = "/userRegistration", method = { RequestMethod.POST })
-	public Response userRegistration(UserDetailsDto userDetailsDtoObject) {
+	@ResponseBody
+	public Response userRegistration(@RequestParam("firstName") String firstName,
+			@RequestParam("lastName") String lastName, @RequestParam("userName") String userName,
+			@RequestParam("password") String password, @RequestParam("mobileNumber") long mobileNumber,
+			@RequestParam("secretEmergencyWord") String secretEmergencyWord,
+			@RequestParam("firstMobileNumber") long firstMobileNumber) {
 
-		UserDetails userDetailsObject = new UserDetails(userDetailsDtoObject);
-		
+		UserDetails userDetailsObject = new UserDetails(firstName, lastName, userName, password, mobileNumber,
+				secretEmergencyWord, firstMobileNumber);
+
 		// Storing user data into data base
 		Response response = userServiceObject.registerUser(userDetailsObject);
-		
+
 		return response;
 	}
 
 	@GetMapping("/forgetPassword")
-	public Response forgetPassword(SecretInformationDto secretInformationData) {
+	@ResponseBody
+	public Response forgetPassword(@RequestBody SecretInformationDto secretInformationData) {
 
 		secretWord = secretInformationData.getSecretEmergencyWord();
-		Response response = userServiceObject.forgetPassword(secretInformationData);	
-		
+		Response response = userServiceObject.forgetPassword(secretInformationData);
+
 		return response;
 	}
 
 	@RequestMapping(value = "/resetPassword", method = { RequestMethod.PUT })
-	public Response resetPassword(ResetPasswordDto resetPasswordDto, String secretWord) {
-		
-		return userServiceObject.resetPassword(resetPasswordDto, secretWord);	
+	@ResponseBody
+	public Response resetPassword(@RequestBody ResetPasswordDto resetPasswordDto) {
+
+		return userServiceObject.resetPassword(resetPasswordDto, secretWord);
 	}
 
 //	@RequestMapping(value = "/addNote", method = { RequestMethod.POST })
