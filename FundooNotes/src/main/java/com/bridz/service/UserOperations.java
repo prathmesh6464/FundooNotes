@@ -28,13 +28,13 @@ public class UserOperations implements UserService {
 	}
 
 	@Override
-	public List<UserDetails> userLogin(LoginData userLoginDtoObject) {
+	public List<UserDetails> userLogin(LoginData userLoginObject) {
 
 		// Checking user name and password is valid or not
-		if (userRepository.findByUserName(userLoginDtoObject.getUserName())
-				.equals(userRepository.findByPassword(userLoginDtoObject.getPassword()))) {
+		if (userRepository.findByUserName(userLoginObject.getUserName())
+				.equals(userRepository.findByPassword(userLoginObject.getPassword()))) {
 
-			return userRepository.findByPassword(userLoginDtoObject.getPassword());
+			return userRepository.findByPassword(userLoginObject.getPassword());
 		}
 
 		return null;
@@ -52,14 +52,14 @@ public class UserOperations implements UserService {
 	}
 
 	@Override
-	public Response resetPassword(ResetPasswordData resetPasswordDto, String secretWord) {
+	public Response resetPassword(ResetPasswordData resetPassword, String secretWord) {
 
 		// Storing user's edited information to data base
-		if (resetPasswordDto.getPassword().equals(resetPasswordDto.getConfirmPassword())) {
+		if (resetPassword.getPassword().equals(resetPassword.getConfirmPassword())) {
 
 			try {
 				
-				userRepository.setPassword(resetPasswordDto.getPassword(), secretWord);
+				userRepository.setPassword(resetPassword.getPassword(), secretWord);
 			} catch (Exception e) {
 				return new Response("Successfully password changed", 200);
 			}
