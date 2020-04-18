@@ -2,7 +2,7 @@ package com.bridz.model;
 
 public class ResetPasswordData {
 	
-	//Variable
+	//Variable 
 	private String password;
 	private String confirmPassword;
 
@@ -15,7 +15,7 @@ public class ResetPasswordData {
 	// @param password the password to set
 	public void setPassword(String password) {
 
-		this.password = password;
+		this.password = password; 
 	}
 
 	// @return the confirmPassword
