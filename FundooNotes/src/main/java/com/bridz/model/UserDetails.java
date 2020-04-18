@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
 import com.bridz.dto.UserDetailsDto;
 
 @Entity
@@ -31,7 +30,7 @@ public class UserDetails {
 	//Parameterized constructor
 	public UserDetails(UserDetailsDto userDetailsDtoObject) {
 
-		super(); 
+		super();
 		this.firstName = userDetailsDtoObject.getFirstName();
 		this.lastName = userDetailsDtoObject.getLastName();
 		this.userName = userDetailsDtoObject.getUserName();
