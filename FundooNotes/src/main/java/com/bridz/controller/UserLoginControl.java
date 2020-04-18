@@ -1,18 +1,13 @@
 package com.bridz.controller;
 
 import com.bridz.model.UserDetails;
-import com.bridz.dto.LoginDataDto;
-import com.bridz.dto.ResetPasswordDto;
-import com.bridz.dto.SecretInformationDto;
-import com.bridz.dto.UserDetailsDto;
-import com.bridz.model.NotesData;
-import com.bridz.repository.NotesRepository;
-import com.bridz.repository.UserRepository;
+import com.bridz.model.LoginData;
+import com.bridz.model.ResetPasswordData;
+import com.bridz.model.SecretInformation;
 import com.bridz.response.Response;
 import com.bridz.service.UserService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +26,7 @@ public class UserLoginControl {
 
 	@GetMapping("/userLogin")
 	@ResponseBody
-	public List<UserDetails> userLogin(@RequestBody LoginDataDto userLoginDtoObject) {
+	public List<UserDetails> userLogin(@RequestBody LoginData userLoginDtoObject) {
 
 		return userServiceObject.userLogin(userLoginDtoObject);
 	}
@@ -55,7 +50,7 @@ public class UserLoginControl {
 
 	@GetMapping("/forgetPassword")
 	@ResponseBody
-	public Response forgetPassword(@RequestBody SecretInformationDto secretInformationData) {
+	public Response forgetPassword(@RequestBody SecretInformation secretInformationData) {
 
 		secretWord = secretInformationData.getSecretEmergencyWord();
 		Response response = userServiceObject.forgetPassword(secretInformationData);
@@ -65,7 +60,7 @@ public class UserLoginControl {
 
 	@RequestMapping(value = "/resetPassword", method = { RequestMethod.PUT })
 	@ResponseBody
-	public Response resetPassword(@RequestBody ResetPasswordDto resetPasswordDto) {
+	public Response resetPassword(@RequestBody ResetPasswordData resetPasswordDto) {
 
 		return userServiceObject.resetPassword(resetPasswordDto, secretWord);
 	}
