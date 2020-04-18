@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class UserLoginControl {
 
-	@Autowired 
+	@Autowired
 	UserService userServiceObject;
 
 	String secretWord;
@@ -70,19 +70,19 @@ public class UserLoginControl {
 		return userServiceObject.resetPassword(resetPasswordDto, secretWord);
 	}
 
-//	@RequestMapping(value = "/addNote", method = { RequestMethod.POST })
-//	public String addUserNote(NotesData userNote) {
-//
-//		// Storing user note data into data base
-//		notesRepository.save(userNote);
-//		return "Note added successfully";
-//	}
-//
-//	@RequestMapping(value = "/deleteNote", method = { RequestMethod.DELETE })
-//	public String deleteUserNote(NotesData userNote) {
-//
-//		// Storing user note data into data base
-//		// notesRepository.delete();
-//		return "Note deleted successfully";
-//	}
+	//	@RequestMapping(value = "/addNote", method = { RequestMethod.POST })
+	//	public String addUserNote(NotesData userNote) {
+	//
+	//		// Storing user note data into data base
+	//		notesRepository.save(userNote);
+	//		return "Note added successfully";
+	//	}
+	//
+	//	@RequestMapping(value = "/deleteNote", method = { RequestMethod.DELETE })
+	//	public String deleteUserNote(NotesData userNote) {
+	//
+	//		// Storing user note data into data base
+	//		// notesRepository.delete();
+	//		return "Note deleted successfully";
+	//	}
 }
