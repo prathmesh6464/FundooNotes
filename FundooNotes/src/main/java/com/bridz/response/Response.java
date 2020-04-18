@@ -20,7 +20,7 @@ public class Response {
 	}
 
 	// @param responseStatus the responseStatus to set
-	public void setResponseStatus(int responseStatus) {
+	public void setResponseStatus(int responseStatus) { 
 
 		this.responseStatus = responseStatus;
 	}
