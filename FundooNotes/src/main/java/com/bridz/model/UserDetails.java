@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import com.bridz.dto.UserDetailsDto;
 
 @Entity
 public class UserDetails {
@@ -19,19 +20,24 @@ public class UserDetails {
 	private long mobileNumber;
 	private String secretEmergencyWord;
 	private long firstMobileNumber;
+	
+	//Default constructor
+	public UserDetails() {
+		
+		super();
+	}
 
-	// Constructor
-	public UserDetails(String firstName, String lastName, String userName, String password, long mobileNumber2,
-			String secretEmergencyWord, long firstMobileNumber2) {
+	//Parameterized constructor
+	public UserDetails(UserDetailsDto userDetailsDtoObject) {
 
 		super();
-		this.firstName = firstName; 
-		this.lastName = lastName;
-		this.userName = userName;
-		this.password = password;
-		this.mobileNumber = mobileNumber2;
-		this.secretEmergencyWord = secretEmergencyWord;
-		this.firstMobileNumber = firstMobileNumber2;
+		this.firstName = userDetailsDtoObject.getFirstName();
+		this.lastName = userDetailsDtoObject.getLastName();
+		this.userName = userDetailsDtoObject.getUserName();
+		this.password = userDetailsDtoObject.getPassword();
+		this.mobileNumber = userDetailsDtoObject.getMobileNumber();
+		this.secretEmergencyWord = userDetailsDtoObject.getFirstName();
+		this.firstMobileNumber = userDetailsDtoObject.getFirstMobileNumber();
 	}
 
 	// @return the firstName
@@ -119,3 +125,4 @@ public class UserDetails {
 		this.secretEmergencyWord = secretEmergencyWord;
 	}
 }
+
