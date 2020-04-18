@@ -1,7 +1,8 @@
 package com.bridz.model;
 
 public class ResetPasswordData {
-
+	
+	//Variable
 	private String password;
 	private String confirmPassword;
 
