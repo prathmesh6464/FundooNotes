@@ -54,7 +54,7 @@ public class UserLoginControl {
 	}
 
 	@RequestMapping(value = "/resetPassword", method = { RequestMethod.PUT })
-	public Response resetPassword(ResetPasswordDto resetPasswordDto, String secretWord) {
+	public Response resetPassword(ResetPasswordDto resetPasswordDto) {
 		
 		return userServiceObject.resetPassword(resetPasswordDto, secretWord);	
 	}
