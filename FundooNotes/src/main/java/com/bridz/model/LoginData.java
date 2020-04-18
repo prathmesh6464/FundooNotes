@@ -1,6 +1,6 @@
-package com.bridz.dto;
+package com.bridz.model;
 
-public class LoginDataDto {
+public class LoginData {
 
 	// Variables
 	private String userName;
