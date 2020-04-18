@@ -1,12 +1,10 @@
 package com.bridz.service;
 
 import java.util.List;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import com.bridz.dto.LoginDataDto;
-import com.bridz.dto.ResetPasswordDto;
-import com.bridz.dto.SecretInformationDto;
+import com.bridz.model.LoginData;
+import com.bridz.model.ResetPasswordData;
+import com.bridz.model.SecretInformation;
 import com.bridz.model.UserDetails;
 import com.bridz.repository.UserRepository;
 import com.bridz.response.Response;
@@ -30,7 +28,7 @@ public class UserOperations implements UserService {
 	}
 
 	@Override
-	public List<UserDetails> userLogin(LoginDataDto userLoginDtoObject) {
+	public List<UserDetails> userLogin(LoginData userLoginDtoObject) {
 
 		// Checking user name and password is valid or not
 		if (userRepository.findByUserName(userLoginDtoObject.getUserName())
@@ -43,7 +41,7 @@ public class UserOperations implements UserService {
 	}
 
 	@Override
-	public Response forgetPassword(SecretInformationDto secretInformationData) {
+	public Response forgetPassword(SecretInformation secretInformationData) {
 
 		// Checking secret information is valid or not
 		if (userRepository.findBySecretEmergencyWord(secretInformationData.getSecretEmergencyWord())
@@ -54,7 +52,7 @@ public class UserOperations implements UserService {
 	}
 
 	@Override
-	public Response resetPassword(ResetPasswordDto resetPasswordDto, String secretWord) {
+	public Response resetPassword(ResetPasswordData resetPasswordDto, String secretWord) {
 
 		// Storing user's edited information to data base
 		if (resetPasswordDto.getPassword().equals(resetPasswordDto.getConfirmPassword())) {
