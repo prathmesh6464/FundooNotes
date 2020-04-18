@@ -2,6 +2,7 @@ package com.bridz.response;
 
 public class Response {
 
+	//Variable
 	private int responseStatus;
 	private String responseMessage;
 
