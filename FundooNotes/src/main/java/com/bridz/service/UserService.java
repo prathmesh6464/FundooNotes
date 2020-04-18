@@ -10,8 +10,8 @@ import com.bridz.response.Response;
 public interface UserService {
 	
 	public Response registerUser(UserDetails userDetails);
-	public List<UserDetails> userLogin(LoginData  userLoginDtoObject);
+	public List<UserDetails> userLogin(LoginData  userLoginObject);
 	public Response forgetPassword(SecretInformation secretInformationData);
-	public Response resetPassword(ResetPasswordData resetPasswordDto, String secretWord);
+	public Response resetPassword(ResetPasswordData resetPassword, String secretWord);
 	
 }
