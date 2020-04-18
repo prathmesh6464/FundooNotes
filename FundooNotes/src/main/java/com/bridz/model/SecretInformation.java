@@ -1,6 +1,6 @@
-package com.bridz.dto;
+package com.bridz.model;
 
-public class SecretInformationDto {
+public class SecretInformation {
 
 	// Variables
 	private String secretEmergencyWord;
@@ -8,7 +8,7 @@ public class SecretInformationDto {
 
 	// @return the secretEmergencyWord
 	public String getSecretEmergencyWord() {
- 
+
 		return secretEmergencyWord;
 	}
 
