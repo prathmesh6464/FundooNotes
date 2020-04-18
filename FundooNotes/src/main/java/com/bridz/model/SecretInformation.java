@@ -8,7 +8,7 @@ public class SecretInformation {
 
 	// @return the secretEmergencyWord
 	public String getSecretEmergencyWord() {
-
+ 
 		return secretEmergencyWord;
 	}
 
