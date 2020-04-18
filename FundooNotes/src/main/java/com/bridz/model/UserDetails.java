@@ -31,7 +31,7 @@ public class UserDetails {
 	//Parameterized constructor
 	public UserDetails(UserDetailsDto userDetailsDtoObject) {
 
-		super();
+		super(); 
 		this.firstName = userDetailsDtoObject.getFirstName();
 		this.lastName = userDetailsDtoObject.getLastName();
 		this.userName = userDetailsDtoObject.getUserName();
