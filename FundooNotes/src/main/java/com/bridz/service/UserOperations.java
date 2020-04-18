@@ -50,7 +50,7 @@ public class UserOperations implements UserService {
 
 		return new Response("false", 201);
 	}
-
+ 
 	@Override
 	public Response resetPassword(ResetPasswordData resetPassword, String secretWord) {
 
