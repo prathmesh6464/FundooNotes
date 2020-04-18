@@ -8,7 +8,7 @@ public class SecretInformationDto {
 
 	// @return the secretEmergencyWord
 	public String getSecretEmergencyWord() {
-
+ 
 		return secretEmergencyWord;
 	}
 
