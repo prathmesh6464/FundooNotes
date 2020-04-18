@@ -69,4 +69,4 @@ public class UserOperations implements UserService {
 
 		return new Response("Confirm password and password not matched", 201);
 	}
-}
+} 
