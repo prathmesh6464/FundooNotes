@@ -12,7 +12,7 @@ public class UserDetailsDto {
 	private String userName;
 	
 	@OneToMany(mappedBy = "userDetails")
-	private List<NotesDataDto> notesDataDto = new ArrayList<>();
+	private List<NotesDto> notesDataDto = new ArrayList<>();
 
 	// @return the firstName
 	public String getFirstName() {
@@ -51,13 +51,13 @@ public class UserDetailsDto {
 	}
 
 	// @return the notesDataDto
-	public List<NotesDataDto> getNotes() {
+	public List<NotesDto> getNotes() {
 
 		return notesDataDto;
 	}
 
 	// @param notesDataDto the notesDataDto to set
-	public void setNotes(List<NotesDataDto> notesDataDto) {
+	public void setNotes(List<NotesDto> notesDataDto) {
 
 		this.notesDataDto = notesDataDto;
 	}
