@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import com.bridz.dto.LoginDto;
+import com.bridz.dto.ResetPasswordDto;
+import com.bridz.dto.SecretInformationDto;
 import com.bridz.dto.UserDetailsDto;
-import com.bridz.model.LoginData;
-import com.bridz.model.ResetPasswordData;
-import com.bridz.model.SecretInformation;
 import com.bridz.model.UserDetails;
 import com.bridz.repository.UserRepository;
 import com.bridz.response.Response;
@@ -31,45 +31,45 @@ public class UserOperations implements UserService {
 	}
 
 	@Override
-	public List<UserDetailsDto> userLogin(LoginData userLoginObject) {
+	public List<UserDetailsDto> userLogin(LoginDto userLoginDtoObject) {
 
 		// Checking user name and password is valid or not
-		if (userRepository.findByUserName(userLoginObject.getUserName())
-				.equals(userRepository.findByPassword(userLoginObject.getPassword()))) {
+		if (userRepository.findByUserName(userLoginDtoObject.getUserName())
+				.equals(userRepository.findByPassword(userLoginDtoObject.getPassword()))) {
 
 			// copy variables from user details to user details data transfer object
-			List<UserDetails> userDetails = userRepository.findByPassword(userLoginObject.getPassword());
-			List<UserDetailsDto> userDetailsDto = new ArrayList<UserDetailsDto>();
-			userDetailsDto.add(new UserDetailsDto());
+			List<UserDetails> userDetailsObject = userRepository.findByPassword(userLoginDtoObject.getPassword());
+			List<UserDetailsDto> userDetailsDtoObject = new ArrayList<UserDetailsDto>();
+			userDetailsDtoObject.add(new UserDetailsDto());
 			ModelMapper modelMapper = new ModelMapper();
-			modelMapper.map(userDetails.get(0), userDetailsDto.get(0));
+			modelMapper.map(userDetailsObject.get(0), userDetailsDtoObject.get(0));
 
-			return userDetailsDto;
+			return userDetailsDtoObject;
 		}
 
 		return null;
 	}
 
 	@Override
-	public Response forgetPassword(SecretInformation secretInformationData) {
+	public Response forgetPassword(SecretInformationDto secretInformationDtoObject) {
 
 		// Checking secret information is valid or not
-		if (userRepository.findBySecretEmergencyWord(secretInformationData.getSecretEmergencyWord())
-				.equals(userRepository.findByFirstMobileNumber(secretInformationData.getFirstMobileNumber())))
+		if (userRepository.findBySecretEmergencyWord(secretInformationDtoObject.getSecretEmergencyWord())
+				.equals(userRepository.findByFirstMobileNumber(secretInformationDtoObject.getFirstMobileNumber())))
 			return new Response("true", 200);
 
 		return new Response("false", 201);
 	}
 
 	@Override
-	public Response resetPassword(ResetPasswordData resetPassword, String secretWord) {
+	public Response resetPassword(ResetPasswordDto resetPasswordDtoObject, String secretWord) {
 
 		// Storing user's edited information to data base
-		if (resetPassword.getPassword().equals(resetPassword.getConfirmPassword())) {
+		if (resetPasswordDtoObject.getPassword().equals(resetPasswordDtoObject.getConfirmPassword())) {
 
 			try {
 
-				userRepository.setPassword(resetPassword.getPassword(), secretWord);
+				userRepository.setPassword(resetPasswordDtoObject.getPassword(), secretWord);
 			} catch (Exception e) {
 				return new Response("Successfully password changed", 200);
 			}
