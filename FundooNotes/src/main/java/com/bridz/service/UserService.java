@@ -2,10 +2,10 @@ package com.bridz.service;
 
 import java.util.List;
 
+import com.bridz.dto.LoginDto;
+import com.bridz.dto.ResetPasswordDto;
+import com.bridz.dto.SecretInformationDto;
 import com.bridz.dto.UserDetailsDto;
-import com.bridz.model.LoginData;
-import com.bridz.model.ResetPasswordData;
-import com.bridz.model.SecretInformation;
 import com.bridz.model.UserDetails;
 import com.bridz.response.Response;
 
@@ -13,10 +13,10 @@ public interface UserService {
 
 	public Response registerUser(UserDetails userDetails);
 
-	public List<UserDetailsDto> userLogin(LoginData userLoginObject);
+	public List<UserDetailsDto> userLogin(LoginDto userLoginDtoObject);
 
-	public Response forgetPassword(SecretInformation secretInformationData);
+	public Response forgetPassword(SecretInformationDto secretInformationDataDtoObject);
 
-	public Response resetPassword(ResetPasswordData resetPassword, String secretWord);
+	public Response resetPassword(ResetPasswordDto resetPassword, String secretWordDtoObject);
 
 }
