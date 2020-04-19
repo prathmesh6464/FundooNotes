@@ -1,10 +1,10 @@
 package com.bridz.controller;
 
-import com.bridz.model.UserDetails;
 import com.bridz.dto.LoginDto;
 import com.bridz.dto.ResetPasswordDto;
 import com.bridz.dto.SecretInformationDto;
 import com.bridz.dto.UserDetailsDto;
+import com.bridz.dto.UserRegistrationDto;
 import com.bridz.response.Response;
 import com.bridz.service.UserService;
 import java.util.List;
@@ -40,11 +40,11 @@ public class UserLoginControl {
 			@RequestParam("secretEmergencyWord") String secretEmergencyWord,
 			@RequestParam("firstMobileNumber") long firstMobileNumber) {
 
-		UserDetails userDetailsObject = new UserDetails(firstName, lastName, userName, password, mobileNumber,
+		UserRegistrationDto userRegistrationDtoObject = new UserRegistrationDto(firstName, lastName, userName, password, mobileNumber,
 				secretEmergencyWord, firstMobileNumber);
 
 		// Storing user data into data base
-		Response response = userServiceObject.registerUser(userDetailsObject);
+		Response response = userServiceObject.registerUser(userRegistrationDtoObject);
 
 		return response;
 	}
