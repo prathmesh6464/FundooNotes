@@ -51,19 +51,19 @@ public class UserLoginControl {
 
 	@GetMapping("/forgetPassword")
 	@ResponseBody
-	public Response forgetPassword(@RequestBody SecretInformationDto secretInformationDto) {
+	public Response forgetPassword(@RequestBody SecretInformationDto secretInformationDtoObject) {
 
-		secretWord = secretInformationDto.getSecretEmergencyWord();
-		Response response = userServiceObject.forgetPassword(secretInformationDto);
+		secretWord = secretInformationDtoObject.getSecretEmergencyWord();
+		Response response = userServiceObject.forgetPassword(secretInformationDtoObject);
 
 		return response;
 	}
 
 	@RequestMapping(value = "/resetPassword", method = { RequestMethod.PUT })
 	@ResponseBody
-	public Response resetPassword(@RequestBody ResetPasswordDto resetPassword) {
+	public Response resetPassword(@RequestBody ResetPasswordDto resetPasswordDtoObject) {
 
-		return userServiceObject.resetPassword(resetPassword, secretWord);
+		return userServiceObject.resetPassword(resetPasswordDtoObject, secretWord);
 	}
 
 	// @RequestMapping(value = "/addNote", method = { RequestMethod.POST })
