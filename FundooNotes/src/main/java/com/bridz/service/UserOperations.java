@@ -91,7 +91,7 @@ public class UserOperations implements UserService {
 
 			try {
 
-				userRepository.setPassword(resetPasswordDtoObject.getPassword(), secretWord);
+				userRepository.setPassword(userDetailsObject.getPassword(), secretWord);
 			} catch (Exception e) {
 				return new Response("Successfully password changed", 200);
 			}
