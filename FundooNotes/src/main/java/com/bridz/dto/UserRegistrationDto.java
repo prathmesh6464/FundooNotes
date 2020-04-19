@@ -1,6 +1,5 @@
 package com.bridz.dto;
 
-
 public class UserRegistrationDto {
 
 	// Variables
@@ -11,18 +10,18 @@ public class UserRegistrationDto {
 	private long mobileNumber;
 	private String secretEmergencyWord;
 	private long firstMobileNumber;
-	
-	//Default constructor
+
+	// Default constructor
 	public UserRegistrationDto() {
-		
+
 		super();
 	}
 
-	//Parameterized constructor
-	public UserRegistrationDto(String firstName, String lastName, String userName, String password, long mobileNumber, 
-		String secretWord, long firstMobileNumber) {
+	// Parameterized constructor
+	public UserRegistrationDto(String firstName, String lastName, String userName, String password, long mobileNumber,
+			String secretWord, long firstMobileNumber) {
 
-		super(); 
+		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.userName = userName;
@@ -117,4 +116,3 @@ public class UserRegistrationDto {
 		this.secretEmergencyWord = secretEmergencyWord;
 	}
 }
-
