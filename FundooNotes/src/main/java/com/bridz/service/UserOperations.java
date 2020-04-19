@@ -1,7 +1,10 @@
 package com.bridz.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import com.bridz.dto.UserDetailsDto;
 import com.bridz.model.LoginData;
 import com.bridz.model.ResetPasswordData;
 import com.bridz.model.SecretInformation;
@@ -28,13 +31,20 @@ public class UserOperations implements UserService {
 	}
 
 	@Override
-	public List<UserDetails> userLogin(LoginData userLoginObject) {
+	public List<UserDetailsDto> userLogin(LoginData userLoginObject) {
 
 		// Checking user name and password is valid or not
 		if (userRepository.findByUserName(userLoginObject.getUserName())
 				.equals(userRepository.findByPassword(userLoginObject.getPassword()))) {
 
-			return userRepository.findByPassword(userLoginObject.getPassword());
+			// copy variables from user details to user details data transfer object
+			List<UserDetails> userDetails = userRepository.findByPassword(userLoginObject.getPassword());
+			List<UserDetailsDto> userDetailsDto = new ArrayList<UserDetailsDto>();
+			userDetailsDto.add(new UserDetailsDto());
+			ModelMapper modelMapper = new ModelMapper();
+			modelMapper.map(userDetails.get(0), userDetailsDto.get(0));
+
+			return userDetailsDto;
 		}
 
 		return null;
@@ -50,7 +60,7 @@ public class UserOperations implements UserService {
 
 		return new Response("false", 201);
 	}
- 
+
 	@Override
 	public Response resetPassword(ResetPasswordData resetPassword, String secretWord) {
 
@@ -58,7 +68,7 @@ public class UserOperations implements UserService {
 		if (resetPassword.getPassword().equals(resetPassword.getConfirmPassword())) {
 
 			try {
-				
+
 				userRepository.setPassword(resetPassword.getPassword(), secretWord);
 			} catch (Exception e) {
 				return new Response("Successfully password changed", 200);
