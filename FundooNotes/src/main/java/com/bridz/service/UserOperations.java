@@ -8,6 +8,7 @@ import com.bridz.dto.LoginDto;
 import com.bridz.dto.ResetPasswordDto;
 import com.bridz.dto.SecretInformationDto;
 import com.bridz.dto.UserDetailsDto;
+import com.bridz.dto.UserRegistrationDto;
 import com.bridz.model.UserDetails;
 import com.bridz.repository.UserRepository;
 import com.bridz.response.Response;
@@ -24,8 +25,11 @@ public class UserOperations implements UserService {
 	}
 
 	@Override
-	public Response registerUser(UserDetails userDetails) {
-
+	public Response registerUser(UserRegistrationDto userRegistrationDtoObject) {
+		
+		UserDetails userDetails = new UserDetails();
+		ModelMapper modleMapperObject = new ModelMapper();
+		modleMapperObject.map(userRegistrationDtoObject, userDetails);
 		userRepository.save(userDetails);
 		return new Response("User details saved", 200);
 	}
