@@ -1,6 +1,7 @@
 package com.bridz.controller;
 
 import com.bridz.model.UserDetails;
+import com.bridz.dto.UserDetailsDto;
 import com.bridz.model.LoginData;
 import com.bridz.model.ResetPasswordData;
 import com.bridz.model.SecretInformation;
@@ -26,7 +27,7 @@ public class UserLoginControl {
 
 	@GetMapping("/userLogin")
 	@ResponseBody
-	public List<UserDetails> userLogin(@RequestBody LoginData userLoginObject) {
+	public List<UserDetailsDto> userLogin(@RequestBody LoginData userLoginObject) {
 
 		return userServiceObject.userLogin(userLoginObject);
 	}
@@ -65,19 +66,19 @@ public class UserLoginControl {
 		return userServiceObject.resetPassword(resetPassword, secretWord);
 	}
 
-	//	@RequestMapping(value = "/addNote", method = { RequestMethod.POST })
-	//	public String addUserNote(NotesData userNote) {
+	// @RequestMapping(value = "/addNote", method = { RequestMethod.POST })
+	// public String addUserNote(NotesData userNote) {
 	//
-	//		// Storing user note data into data base
-	//		notesRepository.save(userNote);
-	//		return "Note added successfully";
-	//	}
+	// // Storing user note data into data base
+	// notesRepository.save(userNote);
+	// return "Note added successfully";
+	// }
 	//
-	//	@RequestMapping(value = "/deleteNote", method = { RequestMethod.DELETE })
-	//	public String deleteUserNote(NotesData userNote) {
+	// @RequestMapping(value = "/deleteNote", method = { RequestMethod.DELETE })
+	// public String deleteUserNote(NotesData userNote) {
 	//
-	//		// Storing user note data into data base
-	//		// notesRepository.delete();
-	//		return "Note deleted successfully";
-	//	}
+	// // Storing user note data into data base
+	// // notesRepository.delete();
+	// return "Note deleted successfully";
+	// }
 }
