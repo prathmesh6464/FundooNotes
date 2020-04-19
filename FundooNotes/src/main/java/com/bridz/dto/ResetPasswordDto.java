@@ -1,6 +1,6 @@
-package com.bridz.model;
+package com.bridz.dto;
 
-public class ResetPasswordData {
+public class ResetPasswordDto {
 	
 	//Variable 
 	private String password;
