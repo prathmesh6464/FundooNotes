@@ -3,7 +3,7 @@ package com.bridz.dto;
 import javax.persistence.ManyToOne;
 import com.bridz.model.UserDetails;
 
-public class NotesDataDto {
+public class NotesDto {
 
 	private String message;
 
