@@ -1,10 +1,10 @@
 package com.bridz.controller;
 
 import com.bridz.model.UserDetails;
+import com.bridz.dto.LoginDto;
+import com.bridz.dto.ResetPasswordDto;
+import com.bridz.dto.SecretInformationDto;
 import com.bridz.dto.UserDetailsDto;
-import com.bridz.model.LoginData;
-import com.bridz.model.ResetPasswordData;
-import com.bridz.model.SecretInformation;
 import com.bridz.response.Response;
 import com.bridz.service.UserService;
 import java.util.List;
@@ -27,9 +27,9 @@ public class UserLoginControl {
 
 	@GetMapping("/userLogin")
 	@ResponseBody
-	public List<UserDetailsDto> userLogin(@RequestBody LoginData userLoginObject) {
+	public List<UserDetailsDto> userLogin(@RequestBody LoginDto userLoginDtoObject) {
 
-		return userServiceObject.userLogin(userLoginObject);
+		return userServiceObject.userLogin(userLoginDtoObject);
 	}
 
 	@RequestMapping(value = "/userRegistration", method = { RequestMethod.POST })
@@ -51,17 +51,17 @@ public class UserLoginControl {
 
 	@GetMapping("/forgetPassword")
 	@ResponseBody
-	public Response forgetPassword(@RequestBody SecretInformation secretInformationData) {
+	public Response forgetPassword(@RequestBody SecretInformationDto secretInformationDto) {
 
-		secretWord = secretInformationData.getSecretEmergencyWord();
-		Response response = userServiceObject.forgetPassword(secretInformationData);
+		secretWord = secretInformationDto.getSecretEmergencyWord();
+		Response response = userServiceObject.forgetPassword(secretInformationDto);
 
 		return response;
 	}
 
 	@RequestMapping(value = "/resetPassword", method = { RequestMethod.PUT })
 	@ResponseBody
-	public Response resetPassword(@RequestBody ResetPasswordData resetPassword) {
+	public Response resetPassword(@RequestBody ResetPasswordDto resetPassword) {
 
 		return userServiceObject.resetPassword(resetPassword, secretWord);
 	}
