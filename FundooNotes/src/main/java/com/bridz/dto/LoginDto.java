@@ -1,9 +1,16 @@
 package com.bridz.dto;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
 public class LoginDto {
 
 	// Variables
+	@NotNull
+	@Pattern(regexp = "[^0-9]*")
 	private String userName;
+
+	@NotNull
 	private String password;
 
 	// @return the userName
@@ -15,7 +22,7 @@ public class LoginDto {
 	// @param userName the userName to set
 	public void setUserName(String userName) {
 
-		this.userName = userName; 
+		this.userName = userName;
 	}
 
 	// @return the password
