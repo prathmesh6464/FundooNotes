@@ -3,14 +3,23 @@ package com.bridz.dto;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 public class UserDetailsDto {
 
 	// Variables
+	@NotNull
+	@Pattern(regexp = "[^0-9]*")
 	private String firstName;
+
+	@NotNull
+	@Pattern(regexp = "[^0-9]*")
 	private String lastName;
+
+	@NotNull
 	private String userName;
-	
+
 	@OneToMany(mappedBy = "userDetails")
 	private List<NotesDto> notesDataDto = new ArrayList<>();
 
