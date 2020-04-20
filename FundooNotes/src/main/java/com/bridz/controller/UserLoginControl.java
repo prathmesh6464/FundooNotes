@@ -8,6 +8,7 @@ import com.bridz.dto.UserRegistrationDto;
 import com.bridz.response.Response;
 import com.bridz.service.UserService;
 import java.util.List;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,14 +28,14 @@ public class UserLoginControl {
 
 	@GetMapping("/userLogin")
 	@ResponseBody
-	public List<UserDetailsDto> userLogin(@RequestBody LoginDto userLoginDtoObject) {
+	public List<UserDetailsDto> userLogin(@Valid @RequestBody LoginDto userLoginDtoObject) {
 
 		return userServiceObject.userLogin(userLoginDtoObject);
 	}
 
 	@RequestMapping(value = "/userRegistration", method = { RequestMethod.POST })
 	@ResponseBody
-	public Response userRegistration(@RequestParam("firstName") String firstName,
+	public Response userRegistration(@Valid @RequestParam("firstName") String firstName,
 			@RequestParam("lastName") String lastName, @RequestParam("userName") String userName,
 			@RequestParam("password") String password, @RequestParam("mobileNumber") long mobileNumber,
 			@RequestParam("secretEmergencyWord") String secretEmergencyWord,
@@ -51,7 +52,7 @@ public class UserLoginControl {
 
 	@GetMapping("/forgetPassword")
 	@ResponseBody
-	public Response forgetPassword(@RequestBody SecretInformationDto secretInformationDtoObject) {
+	public Response forgetPassword(@Valid @RequestBody SecretInformationDto secretInformationDtoObject) {
 
 		secretWord = secretInformationDtoObject.getSecretEmergencyWord();
 		Response response = userServiceObject.forgetPassword(secretInformationDtoObject);
@@ -61,7 +62,7 @@ public class UserLoginControl {
 
 	@RequestMapping(value = "/resetPassword", method = { RequestMethod.PUT })
 	@ResponseBody
-	public Response resetPassword(@RequestBody ResetPasswordDto resetPasswordDtoObject) {
+	public Response resetPassword(@Valid @RequestBody ResetPasswordDto resetPasswordDtoObject) {
 
 		return userServiceObject.resetPassword(resetPasswordDtoObject, secretWord);
 	}
