@@ -43,7 +43,7 @@ public class UserOperations implements UserService {
 	}
 
 	@Override
-	public List<UserDetailsDto> userLogin(LoginDto userLoginDtoObject) {
+	public Response userLogin(LoginDto userLoginDtoObject) {
 
 		// Using model mapper mapping dto object with user details entity
 		modelMapperObject.map(userLoginDtoObject, userDetailsObject);
@@ -52,18 +52,10 @@ public class UserOperations implements UserService {
 		if (userRepository.findByUserName(userDetailsObject.getUserName())
 				.equals(userRepository.findByPassword(userDetailsObject.getPassword()))) {
 
-			// copy variables from user details to user details data transfer object
-			List<UserDetails> userDetailsListObject = userRepository.findByPassword(userDetailsObject.getPassword());
-			List<UserDetailsDto> userDetailsDtoObject = new ArrayList<UserDetailsDto>();
-			userDetailsDtoObject.add(new UserDetailsDto());
-
-			// Using model mapper mapping dto object with user details entity
-			modelMapperObject.map(userDetailsListObject.get(0), userDetailsDtoObject.get(0));
-
-			return userDetailsDtoObject;
+			return new Response("User Loged in successfully", 200);
 		}
 
-		return null;
+		return new Response("User name password not matched", 200);
 	}
 
 	@Override
