@@ -16,9 +16,9 @@ public class UserDetails {
 	private String lastName;
 	private String userName;
 	private String password;
-	private long mobileNumber;
+	private String mobileNumber;
 	private String secretEmergencyWord;
-	private long firstMobileNumber;
+	private String firstMobileNumber;
 	
 	//Default constructor
 	public UserDetails() {
@@ -27,8 +27,8 @@ public class UserDetails {
 	}
 
 	//Parameterized constructor
-	public UserDetails(String firstName, String lastName, String userName, String password, long mobileNumber, 
-		String secretWord, long firstMobileNumber) {
+	public UserDetails(String firstName, String lastName, String userName, String password, String mobileNumber, 
+		String secretWord, String firstMobileNumber) {
 
 		super(); 
 		this.firstName = firstName;
@@ -89,25 +89,25 @@ public class UserDetails {
 	}
 
 	// @return the mobileNumber
-	public long getMobileNumber() {
+	public String getMobileNumber() {
 
 		return mobileNumber;
 	}
 
 	// @param mobileNumber the mobileNumber to set
-	public void setMobileNumber(long mobileNumber) {
+	public void setMobileNumber(String mobileNumber) {
 
 		this.mobileNumber = mobileNumber;
 	}
 
 	// @return the firstMobileNumber
-	public long getFirstMobileNumber() {
+	public String getFirstMobileNumber() {
 
 		return firstMobileNumber;
 	}
 
 	// @param firstMobileNumber the firstMobileNumber to set
-	public void setFirstMobileNumber(long firstMobileNumber) {
+	public void setFirstMobileNumber(String firstMobileNumber) {
 
 		this.firstMobileNumber = firstMobileNumber;
 	}
