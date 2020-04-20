@@ -16,7 +16,7 @@ public interface UserRepository extends JpaRepository<UserDetails, Integer> {
 
 	List<UserDetails> findBySecretEmergencyWord(String secretEmergencyWord);
 
-	List<UserDetails> findByFirstMobileNumber(long firstMobileNumber);
+	List<UserDetails> findByFirstMobileNumber(String string);
 
 	@Query(value = "UPDATE user_details SET password = ? WHERE secret_emergency_word = ?", nativeQuery = true)
 	@Modifying
