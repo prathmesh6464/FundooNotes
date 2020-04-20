@@ -1,13 +1,10 @@
 package com.bridz.service;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import com.bridz.dto.LoginDto;
 import com.bridz.dto.ResetPasswordDto;
 import com.bridz.dto.ForgetPasswordDto;
-import com.bridz.dto.UserDetailsDto;
 import com.bridz.dto.UserRegistrationDto;
 import com.bridz.model.UserDetails;
 import com.bridz.repository.UserRepository;
