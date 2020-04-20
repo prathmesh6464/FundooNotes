@@ -3,17 +3,15 @@ package com.bridz.controller;
 import com.bridz.dto.LoginDto;
 import com.bridz.dto.ResetPasswordDto;
 import com.bridz.dto.ForgetPasswordDto;
-import com.bridz.dto.UserDetailsDto;
 import com.bridz.dto.UserRegistrationDto;
 import com.bridz.response.Response;
 import com.bridz.service.UserService;
-import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
  
 @RestController
@@ -25,12 +23,12 @@ public class UserLoginControl {
 	String secretWord;
 
 	@GetMapping("/userLogin")
-	public List<UserDetailsDto> userLogin(@Valid @RequestBody LoginDto userLoginDtoObject) {
+	public Response userLogin(@Valid @RequestBody LoginDto userLoginDtoObject) {
 
 		return userServiceObject.userLogin(userLoginDtoObject);
 	}
 
-	@RequestMapping(value = "/userRegistration", method = { RequestMethod.POST })
+	@PostMapping("/userRegistration")
 	public Response userRegistration(@Valid @RequestBody UserRegistrationDto userRegistrationDtoObject) {
 
 		// Storing user data into data base
@@ -51,7 +49,7 @@ public class UserLoginControl {
 		return response;
 	}
 
-	@RequestMapping(value = "/resetPassword", method = { RequestMethod.PUT })
+	@PutMapping("/resetPassword")
 	public Response resetPassword(@Valid @RequestBody ResetPasswordDto resetPasswordDtoObject) {
 
 		return userServiceObject.resetPassword(resetPasswordDtoObject, secretWord);
