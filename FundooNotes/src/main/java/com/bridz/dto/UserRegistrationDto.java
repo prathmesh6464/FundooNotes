@@ -1,39 +1,46 @@
 package com.bridz.dto;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.Range;
 
 public class UserRegistrationDto {
 
 	// Variables
+	@NotEmpty
 	@NotNull
 	@Pattern(regexp = "[^0-9]*")
 	private String firstName;
 
+	@NotEmpty
 	@NotNull
 	@Pattern(regexp = "[^0-9]*")
 	private String lastName;
 
+	@NotEmpty
 	@NotNull
 	private String userName;
 
+	@NotEmpty
 	@NotNull
 	@Size(min = 8)
 	private String password;
 
+	@NotEmpty
 	@NotNull
-	@Size(min = 10, max = 10)
-	@Pattern(regexp = "[0-9]*")
-	private long mobileNumber;
+	@Pattern(regexp = "([0-9]{10})")
+	private String mobileNumber;
 
+	@NotEmpty
 	@NotNull
 	private String secretEmergencyWord;
 
+	@NotEmpty
 	@NotNull
-	@Size(min = 10, max = 10)
-	@Pattern(regexp = "[^0-9]*")
-	private long firstMobileNumber;
+	@Pattern(regexp = "([0-9]{10})")
+	private String firstMobileNumber;
 
 	// Default constructor
 	public UserRegistrationDto() {
@@ -42,8 +49,8 @@ public class UserRegistrationDto {
 	}
 
 	// Parameterized constructor
-	public UserRegistrationDto(String firstName, String lastName, String userName, String password, long mobileNumber,
-			String secretWord, long firstMobileNumber) {
+	public UserRegistrationDto(String firstName, String lastName, String userName, String password, String mobileNumber,
+			String secretWord, String firstMobileNumber) {
 
 		super();
 		this.firstName = firstName;
@@ -104,25 +111,25 @@ public class UserRegistrationDto {
 	}
 
 	// @return the mobileNumber
-	public long getMobileNumber() {
+	public String getMobileNumber() {
 
 		return mobileNumber;
 	}
 
 	// @param mobileNumber the mobileNumber to set
-	public void setMobileNumber(long mobileNumber) {
+	public void setMobileNumber(String mobileNumber) {
 
 		this.mobileNumber = mobileNumber;
 	}
 
 	// @return the firstMobileNumber
-	public long getFirstMobileNumber() {
+	public String getFirstMobileNumber() {
 
 		return firstMobileNumber;
 	}
 
 	// @param firstMobileNumber the firstMobileNumber to set
-	public void setFirstMobileNumber(long firstMobileNumber) {
+	public void setFirstMobileNumber(String firstMobileNumber) {
 
 		this.firstMobileNumber = firstMobileNumber;
 	}
