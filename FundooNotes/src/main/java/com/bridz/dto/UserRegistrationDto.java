@@ -1,14 +1,38 @@
 package com.bridz.dto;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 public class UserRegistrationDto {
 
 	// Variables
+	@NotNull
+	@Pattern(regexp = "[^0-9]*")
 	private String firstName;
+
+	@NotNull
+	@Pattern(regexp = "[^0-9]*")
 	private String lastName;
+
+	@NotNull
 	private String userName;
+
+	@NotNull
+	@Size(min = 8)
 	private String password;
+
+	@NotNull
+	@Size(min = 10, max = 10)
+	@Pattern(regexp = "[0-9]*")
 	private long mobileNumber;
+
+	@NotNull
 	private String secretEmergencyWord;
+
+	@NotNull
+	@Size(min = 10, max = 10)
+	@Pattern(regexp = "[^0-9]*")
 	private long firstMobileNumber;
 
 	// Default constructor
