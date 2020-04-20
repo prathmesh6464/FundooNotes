@@ -1,10 +1,14 @@
 package com.bridz.dto;
 
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import com.bridz.model.UserDetails;
 
 public class NotesDto {
 
+	@NotNull
+	@Size(min = 5)
 	private String message;
 
 	@ManyToOne
