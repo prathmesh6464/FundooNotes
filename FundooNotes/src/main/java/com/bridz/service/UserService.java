@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.bridz.dto.LoginDto;
 import com.bridz.dto.ResetPasswordDto;
-import com.bridz.dto.SecretInformationDto;
+import com.bridz.dto.ForgetPasswordDto;
 import com.bridz.dto.UserDetailsDto;
 import com.bridz.dto.UserRegistrationDto;
 import com.bridz.model.UserDetails;
@@ -16,7 +16,7 @@ public interface UserService {
 
 	public List<UserDetailsDto> userLogin(LoginDto userLoginDtoObject);
 
-	public Response forgetPassword(SecretInformationDto secretInformationDataDtoObject);
+	public Response forgetPassword(ForgetPasswordDto forgetPasswordDtoObject);
 
 	public Response resetPassword(ResetPasswordDto resetPassword, String secretWordDtoObject);
 
