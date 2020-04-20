@@ -1,19 +1,20 @@
 package com.bridz.dto;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
-public class SecretInformationDto {
+public class ForgetPasswordDto {
 
 	// Variables
+	@NotEmpty
 	@NotNull
 	private String secretEmergencyWord;
 
+	@NotEmpty
 	@NotNull
-	@Size(min = 10, max = 10)
-	@Pattern(regexp = "[0-9]*")
-	private long firstMobileNumber;
+	@Pattern(regexp = "[0-9]{10}")
+	private String firstMobileNumber;
 
 	// @return the secretEmergencyWord
 	public String getSecretEmergencyWord() {
@@ -28,13 +29,13 @@ public class SecretInformationDto {
 	}
 
 	// @return the firstMobileNumber
-	public long getFirstMobileNumber() {
+	public String getFirstMobileNumber() {
 
 		return firstMobileNumber;
 	}
 
 	// @param firstMobileNumber the firstMobileNumber to set
-	public void setFirstMobileNumber(long firstMobileNumber) {
+	public void setFirstMobileNumber(String firstMobileNumber) {
 
 		this.firstMobileNumber = firstMobileNumber;
 	}
