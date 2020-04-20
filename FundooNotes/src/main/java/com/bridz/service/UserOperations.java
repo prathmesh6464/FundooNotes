@@ -6,7 +6,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import com.bridz.dto.LoginDto;
 import com.bridz.dto.ResetPasswordDto;
-import com.bridz.dto.SecretInformationDto;
+import com.bridz.dto.ForgetPasswordDto;
 import com.bridz.dto.UserDetailsDto;
 import com.bridz.dto.UserRegistrationDto;
 import com.bridz.model.UserDetails;
@@ -67,10 +67,10 @@ public class UserOperations implements UserService {
 	}
 
 	@Override
-	public Response forgetPassword(SecretInformationDto secretInformationDtoObject) {
+	public Response forgetPassword(ForgetPasswordDto forgetPasswordDtoObject) {
 
 		// Using model mapper mapping dto object with user details entity
-		modelMapperObject.map(secretInformationDtoObject, userDetailsObject);
+		modelMapperObject.map(forgetPasswordDtoObject, userDetailsObject);
 
 		// Checking secret information is valid or not
 		if (userRepository.findBySecretEmergencyWord(userDetailsObject.getSecretEmergencyWord())
