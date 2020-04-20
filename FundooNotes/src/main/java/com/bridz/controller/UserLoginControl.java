@@ -2,7 +2,7 @@ package com.bridz.controller;
 
 import com.bridz.dto.LoginDto;
 import com.bridz.dto.ResetPasswordDto;
-import com.bridz.dto.SecretInformationDto;
+import com.bridz.dto.ForgetPasswordDto;
 import com.bridz.dto.UserDetailsDto;
 import com.bridz.dto.UserRegistrationDto;
 import com.bridz.response.Response;
@@ -27,22 +27,13 @@ public class UserLoginControl {
 	String secretWord;
 
 	@GetMapping("/userLogin")
-	@ResponseBody
 	public List<UserDetailsDto> userLogin(@Valid @RequestBody LoginDto userLoginDtoObject) {
 
 		return userServiceObject.userLogin(userLoginDtoObject);
 	}
 
 	@RequestMapping(value = "/userRegistration", method = { RequestMethod.POST })
-	@ResponseBody
-	public Response userRegistration(@Valid @RequestParam("firstName") String firstName,
-			@RequestParam("lastName") String lastName, @RequestParam("userName") String userName,
-			@RequestParam("password") String password, @RequestParam("mobileNumber") long mobileNumber,
-			@RequestParam("secretEmergencyWord") String secretEmergencyWord,
-			@RequestParam("firstMobileNumber") long firstMobileNumber) {
-
-		UserRegistrationDto userRegistrationDtoObject = new UserRegistrationDto(firstName, lastName, userName, password, mobileNumber,
-				secretEmergencyWord, firstMobileNumber);
+	public Response userRegistration(@Valid @RequestBody UserRegistrationDto userRegistrationDtoObject) {
 
 		// Storing user data into data base
 		Response response = userServiceObject.registerUser(userRegistrationDtoObject);
@@ -51,17 +42,18 @@ public class UserLoginControl {
 	}
 
 	@GetMapping("/forgetPassword")
-	@ResponseBody
-	public Response forgetPassword(@Valid @RequestBody SecretInformationDto secretInformationDtoObject) {
+	public Response forgetPassword(@Valid @RequestBody ForgetPasswordDto forgetPasswordDtoObject) {
 
-		secretWord = secretInformationDtoObject.getSecretEmergencyWord();
-		Response response = userServiceObject.forgetPassword(secretInformationDtoObject);
+		//Variable
+		secretWord = forgetPasswordDtoObject.getSecretEmergencyWord();
+		
+		//Checking user information valid or not
+		Response response = userServiceObject.forgetPassword(forgetPasswordDtoObject);
 
 		return response;
 	}
 
 	@RequestMapping(value = "/resetPassword", method = { RequestMethod.PUT })
-	@ResponseBody
 	public Response resetPassword(@Valid @RequestBody ResetPasswordDto resetPasswordDtoObject) {
 
 		return userServiceObject.resetPassword(resetPasswordDtoObject, secretWord);
