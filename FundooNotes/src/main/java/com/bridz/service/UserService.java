@@ -14,7 +14,7 @@ public interface UserService {
 
 	public Response registerUser(UserRegistrationDto userRegisterDtoObject);
 
-	public List<UserDetailsDto> userLogin(LoginDto userLoginDtoObject);
+	public Response userLogin(LoginDto userLoginDtoObject);
 
 	public Response forgetPassword(ForgetPasswordDto forgetPasswordDtoObject);
 
