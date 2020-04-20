@@ -11,7 +11,7 @@ import com.bridz.repository.UserRepository;
 import com.bridz.response.Response;
 
 @Service
-public class UserOperations implements UserService {
+public class UserServiceImplementation implements UserService {
 
 	// Creating Object of model mapper
 	ModelMapper modelMapperObject = new ModelMapper();
@@ -23,7 +23,7 @@ public class UserOperations implements UserService {
 	private UserRepository userRepository;
 
 	// Constructor
-	public UserOperations(UserRepository userRepository) {
+	public UserServiceImplementation(UserRepository userRepository) {
 
 		super();
 		this.userRepository = userRepository;
