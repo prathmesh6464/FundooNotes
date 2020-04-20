@@ -3,20 +3,24 @@ package com.bridz.dto;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 public class UserDetailsDto {
 
 	// Variables
+	@NotEmpty
 	@NotNull
 	@Pattern(regexp = "[^0-9]*")
 	private String firstName;
 
+	@NotEmpty
 	@NotNull
 	@Pattern(regexp = "[^0-9]*")
 	private String lastName;
 
+	@NotEmpty
 	@NotNull
 	private String userName;
 
