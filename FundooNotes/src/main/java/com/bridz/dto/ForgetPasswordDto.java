@@ -9,34 +9,16 @@ public class ForgetPasswordDto {
 	// Variables
 	@NotEmpty
 	@NotNull
-	private String secretEmergencyWord;
+	private String emailId;
 
-	@NotEmpty
-	@NotNull
-	@Pattern(regexp = "[0-9]{10}")
-	private String firstMobileNumber;
-
-	// @return the secretEmergencyWord
-	public String getSecretEmergencyWord() {
-
-		return secretEmergencyWord;
+	// @return the emailId
+	public String getEmailId() {
+		return emailId;
 	}
 
-	// @param secretEmergencyWord the secretEmergencyWord to set
-	public void setSecretEmergencyWord(String secretEmergencyWord) {
-
-		this.secretEmergencyWord = secretEmergencyWord;
+	// @param emailId the emailId to set
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
 	}
 
-	// @return the firstMobileNumber
-	public String getFirstMobileNumber() {
-
-		return firstMobileNumber;
-	}
-
-	// @param firstMobileNumber the firstMobileNumber to set
-	public void setFirstMobileNumber(String firstMobileNumber) {
-
-		this.firstMobileNumber = firstMobileNumber;
-	}
 }
