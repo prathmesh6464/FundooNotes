@@ -35,12 +35,17 @@ public class UserRegistrationDto {
 
 	@NotEmpty
 	@NotNull
-	private String secretEmergencyWord;
+	private String emailId;
 
-	@NotEmpty
-	@NotNull
-	@Pattern(regexp = "([0-9]{10})")
-	private String firstMobileNumber;
+	// @return the emailId
+	public String getEmailId() {
+		return emailId;
+	}
+
+	// @param emailId the emailId to set
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
+	}
 
 	// Default constructor
 	public UserRegistrationDto() {
@@ -50,7 +55,7 @@ public class UserRegistrationDto {
 
 	// Parameterized constructor
 	public UserRegistrationDto(String firstName, String lastName, String userName, String password, String mobileNumber,
-			String secretWord, String firstMobileNumber) {
+			String emailId) {
 
 		super();
 		this.firstName = firstName;
@@ -58,8 +63,7 @@ public class UserRegistrationDto {
 		this.userName = userName;
 		this.password = password;
 		this.mobileNumber = mobileNumber;
-		this.secretEmergencyWord = secretWord;
-		this.firstMobileNumber = firstMobileNumber;
+		this.emailId = emailId;
 	}
 
 	// @return the firstName
@@ -120,30 +124,5 @@ public class UserRegistrationDto {
 	public void setMobileNumber(String mobileNumber) {
 
 		this.mobileNumber = mobileNumber;
-	}
-
-	// @return the firstMobileNumber
-	public String getFirstMobileNumber() {
-
-		return firstMobileNumber;
-	}
-
-	// @param firstMobileNumber the firstMobileNumber to set
-	public void setFirstMobileNumber(String firstMobileNumber) {
-
-		this.firstMobileNumber = firstMobileNumber;
-	}
-
-	// @return the secretEmergencyWord
-
-	public String getSecretEmergencyWord() {
-
-		return secretEmergencyWord;
-	}
-
-	// @param secretEmergencyWord the secretEmergencyWord to set
-	public void setSecretEmergencyWord(String secretEmergencyWord) {
-
-		this.secretEmergencyWord = secretEmergencyWord;
 	}
 }
