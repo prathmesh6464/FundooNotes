@@ -10,6 +10,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -44,12 +45,12 @@ public class UserLoginControl {
 		// Variable
 		emailId = forgetPasswordDtoObject.getEmailId();
 
-		// Returning token 
 		return userServiceObject.forgetPassword(forgetPasswordDtoObject);
 	}
 
-	@PutMapping("/resetPassword")
-	public Response resetPassword(@Valid @RequestBody ResetPasswordDto resetPasswordDtoObject) {
+	@PutMapping("/resetPassword/{token}")
+	public Response resetPassword(@Valid @PathVariable("token") String token,
+			@RequestBody ResetPasswordDto resetPasswordDtoObject) {
 
 		return userServiceObject.resetPassword(resetPasswordDtoObject, emailId);
 	}
