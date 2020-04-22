@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+
 import com.bridz.model.UserDetails;
 
 //Interface
@@ -14,11 +15,9 @@ public interface UserRepository extends JpaRepository<UserDetails, Integer> {
 
 	List<UserDetails> findByPassword(String password);
 
-	List<UserDetails> findBySecretEmergencyWord(String secretEmergencyWord);
-
-	List<UserDetails> findByFirstMobileNumber(String string);
+	List<UserDetails> findByEmailId(String emailId);
 
 	@Query(value = "UPDATE user_details SET password = ? WHERE secret_emergency_word = ?", nativeQuery = true)
 	@Modifying
-	List<UserDetails> setPassword(String resetPassword, String secretEmergencyWord); 
+	List<UserDetails> setPassword(String resetPassword, String emailId);
 }
