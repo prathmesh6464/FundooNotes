@@ -17,27 +17,25 @@ public class UserDetails {
 	private String userName;
 	private String password;
 	private String mobileNumber;
-	private String secretEmergencyWord;
-	private String firstMobileNumber;
-	
-	//Default constructor
+	private String emailId;
+
+	// Default constructor
 	public UserDetails() {
-		
+
 		super();
 	}
 
-	//Parameterized constructor
-	public UserDetails(String firstName, String lastName, String userName, String password, String mobileNumber, 
-		String secretWord, String firstMobileNumber) {
+	// Parameterized constructor
+	public UserDetails(String firstName, String lastName, String userName, String password, String mobileNumber,
+			String emailId) {
 
-		super(); 
+		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.userName = userName;
 		this.password = password;
 		this.mobileNumber = mobileNumber;
-		this.secretEmergencyWord = secretWord;
-		this.firstMobileNumber = firstMobileNumber;
+		this.emailId = emailId;
 	}
 
 	// @return the firstName
@@ -100,29 +98,14 @@ public class UserDetails {
 		this.mobileNumber = mobileNumber;
 	}
 
-	// @return the firstMobileNumber
-	public String getFirstMobileNumber() {
-
-		return firstMobileNumber;
+	// @return the emailId
+	public String getEmailId() {
+		return emailId;
 	}
 
-	// @param firstMobileNumber the firstMobileNumber to set
-	public void setFirstMobileNumber(String firstMobileNumber) {
-
-		this.firstMobileNumber = firstMobileNumber;
+	// @param emailId the emailId to set
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
 	}
 
-	// @return the secretEmergencyWord
-
-	public String getSecretEmergencyWord() {
-
-		return secretEmergencyWord;
-	}
-
-	// @param secretEmergencyWord the secretEmergencyWord to set
-	public void setSecretEmergencyWord(String secretEmergencyWord) {
-
-		this.secretEmergencyWord = secretEmergencyWord;
-	}
 }
-
