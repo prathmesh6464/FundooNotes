@@ -8,19 +8,20 @@ import com.bridz.response.Response;
 import com.bridz.service.UserService;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
- 
+
 @RestController
 public class UserLoginControl {
 
 	@Autowired
 	UserService userServiceObject;
 
-	String secretWord;
+	String emailId;
 
 	@GetMapping("/userLogin")
 	public Response userLogin(@Valid @RequestBody LoginDto userLoginDtoObject) {
@@ -38,21 +39,19 @@ public class UserLoginControl {
 	}
 
 	@GetMapping("/forgetPassword")
-	public Response forgetPassword(@Valid @RequestBody ForgetPasswordDto forgetPasswordDtoObject) {
+	public ResponseEntity<String> forgetPassword(@Valid @RequestBody ForgetPasswordDto forgetPasswordDtoObject) {
 
-		//Variable
-		secretWord = forgetPasswordDtoObject.getSecretEmergencyWord();
-		
-		//Checking user information valid or not
-		Response response = userServiceObject.forgetPassword(forgetPasswordDtoObject);
+		// Variable
+		emailId = forgetPasswordDtoObject.getEmailId();
 
-		return response;
+		// Returning token 
+		return userServiceObject.forgetPassword(forgetPasswordDtoObject);
 	}
 
 	@PutMapping("/resetPassword")
 	public Response resetPassword(@Valid @RequestBody ResetPasswordDto resetPasswordDtoObject) {
 
-		return userServiceObject.resetPassword(resetPasswordDtoObject, secretWord);
+		return userServiceObject.resetPassword(resetPasswordDtoObject, emailId);
 	}
 
 	// @RequestMapping(value = "/addNote", method = { RequestMethod.POST })
