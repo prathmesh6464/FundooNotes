@@ -13,6 +13,8 @@ import com.bridz.dto.UserRegistrationDto;
 import com.bridz.model.UserDetails;
 import com.bridz.repository.UserRepository;
 import com.bridz.response.Response;
+import com.bridz.utility.JwtToken;
+import com.bridz.utility.EmailService;
 
 @Service
 public class UserServiceImplementation implements UserService {
@@ -26,9 +28,13 @@ public class UserServiceImplementation implements UserService {
 	// User repository object
 	private UserRepository userRepository;
 
-	// Jwt service object created
+	// Jwt token object created
 	@Autowired
-	JwtService jwtServiceObject;
+	JwtToken jwtTokenObject;
+
+	// Email service object created
+	@Autowired
+	EmailService emailServiceObject;
 
 	// Constructor
 	public UserServiceImplementation(UserRepository userRepository) {
@@ -69,12 +75,18 @@ public class UserServiceImplementation implements UserService {
 	@Override
 	public ResponseEntity<String> forgetPassword(ForgetPasswordDto forgetPasswordDtoObject) {
 
-		// Using model mapper mapping dto object with user details entity
-		modelMapperObject.map(forgetPasswordDtoObject, userDetailsObject);
+		//Email related variables
+		String to = "requestchecking@gmail.com";
+		String subject = "Authentication";
+		String token = jwtTokenObject.generateToken(forgetPasswordDtoObject);
+		
+		//Reset url
+		String resetPasswordUrl = "http://localhost:8081/resetPassword/" + token;
 
-		String token = jwtServiceObject.generateToken(forgetPasswordDtoObject);
-
-		return new ResponseEntity<String>(token, HttpStatus.OK);
+		//Send email method callled
+		emailServiceObject.send(to, subject, resetPasswordUrl);
+		
+		return new ResponseEntity<String>("User authenticated", HttpStatus.OK);
 	}
 
 	@Transactional
