@@ -1,10 +1,14 @@
 package com.bridz.service;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import com.bridz.dto.LoginDto;
+import org.springframework.transaction.annotation.Transactional;
 import com.bridz.dto.ResetPasswordDto;
 import com.bridz.dto.ForgetPasswordDto;
+import com.bridz.dto.LoginDto;
 import com.bridz.dto.UserRegistrationDto;
 import com.bridz.model.UserDetails;
 import com.bridz.repository.UserRepository;
@@ -22,6 +26,10 @@ public class UserServiceImplementation implements UserService {
 	// User repository object
 	private UserRepository userRepository;
 
+	// Jwt service object created
+	@Autowired
+	JwtService jwtServiceObject;
+
 	// Constructor
 	public UserServiceImplementation(UserRepository userRepository) {
 
@@ -29,6 +37,7 @@ public class UserServiceImplementation implements UserService {
 		this.userRepository = userRepository;
 	}
 
+	@Transactional
 	@Override
 	public Response registerUser(UserRegistrationDto userRegistrationDtoObject) {
 
@@ -39,6 +48,7 @@ public class UserServiceImplementation implements UserService {
 		return new Response("User details saved", 200);
 	}
 
+	@Transactional
 	@Override
 	public Response userLogin(LoginDto userLoginDtoObject) {
 
@@ -52,25 +62,24 @@ public class UserServiceImplementation implements UserService {
 			return new Response("User Loged in successfully", 200);
 		}
 
-		return new Response("User name password not matched", 200);
+		return new Response("User name password not matched", 202);
 	}
 
+	@Transactional
 	@Override
-	public Response forgetPassword(ForgetPasswordDto forgetPasswordDtoObject) {
+	public ResponseEntity<String> forgetPassword(ForgetPasswordDto forgetPasswordDtoObject) {
 
 		// Using model mapper mapping dto object with user details entity
 		modelMapperObject.map(forgetPasswordDtoObject, userDetailsObject);
 
-		// Checking secret information is valid or not
-		if (userRepository.findBySecretEmergencyWord(userDetailsObject.getSecretEmergencyWord())
-				.equals(userRepository.findByFirstMobileNumber(userDetailsObject.getFirstMobileNumber())))
-			return new Response("true", 200);
+		String token = jwtServiceObject.generateToken(forgetPasswordDtoObject);
 
-		return new Response("false", 201);
+		return new ResponseEntity<String>(token, HttpStatus.OK);
 	}
 
+	@Transactional
 	@Override
-	public Response resetPassword(ResetPasswordDto resetPasswordDtoObject, String secretWord) {
+	public Response resetPassword(ResetPasswordDto resetPasswordDtoObject, String emailId) {
 
 		// Using model mapper mapping dto object with user details entity
 		modelMapperObject.map(resetPasswordDtoObject, userDetailsObject);
@@ -80,7 +89,7 @@ public class UserServiceImplementation implements UserService {
 
 			try {
 
-				userRepository.setPassword(userDetailsObject.getPassword(), secretWord);
+				userRepository.setPassword(userDetailsObject.getPassword(), emailId);
 			} catch (Exception e) {
 				return new Response("Successfully password changed", 200);
 			}
@@ -88,4 +97,5 @@ public class UserServiceImplementation implements UserService {
 
 		return new Response("Confirm password and password not matched", 201);
 	}
+
 }
