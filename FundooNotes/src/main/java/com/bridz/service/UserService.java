@@ -5,18 +5,17 @@ import com.bridz.dto.ResetPasswordDto;
 import org.springframework.http.ResponseEntity;
 import com.bridz.dto.ForgetPasswordDto;
 import com.bridz.dto.UserRegistrationDto;
-import com.bridz.response.Response;
 
 public interface UserService {
 
-	public Response registerUser(UserRegistrationDto userRegisterDtoObject);
+	public ResponseEntity<String> registerUser(UserRegistrationDto userRegisterDtoObject);
 
-	public Response userLogin(LoginDto userLoginDtoObject);
+	public ResponseEntity<String> userLogin(LoginDto userLoginDtoObject);
 
 	public ResponseEntity<String> forgetPassword(ForgetPasswordDto forgetPasswordDtoObject);
 
-	public Response resetPassword(ResetPasswordDto resetPasswordDtoObject, String emailId);
+	public ResponseEntity<String> resetPassword(ResetPasswordDto resetPasswordDtoObject, String emailId);
 
-	public Response userVerification(String emailToken);
+	public ResponseEntity<String> userVerification(String emailToken);
 
 }
