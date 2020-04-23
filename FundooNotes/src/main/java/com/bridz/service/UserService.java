@@ -15,6 +15,6 @@ public interface UserService {
 
 	public ResponseEntity<String> forgetPassword(ForgetPasswordDto forgetPasswordDtoObject);
 
-	public Response resetPassword(ResetPasswordDto resetPasswordDtoObject, String emailId);
+	public Response resetPassword(ResetPasswordDto resetPasswordDtoObject);
 
 }
