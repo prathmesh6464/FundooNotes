@@ -45,11 +45,11 @@ public class UserLoginControl {
 		return userServiceObject.forgetPassword(forgetPasswordDtoObject);
 	}
 
-	@PutMapping("/resetPassword/{token}")
-	public Response resetPassword(@Valid @PathVariable("token") String token,
+	@PutMapping("/resetPassword/{token}/{emailId}")
+	public Response resetPassword(@Valid @PathVariable("token") String token, @PathVariable("emailId") String emailId,
 			@RequestBody ResetPasswordDto resetPasswordDtoObject) {
 
-		return userServiceObject.resetPassword(resetPasswordDtoObject);
+		return userServiceObject.resetPassword(resetPasswordDtoObject, emailId);
 	}
 
 	// @RequestMapping(value = "/addNote", method = { RequestMethod.POST })
