@@ -22,8 +22,6 @@ public class UserLoginControl {
 	@Autowired
 	UserService userServiceObject;
 
-	String emailId;
-
 	@GetMapping("/userLogin")
 	public Response userLogin(@Valid @RequestBody LoginDto userLoginDtoObject) {
 
