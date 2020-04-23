@@ -35,6 +35,12 @@ public class UserServiceImplementation implements UserService {
 	@Autowired
 	EmailService emailServiceObject;
 
+	// Token variable for verification of token
+	String token;
+
+	// User registration dto object used in user verification
+	UserRegistrationDto userRegistrationObject;
+
 	// Constructor
 	public UserServiceImplementation(UserRepository userRepository) {
 
@@ -43,13 +49,23 @@ public class UserServiceImplementation implements UserService {
 	}
 
 	@Override
-	public Response registerUser(UserRegistrationDto userRegistrationDtoObject) {
+	public Response registerUser(UserRegistrationDto userRegisterDtoObject) {
 
-		// Using model mapper mapping dto object with user details entity
-		modelMapperObject.map(userRegistrationDtoObject, userDetailsObject);
-		userRepository.save(userDetailsObject);
+		// User registration object used in user Verification
+		userRegistrationObject = userRegisterDtoObject;
 
-		return new Response("User details saved", 200);
+		// Email related variables
+		String to = "requestchecking@gmail.com";
+		String subject = "Authentication of new registered user";
+		token = jwtTokenObject.generateToken(userRegisterDtoObject);
+
+		// User verification url
+		String userVerificationUrl = "http://localhost:8081/userVerification/" + token;
+
+		// Send email method callled
+		emailServiceObject.send(to, subject, userVerificationUrl);
+
+		return new Response("User authentication started", 200);
 	}
 
 	@Override
@@ -104,6 +120,24 @@ public class UserServiceImplementation implements UserService {
 		}
 
 		return new Response("Confirm password and password not matched", 201);
+	}
+
+	@Override
+	public Response userVerification(String emailToken) {
+
+		// Using model mapper mapping dto object with user details entity
+		modelMapperObject.map(userRegistrationObject, userDetailsObject);
+		
+		//Checking system generated token and email send token is equal or not
+		if (emailToken.equals(token)) {
+
+			// saving user data into database
+			userRepository.save(userDetailsObject);
+
+			return new Response("User varification completed and user registered", 200);
+		}
+
+		return new Response("User varification failed", 201);
 	}
 
 }
