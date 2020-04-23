@@ -20,6 +20,7 @@ public class UserRegistrationDto {
 
 	@NotEmpty
 	@NotNull
+	@Pattern(regexp = "[a-zA-Z0-9]*@[a-zA-Z]+[.][a-zA-Z]+")
 	private String userName;
 
 	@NotEmpty
@@ -34,6 +35,7 @@ public class UserRegistrationDto {
 
 	@NotEmpty
 	@NotNull
+	@Pattern(regexp = "[a-zA-Z0-9]*@[a-zA-Z]+[.][a-zA-Z]+")
 	private String emailId;
 
 	// @return the emailId
