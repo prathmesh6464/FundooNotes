@@ -21,3 +21,4 @@ public interface UserRepository extends JpaRepository<UserDetails, Integer> {
 	@Modifying
 	List<UserDetails> setPassword(String resetPassword, String emailId);
 }
+      
