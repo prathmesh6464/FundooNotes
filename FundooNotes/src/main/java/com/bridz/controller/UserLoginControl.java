@@ -40,14 +40,14 @@ public class UserLoginControl {
 	}
 
 	@PutMapping("/resetPassword/{token}/{emailId}")
-	public ResponseEntity<String> resetPassword(@Valid @PathVariable("token") String token, @PathVariable("emailId") String emailId,
-			@RequestBody ResetPasswordDto resetPasswordDtoObject) {
+	public ResponseEntity<String> resetPassword(@PathVariable("token") String token,
+			@PathVariable("emailId") String emailId, @RequestBody ResetPasswordDto resetPasswordDtoObject) {
 
 		return userServiceObject.resetPassword(resetPasswordDtoObject, emailId);
 	}
 
 	@PostMapping("/userVerification/{token}")
-	public ResponseEntity<String> userVerification(@Valid @PathVariable("token") String emailToken) {
+	public ResponseEntity<String> userVerification(@PathVariable("token") String emailToken) {
 
 		return userServiceObject.userVerification(emailToken);
 	}
