@@ -11,7 +11,6 @@ import com.bridz.dto.LoginDto;
 import com.bridz.dto.UserRegistrationDto;
 import com.bridz.model.UserDetails;
 import com.bridz.repository.UserRepository;
-import com.bridz.response.Response;
 import com.bridz.utility.JwtToken;
 import com.bridz.utility.EmailService;
 
@@ -49,7 +48,7 @@ public class UserServiceImplementation implements UserService {
 	}
 
 	@Override
-	public Response registerUser(UserRegistrationDto userRegisterDtoObject) {
+	public ResponseEntity<String> registerUser(UserRegistrationDto userRegisterDtoObject) {
 
 		// User registration object used in user Verification
 		userRegistrationObject = userRegisterDtoObject;
@@ -65,11 +64,11 @@ public class UserServiceImplementation implements UserService {
 		// Send email method callled
 		emailServiceObject.send(to, subject, userVerificationUrl);
 
-		return new Response("User authentication started", 200);
+		return new ResponseEntity<String>("User authentication started", HttpStatus.OK);
 	}
 
 	@Override
-	public Response userLogin(LoginDto userLoginDtoObject) {
+	public ResponseEntity<String> userLogin(LoginDto userLoginDtoObject) {
 
 		// Using model mapper mapping dto object with user details entity
 		modelMapperObject.map(userLoginDtoObject, userDetailsObject);
@@ -78,10 +77,10 @@ public class UserServiceImplementation implements UserService {
 		if (userRepository.findByUserName(userDetailsObject.getUserName())
 				.equals(userRepository.findByPassword(userDetailsObject.getPassword()))) {
 
-			return new Response("User Loged in successfully", 200);
+			return new ResponseEntity<String>("User Loged in successfully", HttpStatus.OK);
 		}
 
-		return new Response("User name password not matched", 202);
+		return new ResponseEntity<String>("User name password not matched", HttpStatus.NOT_ACCEPTABLE);
 	}
 
 	@Override
@@ -103,7 +102,7 @@ public class UserServiceImplementation implements UserService {
 	}
 
 	@Override
-	public Response resetPassword(ResetPasswordDto resetPasswordDtoObject, String emailId) {
+	public ResponseEntity<String> resetPassword(ResetPasswordDto resetPasswordDtoObject, String emailId) {
 
 		// Using model mapper mapping dto object with user details entity
 		modelMapperObject.map(resetPasswordDtoObject, userDetailsObject);
@@ -115,15 +114,15 @@ public class UserServiceImplementation implements UserService {
 
 				userRepository.setPassword(userDetailsObject.getPassword(), emailId);
 			} catch (Exception e) {
-				return new Response("Successfully password changed", 200);
+				return new ResponseEntity<String>("Successfully password changed", HttpStatus.OK);
 			}
 		}
 
-		return new Response("Confirm password and password not matched", 201);
+		return new ResponseEntity<String>("Confirm password and password not matched", HttpStatus.NOT_ACCEPTABLE);
 	}
 
 	@Override
-	public Response userVerification(String emailToken) {
+	public ResponseEntity<String> userVerification(String emailToken) {
 
 		// Using model mapper mapping dto object with user details entity
 		modelMapperObject.map(userRegistrationObject, userDetailsObject);
@@ -134,10 +133,10 @@ public class UserServiceImplementation implements UserService {
 			// saving user data into database
 			userRepository.save(userDetailsObject);
 
-			return new Response("User varification completed and user registered", 200);
+			return new ResponseEntity<String>("User varification completed and user registered", HttpStatus.OK);
 		}
 
-		return new Response("User varification failed", 201);
+		return new ResponseEntity<String>("User varification failed", HttpStatus.NOT_ACCEPTABLE);
 	}
 
 }
