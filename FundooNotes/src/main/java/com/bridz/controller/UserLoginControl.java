@@ -42,9 +42,6 @@ public class UserLoginControl {
 	@GetMapping("/forgetPassword")
 	public ResponseEntity<String> forgetPassword(@Valid @RequestBody ForgetPasswordDto forgetPasswordDtoObject) {
 
-		// Variable
-		emailId = forgetPasswordDtoObject.getEmailId();
-
 		return userServiceObject.forgetPassword(forgetPasswordDtoObject);
 	}
 
@@ -52,7 +49,7 @@ public class UserLoginControl {
 	public Response resetPassword(@Valid @PathVariable("token") String token,
 			@RequestBody ResetPasswordDto resetPasswordDtoObject) {
 
-		return userServiceObject.resetPassword(resetPasswordDtoObject, emailId);
+		return userServiceObject.resetPassword(resetPasswordDtoObject);
 	}
 
 	// @RequestMapping(value = "/addNote", method = { RequestMethod.POST })
