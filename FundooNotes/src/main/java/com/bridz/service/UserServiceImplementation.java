@@ -56,14 +56,14 @@ public class UserServiceImplementation implements UserService {
 
 		// Email related variables
 		String to = "requestchecking@gmail.com";
-		String subject = "Authentication";
+		String subject = "Authentication of new registered user";
 		token = jwtTokenObject.generateToken(userRegisterDtoObject);
 
-		// Reset url
-		String resetPasswordUrl = "http://localhost:8081/userVerification/" + token;
+		// User verification url
+		String userVerificationUrl = "http://localhost:8081/userVerification/" + token;
 
 		// Send email method callled
-		emailServiceObject.send(to, subject, resetPasswordUrl);
+		emailServiceObject.send(to, subject, userVerificationUrl);
 
 		return new Response("User authentication started", 200);
 	}
@@ -128,6 +128,7 @@ public class UserServiceImplementation implements UserService {
 		// Using model mapper mapping dto object with user details entity
 		modelMapperObject.map(userRegistrationObject, userDetailsObject);
 		
+		//Checking system generated token and email send token is equal or not
 		if (emailToken.equals(token)) {
 
 			// saving user data into database
