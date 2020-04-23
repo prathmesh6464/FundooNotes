@@ -4,7 +4,6 @@ import com.bridz.dto.LoginDto;
 import com.bridz.dto.ResetPasswordDto;
 import com.bridz.dto.ForgetPasswordDto;
 import com.bridz.dto.UserRegistrationDto;
-import com.bridz.response.Response;
 import com.bridz.service.UserService;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,18 +22,15 @@ public class UserLoginControl {
 	UserService userServiceObject;
 
 	@GetMapping("/userLogin")
-	public Response userLogin(@Valid @RequestBody LoginDto userLoginDtoObject) {
+	public ResponseEntity<String> userLogin(@Valid @RequestBody LoginDto userLoginDtoObject) {
 
 		return userServiceObject.userLogin(userLoginDtoObject);
 	}
 
 	@PostMapping("/userRegistration")
-	public Response userRegistration(@Valid @RequestBody UserRegistrationDto userRegistrationDtoObject) {
+	public ResponseEntity<String> userRegistration(@Valid @RequestBody UserRegistrationDto userRegistrationDtoObject) {
 
-		// Storing user data into data base
-		Response response = userServiceObject.registerUser(userRegistrationDtoObject);
-
-		return response;
+		return userServiceObject.registerUser(userRegistrationDtoObject);
 	}
 
 	@GetMapping("/forgetPassword")
@@ -44,14 +40,14 @@ public class UserLoginControl {
 	}
 
 	@PutMapping("/resetPassword/{token}/{emailId}")
-	public Response resetPassword(@Valid @PathVariable("token") String token, @PathVariable("emailId") String emailId,
+	public ResponseEntity<String> resetPassword(@Valid @PathVariable("token") String token, @PathVariable("emailId") String emailId,
 			@RequestBody ResetPasswordDto resetPasswordDtoObject) {
 
 		return userServiceObject.resetPassword(resetPasswordDtoObject, emailId);
 	}
 
 	@PostMapping("/userVerification/{token}")
-	public Response userVerification(@Valid @PathVariable("token") String emailToken) {
+	public ResponseEntity<String> userVerification(@Valid @PathVariable("token") String emailToken) {
 
 		return userServiceObject.userVerification(emailToken);
 	}
