@@ -18,34 +18,28 @@ import com.bridz.utility.EmailService;
 public class UserServiceImplementation implements UserService {
 
 	// Creating Object of model mapper
-	ModelMapper modelMapperObject = new ModelMapper();
+	private ModelMapper modelMapperObject = new ModelMapper();
 
 	// Creating Object of user Details Entity
-	UserDetails userDetailsObject = new UserDetails();
+	private UserDetails userDetailsObject = new UserDetails();
 
 	// User repository object
+	@Autowired
 	private UserRepository userRepository;
 
 	// Jwt token object created
 	@Autowired
-	JwtToken jwtTokenObject;
+	private JwtToken jwtTokenObject;
 
 	// Email service object created
 	@Autowired
-	EmailService emailServiceObject;
+	private EmailService emailServiceObject;
 
 	// Token variable for verification of token
-	String token;
+	private String token;
 
 	// User registration dto object used in user verification
-	UserRegistrationDto userRegistrationObject;
-
-	// Constructor
-	public UserServiceImplementation(UserRepository userRepository) {
-
-		super();
-		this.userRepository = userRepository;
-	}
+	private UserRegistrationDto userRegistrationObject;
 
 	@Override
 	public ResponseEntity<String> registerUser(UserRegistrationDto userRegisterDtoObject) {
@@ -64,7 +58,7 @@ public class UserServiceImplementation implements UserService {
 		// Send email method callled
 		emailServiceObject.send(to, subject, userVerificationUrl);
 
-		return new ResponseEntity<String>("User authentication started", HttpStatus.OK);
+		return new ResponseEntity<String>("Please check your email for authentication", HttpStatus.OK);
 	}
 
 	@Override
@@ -98,7 +92,7 @@ public class UserServiceImplementation implements UserService {
 		// Send email method callled
 		emailServiceObject.send(to, subject, resetPasswordUrl);
 
-		return new ResponseEntity<String>("Check your mail for user authentication", HttpStatus.OK);
+		return new ResponseEntity<String>("Please check your mail for user authentication", HttpStatus.OK);
 	}
 
 	@Override
@@ -126,14 +120,15 @@ public class UserServiceImplementation implements UserService {
 
 		// Using model mapper mapping dto object with user details entity
 		modelMapperObject.map(userRegistrationObject, userDetailsObject);
-		
-		//Checking system generated token and email send token is equal or not
+
+		// Checking system generated token and email send token is equal or not
 		if (emailToken.equals(token)) {
 
 			// saving user data into database
 			userRepository.save(userDetailsObject);
 
-			return new ResponseEntity<String>("User varification completed and user registered successfully", HttpStatus.OK);
+			return new ResponseEntity<String>("User varification completed and user registered successfully",
+					HttpStatus.OK);
 		}
 
 		return new ResponseEntity<String>("User varification failed", HttpStatus.NOT_ACCEPTABLE);
