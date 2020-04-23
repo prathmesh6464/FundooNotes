@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import com.bridz.dto.ResetPasswordDto;
 import com.bridz.dto.ForgetPasswordDto;
 import com.bridz.dto.LoginDto;
@@ -36,6 +35,8 @@ public class UserServiceImplementation implements UserService {
 	@Autowired
 	EmailService emailServiceObject;
 
+	String emailId;
+
 	// Constructor
 	public UserServiceImplementation(UserRepository userRepository) {
 
@@ -43,7 +44,6 @@ public class UserServiceImplementation implements UserService {
 		this.userRepository = userRepository;
 	}
 
-	@Transactional
 	@Override
 	public Response registerUser(UserRegistrationDto userRegistrationDtoObject) {
 
@@ -54,7 +54,6 @@ public class UserServiceImplementation implements UserService {
 		return new Response("User details saved", 200);
 	}
 
-	@Transactional
 	@Override
 	public Response userLogin(LoginDto userLoginDtoObject) {
 
@@ -71,27 +70,26 @@ public class UserServiceImplementation implements UserService {
 		return new Response("User name password not matched", 202);
 	}
 
-	@Transactional
 	@Override
 	public ResponseEntity<String> forgetPassword(ForgetPasswordDto forgetPasswordDtoObject) {
 
-		//Email related variables
+		// Email related variables
 		String to = "requestchecking@gmail.com";
 		String subject = "Authentication";
 		String token = jwtTokenObject.generateToken(forgetPasswordDtoObject);
-		
-		//Reset url
+		emailId = forgetPasswordDtoObject.getEmailId();
+
+		// Reset url
 		String resetPasswordUrl = "http://localhost:8081/resetPassword/" + token;
 
-		//Send email method callled
+		// Send email method callled
 		emailServiceObject.send(to, subject, resetPasswordUrl);
-		
+
 		return new ResponseEntity<String>("User authenticated", HttpStatus.OK);
 	}
 
-	@Transactional
 	@Override
-	public Response resetPassword(ResetPasswordDto resetPasswordDtoObject, String emailId) {
+	public Response resetPassword(ResetPasswordDto resetPasswordDtoObject) {
 
 		// Using model mapper mapping dto object with user details entity
 		modelMapperObject.map(resetPasswordDtoObject, userDetailsObject);
