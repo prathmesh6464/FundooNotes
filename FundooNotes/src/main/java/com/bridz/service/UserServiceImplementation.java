@@ -54,7 +54,7 @@ public class UserServiceImplementation implements UserService {
 		userRegistrationObject = userRegisterDtoObject;
 
 		// Email related variables
-		String to = "requestchecking@gmail.com";
+		String to = userRegisterDtoObject.getEmailId();
 		String subject = "Authentication of new registered user";
 		token = jwtTokenObject.generateToken(userRegisterDtoObject);
 
@@ -87,7 +87,7 @@ public class UserServiceImplementation implements UserService {
 	public ResponseEntity<String> forgetPassword(ForgetPasswordDto forgetPasswordDtoObject) {
 
 		// Email related variables
-		String to = "requestchecking@gmail.com";
+		String to = forgetPasswordDtoObject.getEmailId();
 		String subject = "Authentication";
 		String token = jwtTokenObject.generateToken(forgetPasswordDtoObject);
 		String emailId = forgetPasswordDtoObject.getEmailId();
@@ -98,7 +98,7 @@ public class UserServiceImplementation implements UserService {
 		// Send email method callled
 		emailServiceObject.send(to, subject, resetPasswordUrl);
 
-		return new ResponseEntity<String>("User authenticated", HttpStatus.OK);
+		return new ResponseEntity<String>("Check your mail for user authentication", HttpStatus.OK);
 	}
 
 	@Override
@@ -133,7 +133,7 @@ public class UserServiceImplementation implements UserService {
 			// saving user data into database
 			userRepository.save(userDetailsObject);
 
-			return new ResponseEntity<String>("User varification completed and user registered", HttpStatus.OK);
+			return new ResponseEntity<String>("User varification completed and user registered successfully", HttpStatus.OK);
 		}
 
 		return new ResponseEntity<String>("User varification failed", HttpStatus.NOT_ACCEPTABLE);
