@@ -2,6 +2,7 @@ package com.bridz.dto;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 public class LoginDto {
@@ -9,6 +10,7 @@ public class LoginDto {
 	// Variables
 	@NotEmpty
 	@NotNull
+	@Pattern(regexp = "[a-zA-Z0-9]*@[a-zA-Z]+[.][a-zA-Z]+")
 	private String userName;
 
 	@NotEmpty
