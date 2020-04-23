@@ -50,6 +50,12 @@ public class UserLoginControl {
 		return userServiceObject.resetPassword(resetPasswordDtoObject, emailId);
 	}
 
+	@PostMapping("/userVarification/{token}")
+	public Response userVarification(@Valid @PathVariable("token") String emailToken) {
+
+		return userServiceObject.userVerification(emailToken);
+	}
+
 	// @RequestMapping(value = "/addNote", method = { RequestMethod.POST })
 	// public String addUserNote(NotesData userNote) {
 	//
