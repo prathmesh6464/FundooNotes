@@ -4,10 +4,11 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-
+import org.springframework.stereotype.Repository;
 import com.bridz.model.UserDetails;
 
 //Interface
+@Repository
 public interface UserRepository extends JpaRepository<UserDetails, Integer> {
 
 	// Method for finding data by using user name and password
@@ -21,4 +22,3 @@ public interface UserRepository extends JpaRepository<UserDetails, Integer> {
 	@Modifying
 	List<UserDetails> setPassword(String resetPassword, String emailId);
 }
-      
