@@ -35,8 +35,6 @@ public class UserServiceImplementation implements UserService {
 	@Autowired
 	EmailService emailServiceObject;
 
-	String emailId;
-
 	// Constructor
 	public UserServiceImplementation(UserRepository userRepository) {
 
@@ -77,10 +75,10 @@ public class UserServiceImplementation implements UserService {
 		String to = "requestchecking@gmail.com";
 		String subject = "Authentication";
 		String token = jwtTokenObject.generateToken(forgetPasswordDtoObject);
-		emailId = forgetPasswordDtoObject.getEmailId();
+		String emailId = forgetPasswordDtoObject.getEmailId();
 
 		// Reset url
-		String resetPasswordUrl = "http://localhost:8081/resetPassword/" + token;
+		String resetPasswordUrl = "http://localhost:8081/resetPassword/" + token + "/" + emailId;
 
 		// Send email method callled
 		emailServiceObject.send(to, subject, resetPasswordUrl);
@@ -89,7 +87,7 @@ public class UserServiceImplementation implements UserService {
 	}
 
 	@Override
-	public Response resetPassword(ResetPasswordDto resetPasswordDtoObject) {
+	public Response resetPassword(ResetPasswordDto resetPasswordDtoObject, String emailId) {
 
 		// Using model mapper mapping dto object with user details entity
 		modelMapperObject.map(resetPasswordDtoObject, userDetailsObject);
