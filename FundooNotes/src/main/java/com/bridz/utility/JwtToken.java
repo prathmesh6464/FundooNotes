@@ -3,9 +3,11 @@ package com.bridz.utility;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 import org.springframework.stereotype.Service;
 import com.bridz.dto.ForgetPasswordDto;
 import com.bridz.dto.UserRegistrationDto;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
