@@ -4,6 +4,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import com.bridz.model.NotesData;
 
 public class UserRegistrationDto {
 
@@ -37,6 +38,8 @@ public class UserRegistrationDto {
 	@NotNull
 	@Pattern(regexp = "[a-zA-Z0-9]*@[a-zA-Z]+[.][a-zA-Z]+")
 	private String emailId;
+
+	private NotesData notesData;
 
 	// @return the emailId
 	public String getEmailId() {
@@ -125,5 +128,15 @@ public class UserRegistrationDto {
 	public void setMobileNumber(String mobileNumber) {
 
 		this.mobileNumber = mobileNumber;
+	}
+
+	// @return the notesData
+	public NotesData getNotesData() {
+		return notesData;
+	}
+
+	// @param notesData the notesData to set
+	public void setNotesData(NotesData notesData) {
+		this.notesData = notesData;
 	}
 }
