@@ -21,4 +21,5 @@ public interface UserRepository extends JpaRepository<UserDetails, Integer> {
 	@Query(value = "UPDATE user_details SET password = ? WHERE email_id = ?", nativeQuery = true)
 	@Modifying
 	List<UserDetails> setPassword(String resetPassword, String emailId);
+
 }
