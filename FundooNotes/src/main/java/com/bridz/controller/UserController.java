@@ -8,6 +8,7 @@ import com.bridz.service.UserService;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class UserLoginControl {
+public class UserController {
 
 	@Autowired
 	UserService userServiceObject;
@@ -51,20 +52,4 @@ public class UserLoginControl {
 
 		return userServiceObject.userVerification(emailToken);
 	}
-
-	// @RequestMapping(value = "/addNote", method = { RequestMethod.POST })
-	// public String addUserNote(NotesData userNote) {
-	//
-	// // Storing user note data into data base
-	// notesRepository.save(userNote);
-	// return "Note added successfully";
-	// }
-	//
-	// @RequestMapping(value = "/deleteNote", method = { RequestMethod.DELETE })
-	// public String deleteUserNote(NotesData userNote) {
-	//
-	// // Storing user note data into data base
-	// // notesRepository.delete();
-	// return "Note deleted successfully";
-	// }
 }
