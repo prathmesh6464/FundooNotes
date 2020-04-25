@@ -38,14 +38,14 @@ public class NotesController {
 	public ResponseEntity<String> updateUserNote(@PathVariable("title") String title,
 			@RequestBody NotesDto notesDtoObject) {
 
-		// Storing user note data into data base
+		// Updating user note data into data base
 		return notesServiceObject.updateNote(notesDtoObject, title);
 	}
 
 	@GetMapping("/showNotes")
 	public List<NotesData> showeUserNotes() {
 
-		// Deleting user note from data base
+		// Showing user note data from data base
 		return notesServiceObject.showNotes();
 	}
 
