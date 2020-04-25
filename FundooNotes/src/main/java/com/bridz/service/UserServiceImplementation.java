@@ -1,5 +1,8 @@
 package com.bridz.service;
 
+import javax.management.JMException;
+
+import org.hibernate.cfg.Environment;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +12,9 @@ import com.bridz.dto.ResetPasswordDto;
 import com.bridz.dto.ForgetPasswordDto;
 import com.bridz.dto.LoginDto;
 import com.bridz.dto.UserRegistrationDto;
+import com.bridz.exception.JmsException;
+import com.bridz.exception.JwtTokenException;
+import com.bridz.exception.UserException;
 import com.bridz.model.UserDetails;
 import com.bridz.repository.UserRepository;
 import com.bridz.utility.JwtToken;
@@ -26,6 +32,9 @@ public class UserServiceImplementation implements UserService {
 	// User repository object
 	@Autowired
 	private UserRepository userRepository;
+	
+	//Environment object
+	private Environment environmentObject;
 
 	// Jwt token object created
 	@Autowired
@@ -56,7 +65,12 @@ public class UserServiceImplementation implements UserService {
 		String userVerificationUrl = "http://localhost:8081/userVerification/" + token;
 
 		// Send email method callled
-		emailServiceObject.send(to, subject, userVerificationUrl);
+		try {
+			emailServiceObject.send(to, subject, userVerificationUrl);
+		} catch (JMException e) {
+
+			throw new JmsException(201, "Error in sending email in user service implementation class");
+		}
 
 		return new ResponseEntity<String>("Please check your email for authentication", HttpStatus.OK);
 	}
@@ -74,7 +88,7 @@ public class UserServiceImplementation implements UserService {
 			return new ResponseEntity<String>("User Loged in successfully", HttpStatus.OK);
 		}
 
-		return new ResponseEntity<String>("User name password not matched", HttpStatus.NOT_ACCEPTABLE);
+		throw new UserException(201, "User name password not matched");
 	}
 
 	@Override
@@ -89,8 +103,12 @@ public class UserServiceImplementation implements UserService {
 		// Reset url
 		String resetPasswordUrl = "http://localhost:8081/resetPassword/" + token + "/" + emailId;
 
-		// Send email method callled
-		emailServiceObject.send(to, subject, resetPasswordUrl);
+		try {
+			// Send email method callled
+			emailServiceObject.send(to, subject, resetPasswordUrl);
+		} catch (JMException e) {
+			throw new JmsException(201, "Error in seding email in user service implementation class");
+		}
 
 		return new ResponseEntity<String>("Please check your mail for user authentication", HttpStatus.OK);
 	}
@@ -112,7 +130,7 @@ public class UserServiceImplementation implements UserService {
 			}
 		}
 
-		return new ResponseEntity<String>("Confirm password and password not matched", HttpStatus.NOT_ACCEPTABLE);
+		throw new UserException(201, "Confirm password and password not matched");
 	}
 
 	@Override
@@ -131,7 +149,7 @@ public class UserServiceImplementation implements UserService {
 					HttpStatus.OK);
 		}
 
-		return new ResponseEntity<String>("User varification failed", HttpStatus.NOT_ACCEPTABLE);
+		throw new JwtTokenException(201, "Token not matched User varification failed");
 	}
 
 }
