@@ -10,22 +10,35 @@ public class NotesDto {
 
 	@NotEmpty
 	@NotNull
+	@Size(min = 3)
+	private String title;
+
+	@NotEmpty
+	@NotNull
 	@Size(min = 5)
-	private String message;
+	private String description;
 
 	@ManyToOne
 	private UserDetails userDetails;
 
-	// @return the message
-	public String getMessage() {
-
-		return message;
+	// @return the title
+	public String getTitle() {
+		return title;
 	}
 
-	// @param message the message to set
-	public void setMessage(String message) {
+	// @param title the title to set
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-		this.message = message;
+	// @return the description
+	public String getDescription() {
+		return description;
+	}
+
+	// @param description the description to set
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	// @return the userDetails
