@@ -2,10 +2,13 @@ package com.bridz.utility;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import javax.management.JMException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+
+import com.bridz.exception.JmsException;
 
 @Service
 public class EmailService {
@@ -13,7 +16,7 @@ public class EmailService {
 	@Autowired
 	private JavaMailSender javaMailSender;
 
-	public void send(String to, String subject, String body) {
+	public void send(String to, String subject, String body) throws JMException {
 
 		MimeMessage message = javaMailSender.createMimeMessage();
 		MimeMessageHelper helper;
@@ -26,7 +29,7 @@ public class EmailService {
 			helper.setText(body, true);
 		} catch (MessagingException e) {
 
-			e.printStackTrace();
+			throw new JmsException(201, "Error in mime message in email service class");
 		}
 
 		javaMailSender.send(message);
