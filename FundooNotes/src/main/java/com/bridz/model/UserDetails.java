@@ -1,9 +1,13 @@
 package com.bridz.model;
 
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import org.springframework.stereotype.Component;
 
 @Entity
 public class UserDetails {
@@ -19,6 +23,9 @@ public class UserDetails {
 	private String mobileNumber;
 	private String emailId;
 
+	@OneToMany
+	public List<NotesData> notesData;
+
 	// Default constructor
 	public UserDetails() {
 
@@ -27,7 +34,7 @@ public class UserDetails {
 
 	// Parameterized constructor
 	public UserDetails(String firstName, String lastName, String userName, String password, String mobileNumber,
-			String emailId) {
+			String emailId, List<NotesData> notesData) {
 
 		super();
 		this.firstName = firstName;
@@ -36,6 +43,7 @@ public class UserDetails {
 		this.password = password;
 		this.mobileNumber = mobileNumber;
 		this.emailId = emailId;
+		this.notesData = notesData;
 	}
 
 	// @return the firstName
@@ -106,6 +114,16 @@ public class UserDetails {
 	// @param emailId the emailId to set
 	public void setEmailId(String emailId) {
 		this.emailId = emailId;
+	}
+
+	// @return the notesData
+	public List<NotesData> getNotesData() {
+		return notesData;
+	}
+
+	// @param notesData the notesData to set
+	public void setNotesData(List<NotesData> notesData) {
+		this.notesData = notesData;
 	}
 
 }
