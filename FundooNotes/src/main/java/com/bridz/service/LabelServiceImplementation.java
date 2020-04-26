@@ -10,7 +10,7 @@ import com.bridz.dto.LabelDto;
 import com.bridz.model.LabelData;
 import com.bridz.repository.LabelRepository;
 
-@Service
+@Service 
 public class LabelServiceImplementation implements LabelService {
 
 	LabelData labelDataObject = new LabelData();
