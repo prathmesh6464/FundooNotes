@@ -38,9 +38,9 @@ public class NotesServiceImplementation implements NotesService {
 
 	@Override
 	@Transactional
-	public ResponseEntity<String> deleteNote(String title) {
+	public ResponseEntity<String> deleteNote(Long id) {
 
-		notesRepositoryObject.deleteByTitle(title);
+		notesRepositoryObject.deleteById(id);
 		return new ResponseEntity<String>("Deleted note successfully", HttpStatus.OK);
 	}
 
@@ -51,10 +51,10 @@ public class NotesServiceImplementation implements NotesService {
 	}
 
 	@Override
-	public ResponseEntity<String> updateNote(NotesDto notesDtoObject, String title) {
+	public ResponseEntity<String> updateNote(NotesDto notesDtoObject, Long id) {
 		try {
 			notesRepositoryObject.setTitleDescription(notesDtoObject.getTitle(), notesDtoObject.getDescription(),
-					title);
+					id);
 		} catch (Exception e) {
 			return new ResponseEntity<String>("Updated note successfully", HttpStatus.OK);
 		}
