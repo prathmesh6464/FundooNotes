@@ -11,8 +11,8 @@ public interface LabelService {
 
 	ResponseEntity<String> editeLabel(LabelDto labelDtoObject, long id);
 
-	List<LabelData> showLabel(LabelDto labelDtoObject);
-
 	ResponseEntity<String> deleteLabel(long id);
+
+	List<LabelData> showLabel();
 
 }
