@@ -10,7 +10,7 @@ public interface NotesRepository extends JpaRepository<NotesData, Long> {
  
 	void deleteByTitle(String title);
 
-	@Query(value = "UPDATE notes_data SET title = ?, description = ? where title = ?", nativeQuery = true)
-	void setTitleDescription(String editeTitle, String editeDescription, String title);
+	@Query(value = "UPDATE notes_data SET title = ?, description = ? where id = ?", nativeQuery = true)
+	void setTitleDescription(String editeTitle, String editeDescription, Long id);
 
 }
