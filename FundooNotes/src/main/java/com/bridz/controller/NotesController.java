@@ -27,19 +27,19 @@ public class NotesController {
 		return notesServiceObject.saveNote(notesDtoObject);
 	}
 
-	@DeleteMapping("/deleteNote/{title}")
-	public ResponseEntity<String> deleteUserNote(@PathVariable("title") String title) {
+	@DeleteMapping("/deleteNote/{id}")
+	public ResponseEntity<String> deleteUserNote(@PathVariable("id") Long id) {
 
 		// Deleting user note from data base
-		return notesServiceObject.deleteNote(title);
+		return notesServiceObject.deleteNote(id);
 	}
 
-	@PutMapping("/updateNote/{title}")
-	public ResponseEntity<String> updateUserNote(@PathVariable("title") String title,
+	@PutMapping("/updateNote/{id}")
+	public ResponseEntity<String> updateUserNote(@PathVariable("id") long id,
 			@RequestBody NotesDto notesDtoObject) {
 
 		// Updating user note data into data base
-		return notesServiceObject.updateNote(notesDtoObject, title);
+		return notesServiceObject.updateNote(notesDtoObject, id);
 	}
 
 	@GetMapping("/showNotes")
