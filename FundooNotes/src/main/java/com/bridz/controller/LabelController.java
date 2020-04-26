@@ -1,7 +1,6 @@
 package com.bridz.controller;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.bridz.dto.LabelDto;
 import com.bridz.model.LabelData;
 import com.bridz.service.LabelService;
@@ -41,9 +39,9 @@ public class LabelController {
 	}
 
 	@GetMapping("/showLabel")
-	List<LabelData> showLabel(@RequestBody LabelDto labelDtoObject) {
+	List<LabelData> showLabel() {
 
-		return labelServiceObject.showLabel(labelDtoObject);
+		return labelServiceObject.showLabel();
 	}
 
 }
