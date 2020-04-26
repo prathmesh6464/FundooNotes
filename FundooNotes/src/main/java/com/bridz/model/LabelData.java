@@ -11,7 +11,7 @@ public class LabelData {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	private String LabelName;
+	private String labelName;
 	private long userId;
 
 	// Constructor
@@ -22,18 +22,18 @@ public class LabelData {
 	// Constructor @param id @param labelName @param userId
 	public LabelData(String labelName, long userId) {
 		super();
-		LabelName = labelName;
+		this.labelName = labelName;
 		this.userId = userId;
 	}
 
 	// @return the labelName
 	public String getLabelName() {
-		return LabelName;
+		return labelName;
 	}
 
 	// @param labelName the labelName to set
 	public void setLabelName(String labelName) {
-		LabelName = labelName;
+		this.labelName = labelName;
 	}
 
 	// @return the userId
