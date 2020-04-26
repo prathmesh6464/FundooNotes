@@ -11,28 +11,39 @@ public class LabelData {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	
-	private String LabelMessage;
+	private String labelName;
+	private long userId;
 
 	// Constructor
 	public LabelData() {
 		super();
 	}
 
-	// Constructor @param id @param labelMessage
-	public LabelData(String labelMessage) {
+	// Constructor @param id @param labelName @param userId
+	public LabelData(String labelName, long userId) {
 		super();
-		LabelMessage = labelMessage;
+		this.labelName = labelName;
+		this.userId = userId;
 	}
 
-	// @return the labelMessage
-	public String getLabelMessage() {
-		return LabelMessage;
+	// @return the labelName
+	public String getLabelName() {
+		return labelName;
 	}
 
-	// @param labelMessage the labelMessage to set
-	public void setLabelMessage(String labelMessage) {
-		LabelMessage = labelMessage;
+	// @param labelName the labelName to set
+	public void setLabelName(String labelName) {
+		this.labelName = labelName;
+	}
+
+	// @return the userId
+	public long getUserId() {
+		return userId;
+	}
+
+	// @param userId the userId to set
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 
 }
