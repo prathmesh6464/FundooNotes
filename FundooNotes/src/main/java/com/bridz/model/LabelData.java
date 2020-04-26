@@ -16,7 +16,7 @@ public class LabelData {
 
 	// Constructor
 	public LabelData() {
-		super();
+		super(); 
 	}
 
 	// Constructor @param labelName @param userId
