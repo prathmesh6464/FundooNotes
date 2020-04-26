@@ -10,7 +10,7 @@ import com.bridz.dto.LabelDto;
 import com.bridz.model.LabelData;
 import com.bridz.repository.LabelRepository;
 
-@Service 
+@Service
 public class LabelServiceImplementation implements LabelService {
 
 	LabelData labelDataObject = new LabelData();
@@ -33,9 +33,9 @@ public class LabelServiceImplementation implements LabelService {
 	public ResponseEntity<String> editeLabel(LabelDto labelDtoObject, long id) {
 
 		modelMapperObject.map(labelDtoObject, labelDataObject);
- 
+
 		try {
-			labelRepositoryObject.setById(labelDtoObject.getLableMessage(), id);
+			labelRepositoryObject.setById(labelDtoObject.getLableName(), id);
 		} catch (Exception exception) {
 			return new ResponseEntity<String>("Edited label", HttpStatus.OK);
 		}
@@ -47,11 +47,12 @@ public class LabelServiceImplementation implements LabelService {
 	public ResponseEntity<String> deleteLabel(long id) {
 
 		labelRepositoryObject.deleteById(id);
+
 		return new ResponseEntity<String>("Deleted label", HttpStatus.OK);
 	}
 
 	@Override
-	public List<LabelData> showLabel(LabelDto labelDtoObject) {
+	public List<LabelData> showLabel() {
 
 		return labelRepositoryObject.findAll();
 	}
