@@ -19,7 +19,7 @@ public class LabelData {
 		super();
 	}
 
-	// Constructor @param id @param labelName @param userId
+	// Constructor @param labelName @param userId
 	public LabelData(String labelName, long userId) {
 		super();
 		this.labelName = labelName;
