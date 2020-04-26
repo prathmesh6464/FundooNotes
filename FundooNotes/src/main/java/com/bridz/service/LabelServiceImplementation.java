@@ -52,7 +52,7 @@ public class LabelServiceImplementation implements LabelService {
 
 	@Override
 	public List<LabelData> showLabel(LabelDto labelDtoObject) {
-		// TODO Auto-generated method stub
+
 		return labelRepositoryObject.findAll();
 	}
 
