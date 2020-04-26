@@ -2,26 +2,38 @@ package com.bridz.dto;
 
 public class LabelDto {
 
-	private String lableMessage;
+	private String lableName;
+	private long userId;
 
 	// Constructor
 	public LabelDto() {
 		super();
 	}
 
-	// Constructor @param lableMessage
-	public LabelDto(String lableMessage) {
+	// Constructor @param lableName @param userId
+	public LabelDto(String lableName, long userId) {
 		super();
-		this.lableMessage = lableMessage;
+		this.lableName = lableName;
+		this.setUserId(userId);
 	}
 
-	// @return the lableMessage
-	public String getLableMessage() {
-		return lableMessage;
+	// @return the lableName
+	public String getLableName() {
+		return lableName;
 	}
 
-	// @param lableMessage the lableMessage to set
-	public void setLableMessage(String lableMessage) {
-		this.lableMessage = lableMessage;
+	//@param lableName the lableName to set	 
+	public void setLableName(String lableName) {
+		this.lableName = lableName;
+	}
+
+	// return the userId	 
+	public long getUserId() {
+		return userId;
+	}
+
+	//@param userId the userId to set
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 }
