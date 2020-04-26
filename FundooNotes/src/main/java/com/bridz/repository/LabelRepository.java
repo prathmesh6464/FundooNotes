@@ -11,7 +11,7 @@ public interface LabelRepository extends JpaRepository<LabelData, Long> {
 
 	void save(LabelDto labelDtoObject);
 
-	@Query(value="UPDATE label_data SET label_message = ? where id = ?", nativeQuery = true)
-	void setById(String editedlabelMessage, long id);
+	@Query(value="UPDATE label_data SET label_name = ? where id = ?", nativeQuery = true)
+	void setById(String editedlabelName, long id);
 
 }
