@@ -1,7 +1,6 @@
 package com.bridz.service;
 
 import java.util.List;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,7 +33,7 @@ public class LabelServiceImplementation implements LabelService {
 	public ResponseEntity<String> editeLabel(LabelDto labelDtoObject, long id) {
 
 		modelMapperObject.map(labelDtoObject, labelDataObject);
-
+ 
 		try {
 			labelRepositoryObject.setById(labelDtoObject.getLableMessage(), id);
 		} catch (Exception exception) {
@@ -46,14 +45,14 @@ public class LabelServiceImplementation implements LabelService {
 
 	@Override
 	public ResponseEntity<String> deleteLabel(long id) {
-	
+
 		labelRepositoryObject.deleteById(id);
 		return new ResponseEntity<String>("Deleted label", HttpStatus.OK);
 	}
 
 	@Override
 	public List<LabelData> showLabel(LabelDto labelDtoObject) {
-		// TODO Auto-generated method stub
+
 		return labelRepositoryObject.findAll();
 	}
 
