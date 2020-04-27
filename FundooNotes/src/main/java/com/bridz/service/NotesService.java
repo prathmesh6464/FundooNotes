@@ -1,10 +1,7 @@
 package com.bridz.service;
 
-import java.util.List;
-
 import org.springframework.http.ResponseEntity;
 import com.bridz.dto.NotesDto;
-import com.bridz.model.NotesData;
 
 public interface NotesService {
 
@@ -12,8 +9,22 @@ public interface NotesService {
 
 	public ResponseEntity<String> deleteNote(Long id);
 
-	public List<NotesData> showNotes();
+	public ResponseEntity<Object> showNotes();
 
 	public ResponseEntity<String> updateNote(NotesDto notesDtoObject, Long id);
+
+	public ResponseEntity<String> trashUntrash(long id);
+
+	public ResponseEntity<String> archiveUnArchive(long id);
+
+	public ResponseEntity<String> pinedUnPined(long id);
+
+	public ResponseEntity<Object> sortByTitle();
+
+	public ResponseEntity<Object> sortByDescription();
+
+	public ResponseEntity<Object> findByTitle(String title);
+
+	public ResponseEntity<Object> findByDescription(String description);
 
 }
