@@ -1,5 +1,6 @@
 package com.bridz.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ public class LabelServiceImplementation implements LabelService {
 	LabelData labelDataObject = new LabelData();
 
 	ModelMapper modelMapperObject = new ModelMapper();
+
+	List<LabelDto> listOfLabelDtoObject = new ArrayList<>();
 
 	@Autowired
 	LabelRepository labelRepositoryObject;
@@ -35,7 +38,7 @@ public class LabelServiceImplementation implements LabelService {
 		modelMapperObject.map(labelDtoObject, labelDataObject);
 
 		try {
-			labelRepositoryObject.setById(labelDtoObject.getLableName(), id);
+			labelRepositoryObject.setById(labelDtoObject.getLabelName(), id);
 		} catch (Exception exception) {
 			return new ResponseEntity<String>("Edited label", HttpStatus.OK);
 		}
@@ -52,9 +55,13 @@ public class LabelServiceImplementation implements LabelService {
 	}
 
 	@Override
-	public List<LabelData> showLabel() {
+	public ResponseEntity<Object> showLabel() {
 
-		return labelRepositoryObject.findAll();
+		labelRepositoryObject.findAll().stream().forEach(labelEntityObject -> {
+
+			listOfLabelDtoObject.add(modelMapperObject.map(labelEntityObject, LabelDto.class));
+		});
+
+		return new ResponseEntity<Object>(listOfLabelDtoObject, HttpStatus.OK);
 	}
-
 }
