@@ -2,7 +2,7 @@ package com.bridz.dto;
 
 public class LabelDto {
 
-	private String lableName;
+	private String labelName;
 	private long userId;
 
 	// Constructor
@@ -10,30 +10,24 @@ public class LabelDto {
 		super();
 	}
 
-	// Constructor @param lableName @param userId
-	public LabelDto(String lableName, long userId) {
-		super();
-		this.lableName = lableName;
-		this.setUserId(userId);
+	// @return the labelName
+	public String getLabelName() {
+		return labelName;
 	}
 
-	// @return the lableName
-	public String getLableName() {
-		return lableName;
+	// @param labelName the labelName to set
+	public void setLabelName(String labelName) {
+		this.labelName = labelName;
 	}
 
-	//@param lableName the lableName to set	 
-	public void setLableName(String lableName) {
-		this.lableName = lableName;
-	}
-
-	// return the userId	 
+	// @return the userId
 	public long getUserId() {
 		return userId;
 	}
 
-	//@param userId the userId to set
+	// @param userId the userId to set
 	public void setUserId(long userId) {
 		this.userId = userId;
 	}
+
 }
