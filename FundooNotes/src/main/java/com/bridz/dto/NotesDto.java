@@ -1,10 +1,8 @@
 package com.bridz.dto;
 
-import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import com.bridz.model.UserDetails;
 
 public class NotesDto {
 
@@ -18,8 +16,11 @@ public class NotesDto {
 	@Size(min = 5)
 	private String description;
 
-	@ManyToOne
-	private UserDetails userDetails;
+	private boolean isTrash;
+
+	private boolean isArchive;
+
+	private boolean isPined;
 
 	// @return the title
 	public String getTitle() {
@@ -41,16 +42,34 @@ public class NotesDto {
 		this.description = description;
 	}
 
-	// @return the userDetails
-	public UserDetails getUserDetails() {
-
-		return userDetails;
+	// @return the isTrash
+	public boolean isTrash() {
+		return isTrash;
 	}
 
-	// @param userDetails the userDetails to set
-	public void setUserDetails(UserDetails userDetails) {
+	// @param isTrash the isTrash to set
+	public void setTrash(boolean isTrash) {
+		this.isTrash = isTrash;
+	}
 
-		this.userDetails = userDetails;
+	// @return the isArchive
+	public boolean isArchive() {
+		return isArchive;
+	}
+
+	// @param isArchive the isArchive to set
+	public void setArchive(boolean isArchive) {
+		this.isArchive = isArchive;
+	}
+
+	// @return the isPined
+	public boolean isPined() {
+		return isPined;
+	}
+
+	// @param isPined the isPined to set
+	public void setPined(boolean isPined) {
+		this.isPined = isPined;
 	}
 
 }
