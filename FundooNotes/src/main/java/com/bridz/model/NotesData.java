@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 @Entity
 public class NotesData {
@@ -14,9 +13,9 @@ public class NotesData {
 	private long id;
 	private String title;
 	private String description;
-
-	@ManyToOne
-	public UserDetails userDetails;
+	private boolean isTrash;
+	private boolean isArchive;
+	private boolean isPined;
 
 	// Default constructor
 	public NotesData() {
@@ -24,34 +23,13 @@ public class NotesData {
 	}
 
 	// Constructor
-	public NotesData(String title, String description, UserDetails userDetails) {
-
+	public NotesData(String title, String description, boolean isTrash, boolean isArchive, boolean isPined) {
 		super();
 		this.title = title;
 		this.description = description;
-		this.userDetails = userDetails;
-	}
-
-	// @return the noteId
-	public long getNoteId() {
-
-		return id;
-	}
-
-	// @param noteId the noteId to set
-	public void setNoteId(long noteId) {
-
-		this.id = noteId;
-	}
-
-	// @return the userDetails
-	public UserDetails getUserDetails() {
-		return userDetails;
-	}
-
-	// @param userDetails the userDetails to set
-	public void setUserDetails(UserDetails userDetails) {
-		this.userDetails = userDetails;
+		this.isTrash = isTrash;
+		this.isArchive = isArchive;
+		this.isPined = isPined;
 	}
 
 	// @return the description
@@ -72,5 +50,35 @@ public class NotesData {
 	// @param title the title to set
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	// @return the isTrash
+	public boolean isTrash() {
+		return isTrash;
+	}
+
+	// @param isTrash the isTrash to set
+	public void setTrash(boolean isTrash) {
+		this.isTrash = isTrash;
+	}
+
+	// @return the isArchive
+	public boolean isArchive() {
+		return isArchive;
+	}
+
+	// @param isArchive the isArchive to set
+	public void setArchive(boolean isArchive) {
+		this.isArchive = isArchive;
+	}
+
+	// @return the isPined
+	public boolean isPined() {
+		return isPined;
+	}
+
+	// @param isPined the isPined to set
+	public void setPined(boolean isPined) {
+		this.isPined = isPined;
 	}
 }
