@@ -1,9 +1,7 @@
 package com.bridz.service;
 
-import java.util.List;
 import org.springframework.http.ResponseEntity;
 import com.bridz.dto.LabelDto;
-import com.bridz.model.LabelData;
 
 public interface LabelService {
 
@@ -13,6 +11,6 @@ public interface LabelService {
 
 	ResponseEntity<String> deleteLabel(long id);
 
-	List<LabelData> showLabel();
+	ResponseEntity<Object> showLabel();
 
 }
