@@ -1,5 +1,6 @@
 package com.bridz.repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -35,5 +36,11 @@ public interface NotesRepository extends JpaRepository<NotesData, Long> {
 
 	@Query(value = "SELECT * FROM notes_data WHERE description = ?", nativeQuery = true)
 	List<NotesData> findByDescription(String description);
+
+	@Query(value = "UPDATE notes_data SET reminder_date_time = ? where id = ?", nativeQuery = true)
+	void setReminder(String reminderDateTime, long id);
+
+	@Query(value = "UPDATE notes_data SET reminder_date_time = null where id = ?", nativeQuery = true)
+	void unsetReminder(long id);
 
 }
