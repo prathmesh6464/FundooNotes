@@ -17,10 +17,9 @@ public class NotesDto {
 	private String description;
 
 	private boolean isTrash;
-
 	private boolean isArchive;
-
 	private boolean isPined;
+	private String reminderDateTime;
 
 	// @return the title
 	public String getTitle() {
@@ -70,6 +69,16 @@ public class NotesDto {
 	// @param isPined the isPined to set
 	public void setPined(boolean isPined) {
 		this.isPined = isPined;
+	}
+
+	// @return the reminderDateTime
+	public String getReminderDateTime() {
+		return reminderDateTime;
+	}
+
+	// @param reminderDateTime the reminderDateTime to set
+	public void setReminderDateTime(String reminderDateTime) {
+		this.reminderDateTime = reminderDateTime;
 	}
 
 }
