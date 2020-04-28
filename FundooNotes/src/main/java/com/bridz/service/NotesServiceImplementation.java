@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.bridz.dto.NotesDto;
 import com.bridz.dto.ReminderDateTimeDto;
+import com.bridz.exception.JmsException;
+import com.bridz.exception.NotesException;
 import com.bridz.model.NotesData;
 import com.bridz.repository.NotesRepository;
 
@@ -28,6 +30,9 @@ public class NotesServiceImplementation implements NotesService {
 	NotesDto notesDtoObject = new NotesDto();
 
 	List<NotesDto> listOfNotesDto = new ArrayList<NotesDto>();
+
+	@Autowired
+	ErrorCodeAndStatus errorCodeAndStatusObject;
 
 	// notes repository object
 	@Autowired
@@ -61,6 +66,7 @@ public class NotesServiceImplementation implements NotesService {
 		});
 
 		return new ResponseEntity<Object>(listOfNotesDto, HttpStatus.OK);
+
 	}
 
 	@Override
@@ -76,7 +82,9 @@ public class NotesServiceImplementation implements NotesService {
 			return new ResponseEntity<String>("Updated note successfully", HttpStatus.OK);
 		}
 
-		return null;
+		throw new NotesException(
+				Integer.parseInt(errorCodeAndStatusObject.getProperty("status.update.notes.errorCode")),
+				errorCodeAndStatusObject.getProperty("status.update.notes.errorMessage"));
 	}
 
 	@Override
@@ -99,7 +107,8 @@ public class NotesServiceImplementation implements NotesService {
 					HttpStatus.OK);
 		}
 
-		return null;
+		throw new NotesException(Integer.parseInt(errorCodeAndStatusObject.getProperty("status.notes.trash.errorCode")),
+				errorCodeAndStatusObject.getProperty("status.notes.trash.errorMessage"));
 	}
 
 	@Override
@@ -122,7 +131,9 @@ public class NotesServiceImplementation implements NotesService {
 					"Value set for archive : " + !resultOfArchiveOrUnArchive.get().isArchive(), HttpStatus.OK);
 		}
 
-		return null;
+		throw new NotesException(
+				Integer.parseInt(errorCodeAndStatusObject.getProperty("status.notes.archive.errorCode")),
+				errorCodeAndStatusObject.getProperty("status.notes.archive.errorMessage"));
 	}
 
 	@Override
@@ -145,7 +156,8 @@ public class NotesServiceImplementation implements NotesService {
 					HttpStatus.OK);
 		}
 
-		return null;
+		throw new NotesException(Integer.parseInt(errorCodeAndStatusObject.getProperty("status.notes.pined.errorCode")),
+				errorCodeAndStatusObject.getProperty("status.notes.pined.errorMessage"));
 	}
 
 	@Override
@@ -212,7 +224,9 @@ public class NotesServiceImplementation implements NotesService {
 			return new ResponseEntity<String>("Reminder set successfully", HttpStatus.OK);
 		}
 
-		return null;
+		throw new NotesException(
+				Integer.parseInt(errorCodeAndStatusObject.getProperty("status.notes.reminder.set.errorCode")),
+				errorCodeAndStatusObject.getProperty("status.notes.reminder.set.errorMessage"));
 	}
 
 	@Override
@@ -222,8 +236,10 @@ public class NotesServiceImplementation implements NotesService {
 		} catch (Exception exception) {
 			return new ResponseEntity<String>("Reminder removed successfully", HttpStatus.OK);
 		}
-		
-		return null;
+
+		throw new NotesException(
+				Integer.parseInt(errorCodeAndStatusObject.getProperty("status.notes.reminder.removed.errorCode")),
+				errorCodeAndStatusObject.getProperty("status.notes.reminder.removed.errorMessage"));
 	}
 
 	@Override
@@ -246,7 +262,9 @@ public class NotesServiceImplementation implements NotesService {
 			return new ResponseEntity<String>("Reminder reset successfully", HttpStatus.OK);
 		}
 
-		return null;
+		throw new NotesException(
+				Integer.parseInt(errorCodeAndStatusObject.getProperty("status.notes.reminder.reset.errorCode")),
+				errorCodeAndStatusObject.getProperty("status.notes.reminder.reset.errorMessage"));
 	}
 
 }
