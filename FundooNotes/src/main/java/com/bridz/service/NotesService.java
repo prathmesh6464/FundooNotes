@@ -2,6 +2,7 @@ package com.bridz.service;
 
 import org.springframework.http.ResponseEntity;
 import com.bridz.dto.NotesDto;
+import com.bridz.dto.ReminderDateTimeDto;
 
 public interface NotesService {
 
@@ -26,5 +27,11 @@ public interface NotesService {
 	public ResponseEntity<Object> findByTitle(String title);
 
 	public ResponseEntity<Object> findByDescription(String description);
+
+	public ResponseEntity<String> setReminder(ReminderDateTimeDto reminderDateTimeDtoObject, long id);
+
+	public ResponseEntity<String> unsetReminder(long id);
+
+	public ResponseEntity<String> resetReminder(ReminderDateTimeDto reminderDateTimeDtoObject, long id);
 
 }
