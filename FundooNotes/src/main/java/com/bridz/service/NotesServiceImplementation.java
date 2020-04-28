@@ -1,5 +1,7 @@
 package com.bridz.service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -10,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.bridz.dto.NotesDto;
+import com.bridz.dto.ReminderDateTimeDto;
 import com.bridz.model.NotesData;
 import com.bridz.repository.NotesRepository;
 
@@ -149,7 +152,7 @@ public class NotesServiceImplementation implements NotesService {
 	public ResponseEntity<Object> sortByTitle() {
 
 		notesRepositoryObject.sortByTitle().stream().forEach(notesDataObject -> {
-			
+
 			listOfNotesDto.add(modelMapperObject.map(notesDataObject, NotesDto.class));
 		});
 
@@ -160,7 +163,7 @@ public class NotesServiceImplementation implements NotesService {
 	public ResponseEntity<Object> sortByDescription() {
 
 		notesRepositoryObject.sortByDescription().stream().forEach(notesDataObject -> {
-			
+
 			listOfNotesDto.add(modelMapperObject.map(notesDataObject, NotesDto.class));
 		});
 
@@ -171,7 +174,7 @@ public class NotesServiceImplementation implements NotesService {
 	public ResponseEntity<Object> findByTitle(String title) {
 
 		notesRepositoryObject.findByTitle(title).stream().forEach(notesDataObject -> {
-			
+
 			listOfNotesDto.add(modelMapperObject.map(notesDataObject, NotesDto.class));
 		});
 
@@ -180,12 +183,70 @@ public class NotesServiceImplementation implements NotesService {
 
 	@Override
 	public ResponseEntity<Object> findByDescription(String description) {
-		
+
 		notesRepositoryObject.findByDescription(description).stream().forEach(notesDataObject -> {
-			
+
 			listOfNotesDto.add(modelMapperObject.map(notesDataObject, NotesDto.class));
 		});
 
 		return new ResponseEntity<Object>(listOfNotesDto, HttpStatus.OK);
 	}
+
+	@Override
+	public ResponseEntity<String> setReminder(ReminderDateTimeDto reminderDateTimeDtoObject, long id) {
+
+		LocalDateTime reminderDateTime = LocalDateTime.of(reminderDateTimeDtoObject.getYear(),
+				reminderDateTimeDtoObject.getMonth(), reminderDateTimeDtoObject.getDay(),
+				reminderDateTimeDtoObject.getHour(), reminderDateTimeDtoObject.getMinute());
+
+		// Inbuilt format
+		DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+
+		// Format LocalDateTime
+		String formattedDateTime = reminderDateTime.format(formatter);
+
+		try {
+			notesRepositoryObject.setReminder(formattedDateTime, id);
+		} catch (Exception exception) {
+
+			return new ResponseEntity<String>("Reminder set successfully", HttpStatus.OK);
+		}
+
+		return null;
+	}
+
+	@Override
+	public ResponseEntity<String> unsetReminder(long id) {
+		try {
+			notesRepositoryObject.unsetReminder(id);
+		} catch (Exception exception) {
+			return new ResponseEntity<String>("Reminder removed successfully", HttpStatus.OK);
+		}
+		
+		return null;
+	}
+
+	@Override
+	public ResponseEntity<String> resetReminder(ReminderDateTimeDto reminderDateTimeDtoObject, long id) {
+
+		LocalDateTime reminderDateTime = LocalDateTime.of(reminderDateTimeDtoObject.getYear(),
+				reminderDateTimeDtoObject.getMonth(), reminderDateTimeDtoObject.getDay(),
+				reminderDateTimeDtoObject.getHour(), reminderDateTimeDtoObject.getMinute());
+
+		// Inbuilt format
+		DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+
+		// Format LocalDateTime
+		String formattedDateTime = reminderDateTime.format(formatter);
+
+		try {
+			notesRepositoryObject.setReminder(formattedDateTime, id);
+		} catch (Exception exception) {
+
+			return new ResponseEntity<String>("Reminder reset successfully", HttpStatus.OK);
+		}
+
+		return null;
+	}
+
 }
