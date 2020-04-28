@@ -74,6 +74,12 @@
 			<artifactId>jjwt</artifactId>
 			<version>0.9.1</version>
 		</dependency>
+		<!-- Auto restart server (No need to restart server again and again) -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>t</optional>
+		</dependency>
 
 	</dependencies>
 
