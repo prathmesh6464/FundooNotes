@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.bridz.dto.LabelDto;
+import com.bridz.exception.LabelException;
 import com.bridz.model.LabelData;
 import com.bridz.repository.LabelRepository;
 
@@ -19,6 +20,9 @@ public class LabelServiceImplementation implements LabelService {
 	ModelMapper modelMapperObject = new ModelMapper();
 
 	List<LabelDto> listOfLabelDtoObject = new ArrayList<>();
+
+	@Autowired
+	ErrorCodeAndStatus errorCodeAndStatusObject;
 
 	@Autowired
 	LabelRepository labelRepositoryObject;
@@ -43,7 +47,8 @@ public class LabelServiceImplementation implements LabelService {
 			return new ResponseEntity<String>("Edited label", HttpStatus.OK);
 		}
 
-		return null;
+		throw new LabelException(Integer.parseInt(errorCodeAndStatusObject.getProperty("status.label.edite.errorCode")),
+				errorCodeAndStatusObject.getProperty("status.label.edite.errorMessage"));
 	}
 
 	@Override
