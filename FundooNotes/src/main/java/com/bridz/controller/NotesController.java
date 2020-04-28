@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.bridz.dto.NotesDto;
+import com.bridz.dto.ReminderDateTimeDto;
 import com.bridz.service.NotesService;
 
 @RestController
@@ -86,6 +87,26 @@ public class NotesController {
 	public ResponseEntity<Object> FindByDescription(@PathVariable("description") String description) {
 
 		return notesServiceObject.findByDescription(description);
+	}
+
+	@PostMapping("/setReminder/{id}")
+	public ResponseEntity<String> setReminder(@RequestBody ReminderDateTimeDto reminderDateTimeDtoObject,
+			@PathVariable("id") long id) {
+
+		return notesServiceObject.setReminder(reminderDateTimeDtoObject, id);
+	}
+
+	@PostMapping("/unsetReminder/{id}")
+	public ResponseEntity<String> unsetReminder(@PathVariable("id") long id) {
+
+		return notesServiceObject.unsetReminder(id);
+	}
+
+	@PostMapping("/resetReminder/{id}")
+	public ResponseEntity<String> resetReminder(@RequestBody ReminderDateTimeDto reminderDateTimeDtoObject,
+			@PathVariable("id") long id) {
+
+		return notesServiceObject.resetReminder(reminderDateTimeDtoObject, id);
 	}
 
 }
