@@ -16,25 +16,29 @@ public class NotesData {
 	private boolean isTrash;
 	private boolean isArchive;
 	private boolean isPined;
+	private String reminderDateTime;
 
 	// Default constructor
 	public NotesData() {
 		super();
 	}
 
+	// @return the description
+	public String getDescription() {
+		return description;
+	}
+
 	// Constructor
-	public NotesData(String title, String description, boolean isTrash, boolean isArchive, boolean isPined) {
+	public NotesData(long id, String title, String description, boolean isTrash, boolean isArchive, boolean isPined,
+			String reminderDateTime) {
 		super();
+		this.id = id;
 		this.title = title;
 		this.description = description;
 		this.isTrash = isTrash;
 		this.isArchive = isArchive;
 		this.isPined = isPined;
-	}
-
-	// @return the description
-	public String getDescription() {
-		return description;
+		this.reminderDateTime = reminderDateTime;
 	}
 
 	// @param description the description to set
@@ -80,5 +84,15 @@ public class NotesData {
 	// @param isPined the isPined to set
 	public void setPined(boolean isPined) {
 		this.isPined = isPined;
+	}
+
+	// @return the reminderDateTime
+	public String getReminderDateTime() {
+		return reminderDateTime;
+	}
+
+	// @param reminderDateTime the reminderDateTime to set
+	public void setReminderDateTime(String reminderDateTime) {
+		this.reminderDateTime = reminderDateTime;
 	}
 }
