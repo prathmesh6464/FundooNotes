@@ -1,9 +1,9 @@
 package com.bridz.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -15,14 +15,17 @@ import com.bridz.repository.LabelRepository;
 @Service
 public class LabelServiceImplementation implements LabelService {
 
-	LabelData labelDataObject = new LabelData();
-
-	ModelMapper modelMapperObject = new ModelMapper();
-
-	List<LabelDto> listOfLabelDtoObject = new ArrayList<>();
+	@Autowired
+	LabelData labelDataEntityObject;
 
 	@Autowired
-	ErrorCodeAndStatus errorCodeAndStatusObject;
+	ModelMapper modelMapperObject;
+
+	@Autowired
+	List<LabelDto> listOfLabelDtoObject;
+
+	@Autowired
+	private Environment environmentObject;
 
 	@Autowired
 	LabelRepository labelRepositoryObject;
@@ -30,25 +33,27 @@ public class LabelServiceImplementation implements LabelService {
 	@Override
 	public ResponseEntity<String> addLabel(LabelDto labelDtoObject) {
 
-		modelMapperObject.map(labelDtoObject, labelDataObject);
-		labelRepositoryObject.save(labelDataObject);
+		modelMapperObject.map(labelDtoObject, labelDataEntityObject);
+		labelRepositoryObject.save(labelDataEntityObject);
 
-		return new ResponseEntity<String>("Added label", HttpStatus.OK);
+		return new ResponseEntity<String>(environmentObject.getProperty("status.success.label.addlabel"),
+				HttpStatus.OK);
 	}
 
 	@Override
 	public ResponseEntity<String> editeLabel(LabelDto labelDtoObject, long id) {
 
-		modelMapperObject.map(labelDtoObject, labelDataObject);
+		modelMapperObject.map(labelDtoObject, labelDataEntityObject);
 
 		try {
 			labelRepositoryObject.setById(labelDtoObject.getLabelName(), id);
 		} catch (Exception exception) {
-			return new ResponseEntity<String>("Edited label", HttpStatus.OK);
+			return new ResponseEntity<String>(environmentObject.getProperty("status.success.label.editelabel"),
+					HttpStatus.OK);
 		}
 
-		throw new LabelException(Integer.parseInt(errorCodeAndStatusObject.getProperty("status.label.edite.errorCode")),
-				errorCodeAndStatusObject.getProperty("status.label.edite.errorMessage"));
+		throw new LabelException(Integer.parseInt(environmentObject.getProperty("status.label.edite.errorCode")),
+				environmentObject.getProperty("status.label.edite.errorMessage"));
 	}
 
 	@Override
@@ -56,7 +61,8 @@ public class LabelServiceImplementation implements LabelService {
 
 		labelRepositoryObject.deleteById(id);
 
-		return new ResponseEntity<String>("Deleted label", HttpStatus.OK);
+		return new ResponseEntity<String>(environmentObject.getProperty("status.success.label.deletelabel"),
+				HttpStatus.OK);
 	}
 
 	@Override
