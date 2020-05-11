@@ -22,50 +22,50 @@ public class NotesServiceImplementation implements NotesService {
 
 	// Creating Object of model mapper
 	@Autowired
-	private ModelMapper modelMapperObject;
+	private ModelMapper modelMapper;
 
 	// Creating Object of notes data entity
 	@Autowired
-	private NotesData notesDataEntityObject;
+	private NotesData notesDataEntity;
 
 	@Autowired
-	NotesDto notesDtoObject;
+	NotesDto notesDto;
 
 	@Autowired
 	List<NotesDto> listOfNotesDto;
 
 	@Autowired
-	private Environment environmentObject;
+	private Environment environment;
 
 	// notes repository object
 	@Autowired
-	private NotesRepository notesRepositoryObject;
+	private NotesRepository notesRepository;
 
 	@Override
-	public ResponseEntity<String> saveNote(NotesDto notesDtoObject) {
+	public ResponseEntity<String> save(NotesDto notesDto) {
 
 		// Using model mapper mapping dto object with user details entity
-		modelMapperObject.map(notesDtoObject, notesDataEntityObject);
-		notesRepositoryObject.save(notesDataEntityObject);
+		modelMapper.map(notesDto, notesDataEntity);
+		notesRepository.save(notesDataEntity);
 
-		return new ResponseEntity<String>(environmentObject.getProperty("status.success.note.add"), HttpStatus.OK);
+		return new ResponseEntity<String>(environment.getProperty("status.success.note.add"), HttpStatus.OK);
 	}
 
 	@Override
 	@Transactional
-	public ResponseEntity<String> deleteNote(Long id) {
+	public ResponseEntity<String> delete(Long id) {
 
-		notesRepositoryObject.deleteById(id);
+		notesRepository.deleteById(id);
 
-		return new ResponseEntity<String>(environmentObject.getProperty("status.success.note.delete"), HttpStatus.OK);
+		return new ResponseEntity<String>(environment.getProperty("status.success.note.delete"), HttpStatus.OK);
 	}
 
 	@Override
-	public ResponseEntity<Object> showNotes() {
+	public ResponseEntity<Object> show() {
 
-		notesRepositoryObject.findAll().stream().forEach(notesDataObject -> {
+		notesRepository.findAll().stream().forEach(notesDataObject -> {
 
-			listOfNotesDto.add(modelMapperObject.map(notesDataObject, NotesDto.class));
+			listOfNotesDto.add(modelMapper.map(notesDataObject, NotesDto.class));
 		});
 
 		return new ResponseEntity<Object>(listOfNotesDto, HttpStatus.OK);
@@ -73,101 +73,101 @@ public class NotesServiceImplementation implements NotesService {
 	}
 
 	@Override
-	public ResponseEntity<String> updateNote(NotesDto notesDtoObject, Long id) {
+	public ResponseEntity<String> update(NotesDto notesDto, Long id) {
 
-		modelMapperObject.map(notesDtoObject, notesDataEntityObject);
+		modelMapper.map(notesDto, notesDataEntity);
 
 		try {
 
-			notesRepositoryObject.setTitleDescription(notesDataEntityObject.getTitle(), notesDataEntityObject.getDescription(), id);
+			notesRepository.setTitleDescription(notesDataEntity.getTitle(), notesDataEntity.getDescription(), id);
 		} catch (Exception e) {
 
-			return new ResponseEntity<String>(environmentObject.getProperty("status.success.note.update"),
+			return new ResponseEntity<String>(environment.getProperty("status.success.note.update"),
 					HttpStatus.OK);
 		}
 
-		throw new NotesException(Integer.parseInt(environmentObject.getProperty("status.update.notes.errorCode")),
-				environmentObject.getProperty("status.update.notes.errorMessage"));
+		throw new NotesException(Integer.parseInt(environment.getProperty("status.update.notes.errorCode")),
+				environment.getProperty("status.update.notes.errorMessage"));
 	}
 
 	@Override
 	public ResponseEntity<String> trashUntrash(long id) {
 
-		Optional<NotesData> resultOfTrashOrUnTrash = notesRepositoryObject.findById(id);
+		Optional<NotesData> resultOfTrashOrUnTrash = notesRepository.findById(id);
 
 		try {
 
 			if (resultOfTrashOrUnTrash.get().isTrash()) {
 
-				notesRepositoryObject.setTrash(false, id);
+				notesRepository.setTrash(false, id);
 			} else {
 
-				notesRepositoryObject.setTrash(true, id);
+				notesRepository.setTrash(true, id);
 			}
 		} catch (Exception e) {
 
-			return new ResponseEntity<String>(environmentObject.getProperty("status.success.note.trash")
+			return new ResponseEntity<String>(environment.getProperty("status.success.note.trash")
 					+ !resultOfTrashOrUnTrash.get().isTrash(), HttpStatus.OK);
 		}
 
-		throw new NotesException(Integer.parseInt(environmentObject.getProperty("status.notes.trash.errorCode")),
-				environmentObject.getProperty("status.notes.trash.errorMessage"));
+		throw new NotesException(Integer.parseInt(environment.getProperty("status.notes.trash.errorCode")),
+				environment.getProperty("status.notes.trash.errorMessage"));
 	}
 
 	@Override
 	public ResponseEntity<String> archiveUnArchive(long id) {
 
-		Optional<NotesData> resultOfArchiveOrUnArchive = notesRepositoryObject.findById(id);
+		Optional<NotesData> resultOfArchiveOrUnArchive = notesRepository.findById(id);
 
 		try {
 
 			if (resultOfArchiveOrUnArchive.get().isArchive()) {
 
-				notesRepositoryObject.setArchive(false, id);
+				notesRepository.setArchive(false, id);
 			} else {
 
-				notesRepositoryObject.setArchive(true, id);
+				notesRepository.setArchive(true, id);
 			}
 		} catch (Exception e) {
 
-			return new ResponseEntity<String>(environmentObject.getProperty("status.success.note.archive")
+			return new ResponseEntity<String>(environment.getProperty("status.success.note.archive")
 					+ !resultOfArchiveOrUnArchive.get().isArchive(), HttpStatus.OK);
 		}
 
-		throw new NotesException(Integer.parseInt(environmentObject.getProperty("status.notes.archive.errorCode")),
-				environmentObject.getProperty("status.notes.archive.errorMessage"));
+		throw new NotesException(Integer.parseInt(environment.getProperty("status.notes.archive.errorCode")),
+				environment.getProperty("status.notes.archive.errorMessage"));
 	}
 
 	@Override
 	public ResponseEntity<String> pinedUnPined(long id) {
 
-		Optional<NotesData> resultOfPinedOrUnPined = notesRepositoryObject.findById(id);
+		Optional<NotesData> resultOfPinedOrUnPined = notesRepository.findById(id);
 
 		try {
 
 			if (resultOfPinedOrUnPined.get().isPined()) {
 
-				notesRepositoryObject.setPined(false, id);
+				notesRepository.setPined(false, id);
 			} else {
 
-				notesRepositoryObject.setPined(true, id);
+				notesRepository.setPined(true, id);
 			}
 		} catch (Exception e) {
 
-			return new ResponseEntity<String>(environmentObject.getProperty("status.success.note.pined")
+			return new ResponseEntity<String>(environment.getProperty("status.success.note.pined")
 					+ !resultOfPinedOrUnPined.get().isPined(), HttpStatus.OK);
 		}
 
-		throw new NotesException(Integer.parseInt(environmentObject.getProperty("status.notes.pined.errorCode")),
-				environmentObject.getProperty("status.notes.pined.errorMessage"));
+		throw new NotesException(Integer.parseInt(environment.getProperty("status.notes.pined.errorCode")),
+				environment.getProperty("status.notes.pined.errorMessage"));
 	}
 
 	@Override
 	public ResponseEntity<Object> sortByTitle() {
 
-		notesRepositoryObject.sortByTitle().stream().forEach(notesDataObject -> {
+		notesRepository.sortByTitle().stream().forEach(notesData -> {
 
-			listOfNotesDto.add(modelMapperObject.map(notesDataObject, NotesDto.class));
+			listOfNotesDto.add(modelMapper.map(notesData, NotesDto.class));
 		});
 
 		return new ResponseEntity<Object>(listOfNotesDto, HttpStatus.OK);
@@ -176,9 +176,9 @@ public class NotesServiceImplementation implements NotesService {
 	@Override
 	public ResponseEntity<Object> sortByDescription() {
 
-		notesRepositoryObject.sortByDescription().stream().forEach(notesDataObject -> {
+		notesRepository.sortByDescription().stream().forEach(notesData -> {
 
-			listOfNotesDto.add(modelMapperObject.map(notesDataObject, NotesDto.class));
+			listOfNotesDto.add(modelMapper.map(notesData, NotesDto.class));
 		});
 
 		return new ResponseEntity<Object>(listOfNotesDto, HttpStatus.OK);
@@ -187,9 +187,9 @@ public class NotesServiceImplementation implements NotesService {
 	@Override
 	public ResponseEntity<Object> findByTitle(String title) {
 
-		notesRepositoryObject.findByTitle(title).stream().forEach(notesDataObject -> {
+		notesRepository.findByTitle(title).stream().forEach(notesData -> {
 
-			listOfNotesDto.add(modelMapperObject.map(notesDataObject, NotesDto.class));
+			listOfNotesDto.add(modelMapper.map(notesData, NotesDto.class));
 		});
 
 		return new ResponseEntity<Object>(listOfNotesDto, HttpStatus.OK);
@@ -198,20 +198,20 @@ public class NotesServiceImplementation implements NotesService {
 	@Override
 	public ResponseEntity<Object> findByDescription(String description) {
 
-		notesRepositoryObject.findByDescription(description).stream().forEach(notesDataObject -> {
+		notesRepository.findByDescription(description).stream().forEach(notesData -> {
 
-			listOfNotesDto.add(modelMapperObject.map(notesDataObject, NotesDto.class));
+			listOfNotesDto.add(modelMapper.map(notesData, NotesDto.class));
 		});
 
 		return new ResponseEntity<Object>(listOfNotesDto, HttpStatus.OK);
 	}
 
 	@Override
-	public ResponseEntity<String> setReminder(ReminderDateTimeDto reminderDateTimeDtoObject, long id) {
+	public ResponseEntity<String> setReminder(ReminderDateTimeDto reminderDateTimeDto, long id) {
 
-		LocalDateTime reminderDateTime = LocalDateTime.of(reminderDateTimeDtoObject.getYear(),
-				reminderDateTimeDtoObject.getMonth(), reminderDateTimeDtoObject.getDay(),
-				reminderDateTimeDtoObject.getHour(), reminderDateTimeDtoObject.getMinute());
+		LocalDateTime reminderDateTime = LocalDateTime.of(reminderDateTimeDto.getYear(),
+				reminderDateTimeDto.getMonth(), reminderDateTimeDto.getDay(),
+				reminderDateTimeDto.getHour(), reminderDateTimeDto.getMinute());
 
 		// Inbuilt format
 		DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
@@ -220,37 +220,37 @@ public class NotesServiceImplementation implements NotesService {
 		String formattedDateTime = reminderDateTime.format(formatter);
 
 		try {
-			notesRepositoryObject.setReminder(formattedDateTime, id);
+			notesRepository.setReminder(formattedDateTime, id);
 		} catch (Exception exception) {
 
-			return new ResponseEntity<String>(environmentObject.getProperty("status.success.note.reminder"),
+			return new ResponseEntity<String>(environment.getProperty("status.success.note.reminder"),
 					HttpStatus.OK);
 		}
 
-		throw new NotesException(Integer.parseInt(environmentObject.getProperty("status.notes.reminder.set.errorCode")),
-				environmentObject.getProperty("status.notes.reminder.set.errorMessage"));
+		throw new NotesException(Integer.parseInt(environment.getProperty("status.notes.reminder.set.errorCode")),
+				environment.getProperty("status.notes.reminder.set.errorMessage"));
 	}
 
 	@Override
 	public ResponseEntity<String> unsetReminder(long id) {
 		try {
-			notesRepositoryObject.unsetReminder(id);
+			notesRepository.unsetReminder(id);
 		} catch (Exception exception) {
-			return new ResponseEntity<String>(environmentObject.getProperty("status.success.note.removedreminder"),
+			return new ResponseEntity<String>(environment.getProperty("status.success.note.removedreminder"),
 					HttpStatus.OK);
 		}
 
 		throw new NotesException(
-				Integer.parseInt(environmentObject.getProperty("status.notes.reminder.removed.errorCode")),
-				environmentObject.getProperty("status.notes.reminder.removed.errorMessage"));
+				Integer.parseInt(environment.getProperty("status.notes.reminder.removed.errorCode")),
+				environment.getProperty("status.notes.reminder.removed.errorMessage"));
 	}
 
 	@Override
-	public ResponseEntity<String> resetReminder(ReminderDateTimeDto reminderDateTimeDtoObject, long id) {
+	public ResponseEntity<String> resetReminder(ReminderDateTimeDto reminderDateTimeDto, long id) {
 
-		LocalDateTime reminderDateTime = LocalDateTime.of(reminderDateTimeDtoObject.getYear(),
-				reminderDateTimeDtoObject.getMonth(), reminderDateTimeDtoObject.getDay(),
-				reminderDateTimeDtoObject.getHour(), reminderDateTimeDtoObject.getMinute());
+		LocalDateTime reminderDateTime = LocalDateTime.of(reminderDateTimeDto.getYear(),
+				reminderDateTimeDto.getMonth(), reminderDateTimeDto.getDay(),
+				reminderDateTimeDto.getHour(), reminderDateTimeDto.getMinute());
 
 		// Inbuilt format
 		DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
@@ -259,16 +259,16 @@ public class NotesServiceImplementation implements NotesService {
 		String formattedDateTime = reminderDateTime.format(formatter);
 
 		try {
-			notesRepositoryObject.setReminder(formattedDateTime, id);
+			notesRepository.setReminder(formattedDateTime, id);
 		} catch (Exception exception) {
 
-			return new ResponseEntity<String>(environmentObject.getProperty("status.success.note.reset"),
+			return new ResponseEntity<String>(environment.getProperty("status.success.note.reset"),
 					HttpStatus.OK);
 		}
 
 		throw new NotesException(
-				Integer.parseInt(environmentObject.getProperty("status.notes.reminder.reset.errorCode")),
-				environmentObject.getProperty("status.notes.reminder.reset.errorMessage"));
+				Integer.parseInt(environment.getProperty("status.notes.reminder.reset.errorCode")),
+				environment.getProperty("status.notes.reminder.reset.errorMessage"));
 	}
 
 }
