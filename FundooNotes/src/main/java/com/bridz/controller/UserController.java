@@ -8,47 +8,50 @@ import com.bridz.service.UserService;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@RequestMapping("/user")
+@CrossOrigin(origins = "*")
 @RestController
 public class UserController {
 
 	@Autowired
-	UserService userServiceObject;
+	UserService userService;
 
-	@GetMapping("/userLogin")
-	public ResponseEntity<String> userLogin(@Valid @RequestBody LoginDto userLoginDtoObject) {
+	@PostMapping("/login")
+	public ResponseEntity<String> login(@Valid @RequestBody LoginDto userLoginDto) {
 
-		return userServiceObject.userLogin(userLoginDtoObject);
+		return userService.login(userLoginDto);
 	}
 
-	@PostMapping("/userRegistration")
-	public ResponseEntity<String> userRegistration(@Valid @RequestBody UserRegistrationDto userRegistrationDtoObject) {
+	@PostMapping("/registration")
+	public ResponseEntity<String> registration(@Valid @RequestBody UserRegistrationDto userRegistrationDto) {
 
-		return userServiceObject.registerUser(userRegistrationDtoObject);
+		return userService.registerUser(userRegistrationDto);
 	}
 
-	@GetMapping("/forgetPassword")
-	public ResponseEntity<String> forgetPassword(@Valid @RequestBody ForgetPasswordDto forgetPasswordDtoObject) {
+	@PostMapping("/forgetPassword")
+	public ResponseEntity<String> forgetPassword(@Valid @RequestBody ForgetPasswordDto forgetPasswordDto) {
 
-		return userServiceObject.forgetPassword(forgetPasswordDtoObject);
+		return userService.forgetPassword(forgetPasswordDto);
 	}
 
-	@PutMapping("/resetPassword/{token}/{emailId}")
-	public ResponseEntity<String> resetPassword(@PathVariable("token") String token,
-			@PathVariable("emailId") String emailId, @RequestBody ResetPasswordDto resetPasswordDtoObject) {
+	@PutMapping("/resetPassword")
+	public ResponseEntity<String> resetPassword(@Valid @RequestBody ResetPasswordDto resetPasswordDto) {
 
-		return userServiceObject.resetPassword(resetPasswordDtoObject, emailId);
+		return userService.resetPassword(resetPasswordDto);
 	}
 
-	@PostMapping("/userVerification/{token}")
+	@GetMapping("/verification/{token}")
 	public ResponseEntity<String> userVerification(@PathVariable("token") String emailToken) {
 
-		return userServiceObject.userVerification(emailToken);
+		return userService.verification(emailToken);
 	}
 }
