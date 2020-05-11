@@ -2,111 +2,115 @@ package com.bridz.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.bridz.dto.NotesDto;
 import com.bridz.dto.ReminderDateTimeDto;
 import com.bridz.service.NotesService;
 
 @RestController
+@RequestMapping("/notes")
+@CrossOrigin(origins = "*")
 public class NotesController {
 
 	@Autowired
-	NotesService notesServiceObject;
+	NotesService notesService;
 
-	@PostMapping("/addNote")
-	public ResponseEntity<String> addUserNote(@RequestBody NotesDto notesDtoObject) {
+	@PostMapping("/add")
+	public ResponseEntity<String> add(@RequestBody NotesDto notesDto) {
 
 		// Storing user note data into data base
-		return notesServiceObject.saveNote(notesDtoObject);
+		return notesService.save(notesDto);
 	}
 
-	@DeleteMapping("/deleteNote/{id}")
-	public ResponseEntity<String> deleteUserNote(@PathVariable("id") Long id) {
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<String> delete(@PathVariable("id") Long id) {
 
 		// Deleting user note from data base
-		return notesServiceObject.deleteNote(id);
+		return notesService.delete(id);
 	}
 
-	@PutMapping("/updateNote/{id}")
-	public ResponseEntity<String> updateUserNote(@PathVariable("id") long id, @RequestBody NotesDto notesDtoObject) {
+	@PutMapping("/update/{id}")
+	public ResponseEntity<String> update(@PathVariable("id") long id, @RequestBody NotesDto notesDto) {
 
 		// Updating user note data into data base
-		return notesServiceObject.updateNote(notesDtoObject, id);
+		return notesService.update(notesDto, id);
 	}
 
-	@GetMapping("/showNotes")
-	public ResponseEntity<Object> showeUserNotes() {
+	@GetMapping("/show")
+	public ResponseEntity<Object> show() {
 
 		// Showing user note data from data base
-		return notesServiceObject.showNotes();
+		return notesService.show();
 	}
 
-	@PostMapping("/trashOrUnTrashNote/{id}")
+	@PostMapping("/trashOrUnTrash/{id}")
 	public ResponseEntity<String> setTrashOrUntrash(@PathVariable("id") long id) {
 
-		return notesServiceObject.trashUntrash(id);
+		return notesService.trashUntrash(id);
 	}
 
-	@PostMapping("/archiveOrUnArchiveNote/{id}")
+	@PostMapping("/archiveOrUnArchive/{id}")
 	public ResponseEntity<String> setArchiveOrUnArchive(@PathVariable("id") long id) {
 
-		return notesServiceObject.archiveUnArchive(id);
+		return notesService.archiveUnArchive(id);
 	}
 
-	@PostMapping("/pinedOrUnPinedNote/{id}")
+	@PostMapping("/pinedOrUnPined/{id}")
 	public ResponseEntity<String> setPinedOrUnPined(@PathVariable("id") long id) {
 
-		return notesServiceObject.pinedUnPined(id);
+		return notesService.pinedUnPined(id);
 	}
 
 	@GetMapping("/sortByTitle")
 	public ResponseEntity<Object> sortByTitle() {
 
-		return notesServiceObject.sortByTitle();
+		return notesService.sortByTitle();
 	}
 
 	@GetMapping("/sortByDescription")
 	public ResponseEntity<Object> sortByDescription() {
 
-		return notesServiceObject.sortByDescription();
+		return notesService.sortByDescription();
 	}
 
 	@GetMapping("/findByTitle/{title}")
 	public ResponseEntity<Object> findByTitle(@PathVariable("title") String title) {
 
-		return notesServiceObject.findByTitle(title);
+		return notesService.findByTitle(title);
 	}
 
 	@GetMapping("/findByDescription/{description}")
 	public ResponseEntity<Object> FindByDescription(@PathVariable("description") String description) {
 
-		return notesServiceObject.findByDescription(description);
+		return notesService.findByDescription(description);
 	}
 
 	@PostMapping("/setReminder/{id}")
-	public ResponseEntity<String> setReminder(@RequestBody ReminderDateTimeDto reminderDateTimeDtoObject,
+	public ResponseEntity<String> setReminder(@RequestBody ReminderDateTimeDto reminderDateTimeDto,
 			@PathVariable("id") long id) {
 
-		return notesServiceObject.setReminder(reminderDateTimeDtoObject, id);
+		return notesService.setReminder(reminderDateTimeDto, id);
 	}
 
 	@PostMapping("/unsetReminder/{id}")
 	public ResponseEntity<String> unsetReminder(@PathVariable("id") long id) {
 
-		return notesServiceObject.unsetReminder(id);
+		return notesService.unsetReminder(id);
 	}
 
 	@PostMapping("/resetReminder/{id}")
-	public ResponseEntity<String> resetReminder(@RequestBody ReminderDateTimeDto reminderDateTimeDtoObject,
+	public ResponseEntity<String> resetReminder(@RequestBody ReminderDateTimeDto reminderDateTimeDto,
 			@PathVariable("id") long id) {
 
-		return notesServiceObject.resetReminder(reminderDateTimeDtoObject, id);
+		return notesService.resetReminder(reminderDateTimeDto, id);
 	}
 
 }
