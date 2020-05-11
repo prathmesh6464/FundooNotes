@@ -29,10 +29,9 @@ public class NotesData {
 	}
 
 	// Constructor
-	public NotesData(long id, String title, String description, boolean isTrash, boolean isArchive, boolean isPined,
+	public NotesData(String title, String description, boolean isTrash, boolean isArchive, boolean isPined,
 			String reminderDateTime) {
 		super();
-		this.id = id;
 		this.title = title;
 		this.description = description;
 		this.isTrash = isTrash;
