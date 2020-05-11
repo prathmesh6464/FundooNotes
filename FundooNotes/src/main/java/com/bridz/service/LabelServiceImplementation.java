@@ -16,63 +16,63 @@ import com.bridz.repository.LabelRepository;
 public class LabelServiceImplementation implements LabelService {
 
 	@Autowired
-	LabelData labelDataEntityObject;
+	LabelData labelDataEntity;
 
 	@Autowired
-	ModelMapper modelMapperObject;
+	ModelMapper modelMapper;
 
 	@Autowired
-	List<LabelDto> listOfLabelDtoObject;
+	List<LabelDto> listOfLabelDto;
 
 	@Autowired
-	private Environment environmentObject;
+	private Environment environment;
 
 	@Autowired
-	LabelRepository labelRepositoryObject;
+	LabelRepository labelRepository;
 
 	@Override
-	public ResponseEntity<String> addLabel(LabelDto labelDtoObject) {
+	public ResponseEntity<String> add(LabelDto labelDto) {
 
-		modelMapperObject.map(labelDtoObject, labelDataEntityObject);
-		labelRepositoryObject.save(labelDataEntityObject);
+		modelMapper.map(labelDto, labelDataEntity);
+		labelRepository.save(labelDataEntity);
 
-		return new ResponseEntity<String>(environmentObject.getProperty("status.success.label.addlabel"),
+		return new ResponseEntity<String>(environment.getProperty("status.success.label.addlabel"),
 				HttpStatus.OK);
 	}
 
 	@Override
-	public ResponseEntity<String> editeLabel(LabelDto labelDtoObject, long id) {
+	public ResponseEntity<String> edite(LabelDto labelDto, long id) {
 
-		modelMapperObject.map(labelDtoObject, labelDataEntityObject);
+		modelMapper.map(labelDto, labelDataEntity);
 
 		try {
-			labelRepositoryObject.setById(labelDtoObject.getLabelName(), id);
+			labelRepository.setById(labelDto.getLabelName(), id);
 		} catch (Exception exception) {
-			return new ResponseEntity<String>(environmentObject.getProperty("status.success.label.editelabel"),
+			return new ResponseEntity<String>(environment.getProperty("status.success.label.editelabel"),
 					HttpStatus.OK);
 		}
 
-		throw new LabelException(Integer.parseInt(environmentObject.getProperty("status.label.edite.errorCode")),
-				environmentObject.getProperty("status.label.edite.errorMessage"));
+		throw new LabelException(Integer.parseInt(environment.getProperty("status.label.edite.errorCode")),
+				environment.getProperty("status.label.edite.errorMessage"));
 	}
 
 	@Override
-	public ResponseEntity<String> deleteLabel(long id) {
+	public ResponseEntity<String> delete(long id) {
 
-		labelRepositoryObject.deleteById(id);
+		labelRepository.deleteById(id);
 
-		return new ResponseEntity<String>(environmentObject.getProperty("status.success.label.deletelabel"),
+		return new ResponseEntity<String>(environment.getProperty("status.success.label.deletelabel"),
 				HttpStatus.OK);
 	}
 
 	@Override
-	public ResponseEntity<Object> showLabel() {
+	public ResponseEntity<Object> show() {
 
-		labelRepositoryObject.findAll().stream().forEach(labelEntityObject -> {
+		labelRepository.findAll().stream().forEach(labelEntityObject -> {
 
-			listOfLabelDtoObject.add(modelMapperObject.map(labelEntityObject, LabelDto.class));
+			listOfLabelDto.add(modelMapper.map(labelEntityObject, LabelDto.class));
 		});
 
-		return new ResponseEntity<Object>(listOfLabelDtoObject, HttpStatus.OK);
+		return new ResponseEntity<Object>(listOfLabelDto, HttpStatus.OK);
 	}
 }
