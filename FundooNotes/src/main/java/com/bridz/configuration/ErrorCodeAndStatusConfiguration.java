@@ -5,6 +5,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import com.bridz.dto.LabelDto;
 import com.bridz.dto.NotesDto;
@@ -13,7 +14,8 @@ import com.bridz.model.NotesData;
 import com.bridz.model.UserDetails;
 
 @Configuration
-@PropertySource("classpath:ErrorCodeErrorMessage.properties")
+@PropertySources({ @PropertySource("classpath:ErrorCodeErrorMessage.properties"),
+@PropertySource("classpath:RabbitMq.properties") })
 public class ErrorCodeAndStatusConfiguration {
 
 	@Bean
