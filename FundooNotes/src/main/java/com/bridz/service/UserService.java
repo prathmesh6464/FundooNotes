@@ -8,14 +8,14 @@ import com.bridz.dto.UserRegistrationDto;
 
 public interface UserService {
 
-	public ResponseEntity<String> registerUser(UserRegistrationDto userRegisterDtoObject);
+	public ResponseEntity<String> registerUser(UserRegistrationDto userRegisterDto);
 
-	public ResponseEntity<String> userLogin(LoginDto userLoginDtoObject);
+	public ResponseEntity<String> login(LoginDto userLoginDto);
 
-	public ResponseEntity<String> forgetPassword(ForgetPasswordDto forgetPasswordDtoObject);
+	public ResponseEntity<String> forgetPassword(ForgetPasswordDto forgetPasswordDto);
 
-	public ResponseEntity<String> resetPassword(ResetPasswordDto resetPasswordDtoObject, String emailId);
+	public ResponseEntity<String> resetPassword(ResetPasswordDto resetPasswordDto);
 
-	public ResponseEntity<String> userVerification(String emailToken);
+	public ResponseEntity<String> verification(String emailToken);
 
 }
