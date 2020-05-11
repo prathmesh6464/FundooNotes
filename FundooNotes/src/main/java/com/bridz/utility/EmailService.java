@@ -28,7 +28,7 @@ public class EmailService {
 			helper.setText(body, true);
 		} catch (MessagingException e) {
 
-			throw new JmsException(201, "Error in mime message in email service class");
+			throw new JmsException(500, "Error in mime message in email service class");
 		}
 
 		javaMailSender.send(message);
