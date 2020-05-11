@@ -6,13 +6,13 @@ import com.bridz.dto.ReminderDateTimeDto;
 
 public interface NotesService {
 
-	public ResponseEntity<String> saveNote(NotesDto notesDtoObject);
+	public ResponseEntity<String> save(NotesDto notesDto);
 
-	public ResponseEntity<String> deleteNote(Long id);
+	public ResponseEntity<String> delete(Long id);
 
-	public ResponseEntity<Object> showNotes();
+	public ResponseEntity<Object> show();
 
-	public ResponseEntity<String> updateNote(NotesDto notesDtoObject, Long id);
+	public ResponseEntity<String> update(NotesDto notesDto, Long id);
 
 	public ResponseEntity<String> trashUntrash(long id);
 
@@ -28,10 +28,10 @@ public interface NotesService {
 
 	public ResponseEntity<Object> findByDescription(String description);
 
-	public ResponseEntity<String> setReminder(ReminderDateTimeDto reminderDateTimeDtoObject, long id);
+	public ResponseEntity<String> setReminder(ReminderDateTimeDto reminderDateTimeDto, long id);
 
 	public ResponseEntity<String> unsetReminder(long id);
 
-	public ResponseEntity<String> resetReminder(ReminderDateTimeDto reminderDateTimeDtoObject, long id);
+	public ResponseEntity<String> resetReminder(ReminderDateTimeDto reminderDateTimeDto, long id);
 
 }
