@@ -5,12 +5,12 @@ import com.bridz.dto.LabelDto;
 
 public interface LabelService {
 
-	ResponseEntity<String> addLabel(LabelDto labelDtoObject);
+	ResponseEntity<String> add(LabelDto labelDto);
 
-	ResponseEntity<String> editeLabel(LabelDto labelDtoObject, long id);
+	ResponseEntity<String> edite(LabelDto labelDto, long id);
 
-	ResponseEntity<String> deleteLabel(long id);
+	ResponseEntity<String> delete(long id);
 
-	ResponseEntity<Object> showLabel();
+	ResponseEntity<Object> show();
 
 }
