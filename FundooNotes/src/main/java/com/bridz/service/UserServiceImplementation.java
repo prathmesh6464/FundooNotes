@@ -17,7 +17,6 @@ import com.bridz.dto.LoginDto;
 import com.bridz.dto.UserRegistrationDto;
 import com.bridz.exception.JmsException;
 import com.bridz.exception.JwtTokenException;
-import com.bridz.exception.UserException;
 import com.bridz.model.UserDetails;
 import com.bridz.repository.UserRepository;
 import com.bridz.utility.JwtToken;
