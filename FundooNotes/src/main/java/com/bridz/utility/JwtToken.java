@@ -6,6 +6,8 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 import com.bridz.dto.ForgetPasswordDto;
 import com.bridz.dto.UserRegistrationDto;
+
+import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -34,7 +36,7 @@ public class JwtToken {
 	public String createToken(Map<String, Object> claims, String subject) {
 
 		return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() + 100 * 60 * 5))
+				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 5))
 				.signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
 	}
 
