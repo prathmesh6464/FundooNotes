@@ -41,16 +41,6 @@ public class UserRegistrationDto {
 
 	private NotesData notesData;
 
-	// @return the emailId
-	public String getEmailId() {
-		return emailId;
-	}
-
-	// @param emailId the emailId to set
-	public void setEmailId(String emailId) {
-		this.emailId = emailId;
-	}
-
 	// Default constructor
 	public UserRegistrationDto() {
 
@@ -58,8 +48,8 @@ public class UserRegistrationDto {
 	}
 
 	// Parameterized constructor
-	public UserRegistrationDto(String firstName, String lastName, String userName, String password, String mobileNumber,
-			String emailId) {
+	public UserRegistrationDto(String firstName, String lastName, String userName, String password,
+			String mobileNumber, String emailId) {
 
 		super();
 		this.firstName = firstName;
@@ -110,6 +100,16 @@ public class UserRegistrationDto {
 	public String getPassword() {
 
 		return password;
+	}
+
+	// @return the emailId
+	public String getEmailId() {
+		return emailId;
+	}
+
+	// @param emailId the emailId to set
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
 	}
 
 	// @param password the password to set
