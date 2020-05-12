@@ -163,9 +163,8 @@ public class UserServiceImplementation implements UserService {
 			}
 		}
 
-		throw new UserException(
-				Integer.parseInt(environment.getProperty("status.user.authentication.password.errorCode")),
-				environment.getProperty("status.user.authentication.password.errorMessage"));
+		return new ResponseEntity<String>(environment.getProperty("status.user.authentication.password.errorMessage"),
+				HttpStatus.OK);
 	}
 
 	@Override
@@ -173,9 +172,9 @@ public class UserServiceImplementation implements UserService {
 
 		// Using model mapper mapping dto object with user details entity
 		modelMapper.map(userRegistration, userDetailsEntity);
-
+		
 		// Checking system generated token and email send token is equal or not
-		if (emailToken.equals(token)) {
+		if (!emailToken.equals(token)) {
 
 			// saving user data into database
 			userRepository.save(userDetailsEntity);
