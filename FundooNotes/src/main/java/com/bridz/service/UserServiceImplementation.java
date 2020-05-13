@@ -38,7 +38,7 @@ public class UserServiceImplementation implements UserService {
 
 	// User repository object
 	@Autowired
-	private UserRepository userRepository;
+	private UserRepository repository;
 
 	@Autowired
 	Environment environment;
@@ -55,15 +55,15 @@ public class UserServiceImplementation implements UserService {
 	private String token;
 
 	// User registration dto object used in user verification
-	private UserRegistrationDto userRegistration;
-	
+	private UserRegistrationDto userRegistrationDto;
+
 	private String emailId;
 
 	@Override
 	public ResponseEntity<String> registerUser(UserRegistrationDto userRegisterDto) {
 
 		// User registration object used in user Verification
-		userRegistration = userRegisterDto;
+		userRegistrationDto = userRegisterDto;
 
 		MessageProperties messageProperties = new MessageProperties();
 
@@ -74,9 +74,9 @@ public class UserServiceImplementation implements UserService {
 
 		// User verification url
 		String userVerificationUrl = environment.getProperty("user.verification") + token;
-		
+
 		Message message = new Message(userVerificationUrl.getBytes(), new MessageProperties());
-;
+		;
 
 		// Send email method called
 		try {
@@ -101,18 +101,16 @@ public class UserServiceImplementation implements UserService {
 		modelMapper.map(userLoginDto, userDetailsEntity);
 
 		// Checking user name and password is valid or not
-		if (!userRepository.findByUserName(userDetailsEntity.getUserName())
-				.equals(Collections.<String>emptyList())
-				&& (!userRepository.findByPassword(userDetailsEntity.getPassword())
-						.equals(Collections.<String>emptyList()))
-				&& userRepository.findByUserName(userDetailsEntity.getUserName())
-						.equals(userRepository.findByPassword(userDetailsEntity.getPassword()))) {
+		if (!repository.findByUserName(userDetailsEntity.getUserName()).equals(Collections.<String>emptyList())
+				&& (!repository.findByPassword(userDetailsEntity.getPassword()).equals(Collections.<String>emptyList()))
+				&& repository.findByUserName(userDetailsEntity.getUserName())
+						.equals(repository.findByPassword(userDetailsEntity.getPassword()))) {
 
-			return new ResponseEntity<String>(environment.getProperty("status.success.user.login"),
-					HttpStatus.OK);
+			return new ResponseEntity<String>(environment.getProperty("status.success.user.login"), HttpStatus.OK);
 		}
 
-		return new ResponseEntity<String>(environment.getProperty("status.user.authentication.errorMessage"), HttpStatus.NON_AUTHORITATIVE_INFORMATION);
+		return new ResponseEntity<String>(environment.getProperty("status.user.authentication.errorMessage"),
+				HttpStatus.NON_AUTHORITATIVE_INFORMATION);
 	}
 
 	@Override
@@ -125,7 +123,7 @@ public class UserServiceImplementation implements UserService {
 		emailId = forgetPasswordDto.getEmailId();
 
 		// Reset url
-		String resetPasswordUrl =  environment.getProperty("user.resetpassword") + token + "/" + emailId;
+		String resetPasswordUrl = environment.getProperty("user.resetpassword") + token + "/" + emailId;
 
 		try {
 
@@ -139,8 +137,7 @@ public class UserServiceImplementation implements UserService {
 					environment.getProperty("status.jms.send.mail.errorMessage"));
 		}
 
-		return new ResponseEntity<String>(environment.getProperty("status.success.user.forgetpassword"),
-				HttpStatus.OK);
+		return new ResponseEntity<String>(environment.getProperty("status.success.user.forgetpassword"), HttpStatus.OK);
 	}
 
 	@Override
@@ -154,7 +151,7 @@ public class UserServiceImplementation implements UserService {
 
 			try {
 
-				userRepository.setPassword(userDetailsEntity.getPassword(), emailId);
+				repository.setPassword(userDetailsEntity.getPassword(), emailId);
 			} catch (Exception e) {
 
 				return new ResponseEntity<String>(environment.getProperty("status.success.user.resetPassword"),
@@ -169,14 +166,11 @@ public class UserServiceImplementation implements UserService {
 	@Override
 	public ResponseEntity<String> verification(String emailToken) {
 
-		// Using model mapper mapping dto object with user details entity
-		modelMapper.map(userRegistration, userDetailsEntity);
-		
 		// Checking system generated token and email send token is equal or not
-		if (!emailToken.equals(token)) {
+		if (emailToken.equals(token)) {
 
 			// saving user data into database
-			userRepository.save(userDetailsEntity);
+			repository.save(userDetailsEntity);
 
 			return new ResponseEntity<String>(environment.getProperty("status.success.user.verification"),
 					HttpStatus.OK);
