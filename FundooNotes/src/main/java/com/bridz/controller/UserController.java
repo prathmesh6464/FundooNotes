@@ -50,7 +50,7 @@ public class UserController {
 	}
 
 	@GetMapping("/verification/{token}")
-	public ResponseEntity<String> userVerification(@PathVariable("token") String emailToken) {
+	public ResponseEntity<String> verification(@PathVariable("token") String emailToken) {
 
 		return userService.verification(emailToken);
 	}
