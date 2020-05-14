@@ -1,9 +1,13 @@
 package com.bridz.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class NotesData {
@@ -17,6 +21,12 @@ public class NotesData {
 	private boolean isArchive;
 	private boolean isPined;
 	private String reminderDateTime;
+	
+	@ManyToOne
+	UserDetails userDetailEntity;
+	
+	@OneToMany(mappedBy = "notesDataEntity")
+	public List<LabelData> labelDataEnitiy;
 
 	// Default constructor
 	public NotesData() {
@@ -94,4 +104,21 @@ public class NotesData {
 	public void setReminderDateTime(String reminderDateTime) {
 		this.reminderDateTime = reminderDateTime;
 	}
+	
+	public UserDetails getUserDetailEntity() {
+		return userDetailEntity;
+	}
+
+	public void setUserDetailEntity(UserDetails userDetailEntity) {
+		this.userDetailEntity = userDetailEntity;
+	}
+
+	public List<LabelData> getLabelDataEnitiy() {
+		return labelDataEnitiy;
+	}
+
+	public void setLabelDataEnitiy(List<LabelData> labelDataEnitiy) {
+		this.labelDataEnitiy = labelDataEnitiy;
+	}
+
 }
