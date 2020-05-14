@@ -56,6 +56,6 @@ public class LabelData {
 
 	public void setNotesDataEntity(NotesData notesDataEntity) {
 		this.notesDataEntity = notesDataEntity;
-	}	
+	}
 
 }
