@@ -1,7 +1,12 @@
 package com.bridz.controller;
 
+import com.bridz.dto.NotesDto;
+import com.bridz.dto.ReminderDateTimeDto;
+import com.bridz.service.NotesService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,9 +16,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.bridz.dto.NotesDto;
-import com.bridz.dto.ReminderDateTimeDto;
-import com.bridz.service.NotesService;
+
+
 
 @RestController
 @RequestMapping("/notes")
@@ -51,19 +55,19 @@ public class NotesController {
 		return notesService.show();
 	}
 
-	@PostMapping("/trashOrUnTrash/{id}")
+	@PutMapping("/trashOrUnTrash/{id}")
 	public ResponseEntity<String> setTrashOrUntrash(@PathVariable("id") long id) {
 
 		return notesService.trashUntrash(id);
 	}
 
-	@PostMapping("/archiveOrUnArchive/{id}")
+	@PutMapping("/archiveOrUnArchive/{id}")
 	public ResponseEntity<String> setArchiveOrUnArchive(@PathVariable("id") long id) {
 
 		return notesService.archiveUnArchive(id);
 	}
 
-	@PostMapping("/pinedOrUnPined/{id}")
+	@PutMapping("/pinedOrUnPined/{id}")
 	public ResponseEntity<String> setPinedOrUnPined(@PathVariable("id") long id) {
 
 		return notesService.pinedUnPined(id);
@@ -100,13 +104,13 @@ public class NotesController {
 		return notesService.setReminder(reminderDateTimeDto, id);
 	}
 
-	@PostMapping("/unsetReminder/{id}")
+	@PutMapping("/unsetReminder/{id}")
 	public ResponseEntity<String> unsetReminder(@PathVariable("id") long id) {
 
 		return notesService.unsetReminder(id);
 	}
 
-	@PostMapping("/resetReminder/{id}")
+	@PutMapping("/resetReminder/{id}")
 	public ResponseEntity<String> resetReminder(@RequestBody ReminderDateTimeDto reminderDateTimeDto,
 			@PathVariable("id") long id) {
 
