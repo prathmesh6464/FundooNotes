@@ -1,9 +1,10 @@
 package com.bridz.model;
 
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class LabelData {
@@ -14,9 +15,12 @@ public class LabelData {
 	private String labelName;
 	private long userId;
 
+	@ManyToOne
+	NotesData notesDataEntity;
+
 	// Constructor
 	public LabelData() {
-		super(); 
+		super();
 	}
 
 	// Constructor @param labelName @param userId
@@ -44,6 +48,14 @@ public class LabelData {
 	// @param userId the userId to set
 	public void setUserId(long userId) {
 		this.userId = userId;
+	}
+
+	public NotesData getNotesDataEntity() {
+		return notesDataEntity;
+	}
+
+	public void setNotesDataEntity(NotesData notesDataEntity) {
+		this.notesDataEntity = notesDataEntity;
 	}
 
 }
