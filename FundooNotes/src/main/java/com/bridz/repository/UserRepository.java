@@ -1,25 +1,21 @@
 package com.bridz.repository;
 
-import java.util.List;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
 import com.bridz.model.UserDetails;
+
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 //Interface
 @Repository
 public interface UserRepository extends JpaRepository<UserDetails, Integer> {
 
 	// Method for finding data by using user name and password
-	List<UserDetails> findByUserName(String userName);
+	Optional<UserDetails> findByUserName(String userName);
 
-	List<UserDetails> findByPassword(String password);
+	Optional<UserDetails> findByPassword(String password);
 
-	List<UserDetails> findByEmailId(String emailId);
-
-	@Query(value = "UPDATE user_details SET password = ? WHERE email_id = ?", nativeQuery = true)
-	@Modifying
-	List<UserDetails> setPassword(String resetPassword, String emailId);
+	Optional<UserDetails> findByEmailId(String emailId);
 
 }
