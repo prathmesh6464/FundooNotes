@@ -21,8 +21,8 @@ public class UserDetails {
 	private String mobileNumber;
 	private String emailId;
 
-	@OneToMany
-	public List<NotesData> notesData;
+	@OneToMany(mappedBy = "userDetailEntity")
+	public List<NotesData> notesDataEntity;
 
 	// Default constructor
 	public UserDetails() {
@@ -41,7 +41,7 @@ public class UserDetails {
 		this.password = password;
 		this.mobileNumber = mobileNumber;
 		this.emailId = emailId;
-		this.notesData = notesData;
+		this.notesDataEntity = notesData;
 	}
 
 	// @return the firstName
@@ -116,12 +116,12 @@ public class UserDetails {
 
 	// @return the notesData
 	public List<NotesData> getNotesData() {
-		return notesData;
+		return notesDataEntity;
 	}
 
 	// @param notesData the notesData to set
 	public void setNotesData(List<NotesData> notesData) {
-		this.notesData = notesData;
+		this.notesDataEntity = notesData;
 	}
 
 }
