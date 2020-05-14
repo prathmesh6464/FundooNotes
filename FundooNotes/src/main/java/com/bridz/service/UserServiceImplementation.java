@@ -1,8 +1,21 @@
 package com.bridz.service;
 
-import java.util.Collections;
-import javax.management.JMException;
-import org.modelmapper.ModelMapper;
+import java.util.Optional;
+
+import com.bridz.utility.JwtToken;
+import com.bridz.utility.EmailService;
+
+import com.bridz.exception.JmsException;
+import com.bridz.exception.JwtTokenException;
+
+import com.bridz.dto.ResetPasswordDto;
+import com.bridz.dto.ForgetPasswordDto;
+import com.bridz.dto.LoginDto;
+import com.bridz.dto.UserRegistrationDto;
+
+import com.bridz.model.UserDetails;
+import com.bridz.repository.UserRepository;
+
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -11,16 +24,9 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import com.bridz.dto.ResetPasswordDto;
-import com.bridz.dto.ForgetPasswordDto;
-import com.bridz.dto.LoginDto;
-import com.bridz.dto.UserRegistrationDto;
-import com.bridz.exception.JmsException;
-import com.bridz.exception.JwtTokenException;
-import com.bridz.model.UserDetails;
-import com.bridz.repository.UserRepository;
-import com.bridz.utility.JwtToken;
-import com.bridz.utility.EmailService;
+
+import javax.management.JMException;
+import org.modelmapper.ModelMapper;
 
 @Service
 public class UserServiceImplementation implements UserService {
@@ -54,29 +60,51 @@ public class UserServiceImplementation implements UserService {
 	// Token variable for verification of token
 	private String token;
 
-	// User registration dto object used in user verification
-	private UserRegistrationDto userRegistrationDto;
-
 	private String emailId;
 
 	@Override
 	public ResponseEntity<String> registerUser(UserRegistrationDto userRegisterDto) {
 
-		// User registration object used in user Verification
-		userRegistrationDto = userRegisterDto;
+		modelMapper.map(userRegisterDto, userDetailsEntity);
+
+		if (repository.findByUserName(userDetailsEntity.getUserName()).isPresent()) {
+
+			return new ResponseEntity<String>(environment.getProperty("status.user.registration.userName"),
+					HttpStatus.OK);
+		}
+
+		if (repository.findByEmailId(userDetailsEntity.getEmailId()).isPresent()) {
+
+			return new ResponseEntity<String>(environment.getProperty("status.user.registration.emailId"),
+					HttpStatus.OK);
+		}
+
+		if (repository.findByPassword(userDetailsEntity.getPassword()).isPresent()) {
+
+			return new ResponseEntity<String>(environment.getProperty("status.user.registration.password"),
+					HttpStatus.OK);
+		}
+
+		repository.save(userDetailsEntity);
+
+		this.sendMail(userRegisterDto);
+
+		return new ResponseEntity<String>(environment.getProperty("status.success.user.register"), HttpStatus.OK);
+	}
+
+	public void sendMail(UserRegistrationDto userRegistrationDto) {
 
 		MessageProperties messageProperties = new MessageProperties();
 
 		// Email related variables
-		String to = userRegisterDto.getEmailId();
+		String to = userRegistrationDto.getEmailId();
 		String subject = "Authentication of new registered user";
-		token = jwtToken.generateToken(userRegisterDto);
+		token = jwtToken.generateToken(userRegistrationDto);
 
 		// User verification url
 		String userVerificationUrl = environment.getProperty("user.verification") + token;
 
 		Message message = new Message(userVerificationUrl.getBytes(), new MessageProperties());
-		;
 
 		// Send email method called
 		try {
@@ -90,8 +118,6 @@ public class UserServiceImplementation implements UserService {
 
 		rabbitTemplate.send(environment.getProperty("rabbitmq.exchangeName"),
 				environment.getProperty("rabbitmq.event.topic"), message);
-
-		return new ResponseEntity<String>(environment.getProperty("status.success.user.register"), HttpStatus.OK);
 	}
 
 	@Override
@@ -101,10 +127,10 @@ public class UserServiceImplementation implements UserService {
 		modelMapper.map(userLoginDto, userDetailsEntity);
 
 		// Checking user name and password is valid or not
-		if (!repository.findByUserName(userDetailsEntity.getUserName()).equals(Collections.<String>emptyList())
-				&& (!repository.findByPassword(userDetailsEntity.getPassword()).equals(Collections.<String>emptyList()))
-				&& repository.findByUserName(userDetailsEntity.getUserName())
-						.equals(repository.findByPassword(userDetailsEntity.getPassword()))) {
+		if (repository.findByUserName(userDetailsEntity.getUserName()).isPresent()
+				&& (repository.findByPassword(userDetailsEntity.getPassword()).isPresent())
+				&& repository.findByUserName(userDetailsEntity.getUserName()).get()
+						.equals(repository.findByPassword(userDetailsEntity.getPassword()).get())) {
 
 			return new ResponseEntity<String>(environment.getProperty("status.success.user.login"), HttpStatus.OK);
 		}
@@ -146,19 +172,32 @@ public class UserServiceImplementation implements UserService {
 		// Using model mapper mapping dto object with user details entity
 		modelMapper.map(resetPasswordDto, userDetailsEntity);
 
+		if (repository.findByPassword(userDetailsEntity.getPassword()).isPresent()) {
+
+			return new ResponseEntity<String>(environment.getProperty("status.user.registration.password"),
+					HttpStatus.OK);
+		}
+
 		// Storing user's edited information to data base
 		if (resetPasswordDto.getPassword().equals(resetPasswordDto.getConfirmPassword())) {
 
-			try {
+			Optional<UserDetails> userDetailsInfo = repository.findByEmailId(emailId);
 
-				repository.setPassword(userDetailsEntity.getPassword(), emailId);
-			} catch (Exception e) {
+			if (userDetailsInfo.isPresent()) {
 
-				return new ResponseEntity<String>(environment.getProperty("status.success.user.resetPassword"),
-						HttpStatus.OK);
+				userDetailsInfo.get().setPassword(userDetailsEntity.getPassword());
+			} else {
+
+				throw new JwtTokenException(
+						Integer.parseInt(environment.getProperty("status.user.emailNotFoundErrorCode")),
+						environment.getProperty("status.user.emailNotFoundErrorMessage"));
 			}
-		}
 
+			repository.saveAndFlush(userDetailsInfo.get());
+
+			return new ResponseEntity<String>(environment.getProperty("status.success.user.resetPassword"),
+					HttpStatus.OK);
+		}
 		return new ResponseEntity<String>(environment.getProperty("status.user.authentication.password.errorMessage"),
 				HttpStatus.OK);
 	}
@@ -168,9 +207,6 @@ public class UserServiceImplementation implements UserService {
 
 		// Checking system generated token and email send token is equal or not
 		if (emailToken.equals(token)) {
-
-			// saving user data into database
-			repository.save(userDetailsEntity);
 
 			return new ResponseEntity<String>(environment.getProperty("status.success.user.verification"),
 					HttpStatus.OK);
