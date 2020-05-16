@@ -2,9 +2,13 @@ package com.bridz.model;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class LabelData {
@@ -13,10 +17,9 @@ public class LabelData {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	private String labelName;
-	private long userId;
 
-	@ManyToOne
-	NotesData notesDataEntity;
+	@ManyToMany
+	List<NotesData> notesDataEntity = new ArrayList<>();
 
 	// Constructor
 	public LabelData() {
@@ -24,10 +27,10 @@ public class LabelData {
 	}
 
 	// Constructor @param labelName @param userId
-	public LabelData(String labelName, long userId) {
+	public LabelData(String labelName) {
 		super();
 		this.labelName = labelName;
-		this.userId = userId;
+
 	}
 
 	// @return the labelName
@@ -40,21 +43,11 @@ public class LabelData {
 		this.labelName = labelName;
 	}
 
-	// @return the userId
-	public long getUserId() {
-		return userId;
-	}
-
-	// @param userId the userId to set
-	public void setUserId(long userId) {
-		this.userId = userId;
-	}
-
-	public NotesData getNotesDataEntity() {
+	public List<NotesData> getNotesDataEntity() {
 		return notesDataEntity;
 	}
 
-	public void setNotesDataEntity(NotesData notesDataEntity) {
+	public void setNotesDataEntity(List<NotesData> notesDataEntity) {
 		this.notesDataEntity = notesDataEntity;
 	}
 
