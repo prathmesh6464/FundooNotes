@@ -16,9 +16,9 @@ import com.bridz.dto.UserRegistrationDto;
 import com.bridz.model.UserDetails;
 import com.bridz.repository.UserRepository;
 
-import org.springframework.amqp.core.Message;
-import org.springframework.amqp.core.MessageProperties;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
+//import org.springframework.amqp.core.Message;
+//import org.springframework.amqp.core.MessageProperties;
+//import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
@@ -35,8 +35,8 @@ public class UserServiceImplementation implements UserService {
 	@Autowired
 	private ModelMapper modelMapper;
 
-	@Autowired
-	private RabbitTemplate rabbitTemplate;
+	// @Autowired
+	// private RabbitTemplate rabbitTemplate;
 
 	// Creating Object of user Details Entity
 	@Autowired
@@ -94,17 +94,19 @@ public class UserServiceImplementation implements UserService {
 
 	public void sendMail(UserRegistrationDto userRegistrationDto) {
 
-		MessageProperties messageProperties = new MessageProperties();
+		// MessageProperties messageProperties = new MessageProperties();
 
 		// Email related variables
 		String to = userRegistrationDto.getEmailId();
 		String subject = "Authentication of new registered user";
 		token = jwtToken.generateToken(userRegistrationDto);
+		emailId = to;
 
 		// User verification url
 		String userVerificationUrl = environment.getProperty("user.verification") + token;
 
-		Message message = new Message(userVerificationUrl.getBytes(), new MessageProperties());
+		// Message message = new Message(userVerificationUrl.getBytes(), new
+		// MessageProperties());
 
 		// Send email method called
 		try {
@@ -116,8 +118,8 @@ public class UserServiceImplementation implements UserService {
 					environment.getProperty("status.jms.send.mail.errorMessage"));
 		}
 
-		rabbitTemplate.send(environment.getProperty("rabbitmq.exchangeName"),
-				environment.getProperty("rabbitmq.event.topic"), message);
+		// rabbitTemplate.send(environment.getProperty("rabbitmq.exchangeName"),
+		// environment.getProperty("rabbitmq.event.topic"), message);
 	}
 
 	@Override
@@ -130,7 +132,8 @@ public class UserServiceImplementation implements UserService {
 		if (repository.findByUserName(userDetailsEntity.getUserName()).isPresent()
 				&& (repository.findByPassword(userDetailsEntity.getPassword()).isPresent())
 				&& repository.findByUserName(userDetailsEntity.getUserName()).get()
-						.equals(repository.findByPassword(userDetailsEntity.getPassword()).get())) {
+						.equals(repository.findByPassword(userDetailsEntity.getPassword()).get())
+				&& repository.findByPassword(userDetailsEntity.getPassword()).get().getIsEmailVeriefied() == true) {
 
 			return new ResponseEntity<String>(environment.getProperty("status.success.user.login"), HttpStatus.OK);
 		}
@@ -205,9 +208,13 @@ public class UserServiceImplementation implements UserService {
 	@Override
 	public ResponseEntity<String> verification(String emailToken) {
 
+		Optional<UserDetails> userDetails = repository.findByEmailId(emailId);
+
 		// Checking system generated token and email send token is equal or not
 		if (emailToken.equals(token)) {
 
+			userDetails.get().setIsEmailVeriefied(true);
+			repository.save(userDetails.get());
 			return new ResponseEntity<String>(environment.getProperty("status.success.user.verification"),
 					HttpStatus.OK);
 		}
