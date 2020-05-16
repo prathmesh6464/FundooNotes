@@ -1,10 +1,13 @@
 package com.bridz.model;
 
 import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -20,9 +23,10 @@ public class UserDetails {
 	private String password;
 	private String mobileNumber;
 	private String emailId;
+	private boolean isEmailVerified;
 
-	@OneToMany(mappedBy = "userDetailEntity")
-	public List<NotesData> notesDataEntity;
+	@OneToMany(mappedBy = "userDetailsEntity", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	public List<NotesData> notesData;
 
 	// Default constructor
 	public UserDetails() {
@@ -32,7 +36,7 @@ public class UserDetails {
 
 	// Parameterized constructor
 	public UserDetails(String firstName, String lastName, String userName, String password, String mobileNumber,
-			String emailId, List<NotesData> notesData) {
+			String emailId, boolean isEmailVerified, List<NotesData> notesData) {
 
 		super();
 		this.firstName = firstName;
@@ -41,7 +45,8 @@ public class UserDetails {
 		this.password = password;
 		this.mobileNumber = mobileNumber;
 		this.emailId = emailId;
-		this.notesDataEntity = notesData;
+		this.isEmailVerified = isEmailVerified;
+		this.notesData = notesData;
 	}
 
 	// @return the firstName
@@ -116,12 +121,21 @@ public class UserDetails {
 
 	// @return the notesData
 	public List<NotesData> getNotesData() {
-		return notesDataEntity;
+		return notesData;
 	}
 
 	// @param notesData the notesData to set
 	public void setNotesData(List<NotesData> notesData) {
-		this.notesDataEntity = notesData;
+		this.notesData = notesData;
 	}
 
+	// @return the isEmailVeriefied
+	public boolean getIsEmailVeriefied() {
+		return isEmailVerified;
+	}
+
+	// @param isEmailVeriefied the isEmailVeriefied to set
+	public void setIsEmailVeriefied(boolean isEmailVeriefied) {
+		this.isEmailVerified = isEmailVeriefied;
+	}
 }
