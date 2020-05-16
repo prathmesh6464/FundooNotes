@@ -1,13 +1,16 @@
 package com.bridz.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @Entity
 public class NotesData {
@@ -21,12 +24,12 @@ public class NotesData {
 	private boolean isArchive;
 	private boolean isPined;
 	private String reminderDateTime;
-	
+
 	@ManyToOne
-	UserDetails userDetailEntity;
-	
-	@OneToMany(mappedBy = "notesDataEntity")
-	public List<LabelData> labelDataEnitiy;
+	UserDetails userDetailsEntity;
+
+	@ManyToMany(mappedBy = "notesDataEntity", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	public List<LabelData> labelDataEnitiy = new ArrayList<>();
 
 	// Default constructor
 	public NotesData() {
@@ -104,13 +107,13 @@ public class NotesData {
 	public void setReminderDateTime(String reminderDateTime) {
 		this.reminderDateTime = reminderDateTime;
 	}
-	
+
 	public UserDetails getUserDetailEntity() {
-		return userDetailEntity;
+		return userDetailsEntity;
 	}
 
-	public void setUserDetailEntity(UserDetails userDetailEntity) {
-		this.userDetailEntity = userDetailEntity;
+	public void setUserDetailEntity(UserDetails userDetailsEntity) {
+		this.userDetailsEntity = userDetailsEntity;
 	}
 
 	public List<LabelData> getLabelDataEnitiy() {
