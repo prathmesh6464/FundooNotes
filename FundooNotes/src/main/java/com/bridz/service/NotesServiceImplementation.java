@@ -6,9 +6,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
+import com.bridz.exception.LabelException;
 import com.bridz.exception.NotesException;
 import com.bridz.repository.NotesRepository;
-
+import com.bridz.dto.JwtResponseToken;
 import com.bridz.dto.NotesDto;
 import com.bridz.dto.ReminderDateTimeDto;
 
@@ -42,12 +43,21 @@ public class NotesServiceImplementation implements NotesService {
 	@Autowired
 	private Environment environment;
 
+	@Autowired
+	UserService userService;
+
 	// notes repository object
 	@Autowired
 	private NotesRepository repository;
 
 	@Override
-	public ResponseEntity<String> save(NotesDto notesDto) {
+	public ResponseEntity<String> save(NotesDto notesDto, JwtResponseToken token) {
+
+		if (!token.getJwtToken().equals(userService.getJwtResponseToken())) {
+
+			throw new LabelException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
+					environment.getProperty("status.user.loginErrorMessage"));
+		}
 
 		// Using model mapper mapping dto object with user details entity
 		modelMapper.map(notesDto, entity);
@@ -58,7 +68,13 @@ public class NotesServiceImplementation implements NotesService {
 
 	@Override
 	@Transactional
-	public ResponseEntity<String> delete(Long id) {
+	public ResponseEntity<String> delete(Long id, JwtResponseToken token) {
+
+		if (!token.getJwtToken().equals(userService.getJwtResponseToken())) {
+
+			throw new LabelException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
+					environment.getProperty("status.user.loginErrorMessage"));
+		}
 
 		repository.deleteById(id);
 
@@ -66,7 +82,13 @@ public class NotesServiceImplementation implements NotesService {
 	}
 
 	@Override
-	public ResponseEntity<Object> show() {
+	public ResponseEntity<Object> show(JwtResponseToken token) {
+
+		if (!token.getJwtToken().equals(userService.getJwtResponseToken())) {
+
+			throw new LabelException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
+					environment.getProperty("status.user.loginErrorMessage"));
+		}
 
 		repository.findAll().stream().forEach(notesDataObject -> {
 
@@ -78,7 +100,13 @@ public class NotesServiceImplementation implements NotesService {
 	}
 
 	@Override
-	public ResponseEntity<String> update(NotesDto notesDto, Long id) {
+	public ResponseEntity<String> update(NotesDto notesDto, Long id, JwtResponseToken token) {
+
+		if (!token.getJwtToken().equals(userService.getJwtResponseToken())) {
+
+			throw new LabelException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
+					environment.getProperty("status.user.loginErrorMessage"));
+		}
 
 		modelMapper.map(notesDto, entity);
 		Optional<NotesData> notesData = repository.findById(id);
@@ -99,7 +127,13 @@ public class NotesServiceImplementation implements NotesService {
 	}
 
 	@Override
-	public ResponseEntity<String> trashUntrash(long id) {
+	public ResponseEntity<String> trashUntrash(long id, JwtResponseToken token) {
+
+		if (!token.getJwtToken().equals(userService.getJwtResponseToken())) {
+
+			throw new LabelException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
+					environment.getProperty("status.user.loginErrorMessage"));
+		}
 
 		Optional<NotesData> resultOfTrashOrUnTrash = repository.findById(id);
 
@@ -126,7 +160,13 @@ public class NotesServiceImplementation implements NotesService {
 	}
 
 	@Override
-	public ResponseEntity<String> archiveUnArchive(long id) {
+	public ResponseEntity<String> archiveUnArchive(long id, JwtResponseToken token) {
+
+		if (!token.getJwtToken().equals(userService.getJwtResponseToken())) {
+
+			throw new LabelException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
+					environment.getProperty("status.user.loginErrorMessage"));
+		}
 
 		Optional<NotesData> resultOfArchiveOrUnArchive = repository.findById(id);
 
@@ -151,7 +191,13 @@ public class NotesServiceImplementation implements NotesService {
 	}
 
 	@Override
-	public ResponseEntity<String> pinedUnPined(long id) {
+	public ResponseEntity<String> pinedUnPined(long id, JwtResponseToken token) {
+
+		if (!token.getJwtToken().equals(userService.getJwtResponseToken())) {
+
+			throw new LabelException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
+					environment.getProperty("status.user.loginErrorMessage"));
+		}
 
 		Optional<NotesData> resultOfPinedOrUnPined = repository.findById(id);
 
@@ -178,7 +224,13 @@ public class NotesServiceImplementation implements NotesService {
 	}
 
 	@Override
-	public ResponseEntity<Object> sortByTitle() {
+	public ResponseEntity<Object> sortByTitle(JwtResponseToken token) {
+
+		if (!token.getJwtToken().equals(userService.getJwtResponseToken())) {
+
+			throw new LabelException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
+					environment.getProperty("status.user.loginErrorMessage"));
+		}
 
 		repository.findByOrderByTitleAsc().stream().forEach(notesData -> {
 
@@ -189,7 +241,13 @@ public class NotesServiceImplementation implements NotesService {
 	}
 
 	@Override
-	public ResponseEntity<Object> sortByDescription() {
+	public ResponseEntity<Object> sortByDescription(JwtResponseToken token) {
+
+		if (!token.getJwtToken().equals(userService.getJwtResponseToken())) {
+
+			throw new LabelException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
+					environment.getProperty("status.user.loginErrorMessage"));
+		}
 
 		repository.findByOrderByDescriptionAsc().stream().forEach(notesData -> {
 
@@ -200,7 +258,13 @@ public class NotesServiceImplementation implements NotesService {
 	}
 
 	@Override
-	public ResponseEntity<Object> findByTitle(String title) {
+	public ResponseEntity<Object> findByTitle(String title, JwtResponseToken token) {
+
+		if (!token.getJwtToken().equals(userService.getJwtResponseToken())) {
+
+			throw new LabelException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
+					environment.getProperty("status.user.loginErrorMessage"));
+		}
 
 		repository.findByTitle(title).stream().forEach(notesData -> {
 
@@ -211,7 +275,13 @@ public class NotesServiceImplementation implements NotesService {
 	}
 
 	@Override
-	public ResponseEntity<Object> findByDescription(String description) {
+	public ResponseEntity<Object> findByDescription(String description, JwtResponseToken token) {
+
+		if (!token.getJwtToken().equals(userService.getJwtResponseToken())) {
+
+			throw new LabelException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
+					environment.getProperty("status.user.loginErrorMessage"));
+		}
 
 		repository.findByDescription(description).stream().forEach(notesData -> {
 
@@ -222,10 +292,17 @@ public class NotesServiceImplementation implements NotesService {
 	}
 
 	@Override
-	public ResponseEntity<String> setReminder(ReminderDateTimeDto reminderDateTimeDto, long id) {
+	public ResponseEntity<String> setReminder(ReminderDateTimeDto reminderDateTimeDto, long id,
+			JwtResponseToken token) {
 
 		LocalDateTime reminderDateTime = LocalDateTime.of(reminderDateTimeDto.getYear(), reminderDateTimeDto.getMonth(),
 				reminderDateTimeDto.getDay(), reminderDateTimeDto.getHour(), reminderDateTimeDto.getMinute());
+
+		if (!token.getJwtToken().equals(userService.getJwtResponseToken())) {
+
+			throw new LabelException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
+					environment.getProperty("status.user.loginErrorMessage"));
+		}
 
 		// Inbuilt format
 		DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
@@ -251,7 +328,13 @@ public class NotesServiceImplementation implements NotesService {
 	}
 
 	@Override
-	public ResponseEntity<String> unsetReminder(long id) {
+	public ResponseEntity<String> unsetReminder(long id, JwtResponseToken token) {
+
+		if (!token.getJwtToken().equals(userService.getJwtResponseToken())) {
+
+			throw new LabelException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
+					environment.getProperty("status.user.loginErrorMessage"));
+		}
 
 		Optional<NotesData> notesData = repository.findById(id);
 
@@ -273,10 +356,17 @@ public class NotesServiceImplementation implements NotesService {
 	}
 
 	@Override
-	public ResponseEntity<String> resetReminder(ReminderDateTimeDto reminderDateTimeDto, long id) {
+	public ResponseEntity<String> resetReminder(ReminderDateTimeDto reminderDateTimeDto, long id,
+			JwtResponseToken token) {
 
 		LocalDateTime reminderDateTime = LocalDateTime.of(reminderDateTimeDto.getYear(), reminderDateTimeDto.getMonth(),
 				reminderDateTimeDto.getDay(), reminderDateTimeDto.getHour(), reminderDateTimeDto.getMinute());
+
+		if (!token.getJwtToken().equals(userService.getJwtResponseToken())) {
+
+			throw new LabelException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
+					environment.getProperty("status.user.loginErrorMessage"));
+		}
 
 		// Inbuilt format
 		DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
