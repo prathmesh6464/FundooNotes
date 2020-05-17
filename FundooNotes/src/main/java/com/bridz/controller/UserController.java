@@ -5,7 +5,9 @@ import com.bridz.dto.ResetPasswordDto;
 import com.bridz.dto.ForgetPasswordDto;
 import com.bridz.dto.UserRegistrationDto;
 import com.bridz.service.UserService;
+
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -26,7 +28,7 @@ public class UserController {
 	UserService userService;
 
 	@PostMapping("/login")
-	public ResponseEntity<String> login(@Valid @RequestBody LoginDto userLoginDto) {
+	public ResponseEntity<Object> login(@Valid @RequestBody LoginDto userLoginDto) {
 
 		return userService.login(userLoginDto);
 	}
