@@ -9,6 +9,8 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import com.bridz.dto.JwtResponseToken;
 import com.bridz.dto.LabelDto;
 import com.bridz.exception.LabelException;
 import com.bridz.model.LabelData;
@@ -32,8 +34,19 @@ public class LabelServiceImplementation implements LabelService {
 	@Autowired
 	LabelRepository repository;
 
+	@Autowired
+	UserService userService;
+
 	@Override
-	public ResponseEntity<String> add(LabelDto labelDto) {
+	public ResponseEntity<String> add(LabelDto labelDto, JwtResponseToken token) {
+		
+		if (!userService.getJwtResponseToken().equals(token.getJwtToken())) {
+
+			throw new LabelException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
+					environment.getProperty("status.user.loginErrorMessage"));
+		}
+
+		System.out.println(token.getJwtToken());
 
 		modelMapper.map(labelDto, entity);
 		repository.save(entity);
@@ -42,7 +55,13 @@ public class LabelServiceImplementation implements LabelService {
 	}
 
 	@Override
-	public ResponseEntity<String> edite(LabelDto labelDto, long id) {
+	public ResponseEntity<String> edite(LabelDto labelDto, long id, JwtResponseToken token) {
+
+		if (!userService.getJwtResponseToken().equals(token.getJwtToken())) {
+
+			throw new LabelException(Integer.parseInt(environment.getProperty("status.notes.user.errorCode")),
+					environment.getProperty("status.notes.user.loginErrorMessage"));
+		}
 
 		modelMapper.map(labelDto, entity);
 
@@ -64,7 +83,13 @@ public class LabelServiceImplementation implements LabelService {
 	}
 
 	@Override
-	public ResponseEntity<String> delete(long id) {
+	public ResponseEntity<String> delete(long id, JwtResponseToken token) {
+
+		if (!userService.getJwtResponseToken().equals(token.getJwtToken())) {
+
+			throw new LabelException(Integer.parseInt(environment.getProperty("status.notes.user.errorCode")),
+					environment.getProperty("status.notes.user.loginErrorMessage"));
+		}
 
 		repository.deleteById(id);
 
@@ -72,7 +97,13 @@ public class LabelServiceImplementation implements LabelService {
 	}
 
 	@Override
-	public ResponseEntity<Object> show() {
+	public ResponseEntity<Object> show(JwtResponseToken token) {
+
+		if (!userService.getJwtResponseToken().equals(token.getJwtToken())) {
+
+			throw new LabelException(Integer.parseInt(environment.getProperty("status.notes.user.errorCode")),
+					environment.getProperty("status.notes.user.loginErrorMessage"));
+		}
 
 		repository.findAll().stream().forEach(labelEntityObject -> {
 
