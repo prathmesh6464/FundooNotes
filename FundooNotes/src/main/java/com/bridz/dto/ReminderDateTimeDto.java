@@ -47,4 +47,5 @@ public class ReminderDateTimeDto {
 	public void setMinute(int minute) {
 		this.minute = minute;
 	}
+
 }
