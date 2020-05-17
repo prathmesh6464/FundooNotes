@@ -48,8 +48,8 @@ public class UserRegistrationDto {
 	}
 
 	// Parameterized constructor
-	public UserRegistrationDto(String firstName, String lastName, String userName, String password,
-			String mobileNumber, String emailId) {
+	public UserRegistrationDto(String firstName, String lastName, String userName, String password, String mobileNumber,
+			String emailId) {
 
 		super();
 		this.firstName = firstName;
