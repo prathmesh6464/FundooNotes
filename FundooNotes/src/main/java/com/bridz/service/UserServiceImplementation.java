@@ -10,6 +10,7 @@ import com.bridz.exception.JwtTokenException;
 
 import com.bridz.dto.ResetPasswordDto;
 import com.bridz.dto.ForgetPasswordDto;
+import com.bridz.dto.JwtResponseToken;
 import com.bridz.dto.LoginDto;
 import com.bridz.dto.UserRegistrationDto;
 
@@ -60,7 +61,11 @@ public class UserServiceImplementation implements UserService {
 	// Token variable for verification of token
 	private String token;
 
-	private String emailId;
+	private String emailId;	
+		
+	public String getJwtResponseToken() {
+		return token;
+	}
 
 	@Override
 	public ResponseEntity<String> registerUser(UserRegistrationDto userRegisterDto) {
@@ -123,7 +128,7 @@ public class UserServiceImplementation implements UserService {
 	}
 
 	@Override
-	public ResponseEntity<String> login(LoginDto userLoginDto) {
+	public ResponseEntity<Object> login(LoginDto userLoginDto) {
 
 		// Using model mapper mapping dto object with user details entity
 		modelMapper.map(userLoginDto, userDetailsEntity);
@@ -135,10 +140,12 @@ public class UserServiceImplementation implements UserService {
 						.equals(repository.findByPassword(userDetailsEntity.getPassword()).get())
 				&& repository.findByPassword(userDetailsEntity.getPassword()).get().getIsEmailVeriefied() == true) {
 
-			return new ResponseEntity<String>(environment.getProperty("status.success.user.login"), HttpStatus.OK);
+			token = jwtToken.generateToken(userLoginDto);
+
+			return new ResponseEntity<Object>(new JwtResponseToken(token), HttpStatus.OK);
 		}
 
-		return new ResponseEntity<String>(environment.getProperty("status.user.authentication.errorMessage"),
+		return new ResponseEntity<Object>(new JwtResponseToken(environment.getProperty("status.user.authentication.errorMessage")),
 				HttpStatus.NON_AUTHORITATIVE_INFORMATION);
 	}
 
