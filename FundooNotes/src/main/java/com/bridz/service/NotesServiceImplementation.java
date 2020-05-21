@@ -89,11 +89,15 @@ public class NotesServiceImplementation implements NotesService {
 			throw new LabelException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
 					environment.getProperty("status.user.loginErrorMessage"));
 		}
-
+		
+		listOfNotesDto.clear();
+		
 		repository.findAll().stream().forEach(notesDataObject -> {
 
 			listOfNotesDto.add(modelMapper.map(notesDataObject, NotesDto.class));
 		});
+
+		modelMapper.map(repository.findAll().toArray(), listOfNotesDto);
 
 		return new ResponseEntity<Object>(listOfNotesDto, HttpStatus.OK);
 
