@@ -1,16 +1,17 @@
 package com.bridz.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "UserDetails")
 public class UserDetails {
 
 	// Variables
@@ -22,11 +23,14 @@ public class UserDetails {
 	private String userName;
 	private String password;
 	private String mobileNumber;
-	private String emailId;
+	private String email;
 	private boolean isEmailVerified;
 
-	@OneToMany(mappedBy = "userDetailsEntity", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	public List<NotesData> notesData;
+	@OneToMany(mappedBy = "userDetails")
+	private List<NotesData> notesData = new ArrayList<NotesData>();
+
+	@OneToMany(mappedBy = "userDetails")
+	private List<LabelData> labelData = new ArrayList<LabelData>();
 
 	// Default constructor
 	public UserDetails() {
@@ -34,25 +38,34 @@ public class UserDetails {
 		super();
 	}
 
-	// Parameterized constructor
-	public UserDetails(String firstName, String lastName, String userName, String password, String mobileNumber,
-			String emailId, boolean isEmailVerified, List<NotesData> notesData) {
-
-		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.userName = userName;
-		this.password = password;
-		this.mobileNumber = mobileNumber;
-		this.emailId = emailId;
-		this.isEmailVerified = isEmailVerified;
-		this.notesData = notesData;
-	}
-
 	// @return the firstName
 	public String getFirstName() {
 
 		return firstName;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public boolean isEmailVerified() {
+		return isEmailVerified;
+	}
+
+	public void setEmailVerified(boolean isEmailVerified) {
+		this.isEmailVerified = isEmailVerified;
+	}
+
+	public List<LabelData> getLabelData() {
+		return labelData;
+	}
+
+	public void setLabelData(List<LabelData> labelData) {
+		this.labelData = labelData;
 	}
 
 	// @param firstName the firstName to set
@@ -110,13 +123,13 @@ public class UserDetails {
 	}
 
 	// @return the emailId
-	public String getEmailId() {
-		return emailId;
+	public String getEmail() {
+		return email;
 	}
 
 	// @param emailId the emailId to set
-	public void setEmailId(String emailId) {
-		this.emailId = emailId;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	// @return the notesData
