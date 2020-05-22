@@ -9,6 +9,8 @@ import java.util.Optional;
 import com.bridz.exception.LabelException;
 import com.bridz.exception.NotesException;
 import com.bridz.repository.NotesRepository;
+import com.bridz.repository.UserRepository;
+import com.bridz.utility.JwtToken;
 import com.bridz.dto.JwtResponseToken;
 import com.bridz.dto.NotesDto;
 import com.bridz.dto.ReminderDateTimeDto;
@@ -49,6 +51,12 @@ public class NotesServiceImplementation implements NotesService {
 	// notes repository object
 	@Autowired
 	private NotesRepository repository;
+	
+	@Autowired
+	private UserRepository userRepository;
+	
+	@Autowired
+	private JwtToken jwtToken;
 
 	@Override
 	public ResponseEntity<String> save(NotesDto notesDto, JwtResponseToken token) {
@@ -58,6 +66,8 @@ public class NotesServiceImplementation implements NotesService {
 			throw new LabelException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
 					environment.getProperty("status.user.loginErrorMessage"));
 		}
+		
+		entity.setUserDetails(userRepository.findByUserName(jwtToken.extractUserName(token.getJwtToken())).get());
 
 		// Using model mapper mapping dto object with user details entity
 		modelMapper.map(notesDto, entity);
