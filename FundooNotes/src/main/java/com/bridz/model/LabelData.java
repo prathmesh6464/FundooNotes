@@ -8,9 +8,17 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
+@Table(name = "labelData")
+@JsonIgnoreProperties({ "userDetails" })
 public class LabelData {
 
 	@Id
@@ -19,23 +27,45 @@ public class LabelData {
 	private String labelName;
 
 	@ManyToMany
-	List<NotesData> notesDataEntity = new ArrayList<>();
+	@JoinTable(name = "noteLabel", joinColumns = @JoinColumn(referencedColumnName = "id"))
+	private List<NotesData> notesData = new ArrayList<NotesData>();
+
+	@ManyToOne
+	@JoinColumn(name = "userDetails_id", nullable = false)
+	private UserDetails userDetails;
 
 	// Constructor
 	public LabelData() {
 		super();
 	}
 
-	// Constructor @param labelName @param userId
-	public LabelData(String labelName) {
-		super();
-		this.labelName = labelName;
-
-	}
-
 	// @return the labelName
 	public String getLabelName() {
 		return labelName;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public List<NotesData> getNotesData() {
+		return notesData;
+	}
+
+	public void setNotesData(List<NotesData> notesData) {
+		this.notesData = notesData;
+	}
+
+	public UserDetails getUserDetails() {
+		return userDetails;
+	}
+
+	public void setUserDetails(UserDetails userDetails) {
+		this.userDetails = userDetails;
 	}
 
 	// @param labelName the labelName to set
@@ -44,11 +74,11 @@ public class LabelData {
 	}
 
 	public List<NotesData> getNotesDataEntity() {
-		return notesDataEntity;
+		return notesData;
 	}
 
 	public void setNotesDataEntity(List<NotesData> notesDataEntity) {
-		this.notesDataEntity = notesDataEntity;
+		this.notesData = notesDataEntity;
 	}
 
 }
