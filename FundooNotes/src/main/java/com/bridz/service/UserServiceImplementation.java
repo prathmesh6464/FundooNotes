@@ -61,8 +61,8 @@ public class UserServiceImplementation implements UserService {
 	// Token variable for verification of token
 	private String token;
 
-	private String emailId;	
-		
+	private String emailId;
+
 	public String getJwtResponseToken() {
 		return token;
 	}
@@ -78,7 +78,7 @@ public class UserServiceImplementation implements UserService {
 					HttpStatus.OK);
 		}
 
-		if (repository.findByEmailId(userDetailsEntity.getEmailId()).isPresent()) {
+		if (repository.findByEmail(userDetailsEntity.getEmail()).isPresent()) {
 
 			return new ResponseEntity<String>(environment.getProperty("status.user.registration.emailId"),
 					HttpStatus.OK);
@@ -102,7 +102,7 @@ public class UserServiceImplementation implements UserService {
 		// MessageProperties messageProperties = new MessageProperties();
 
 		// Email related variables
-		String to = userRegistrationDto.getEmailId();
+		String to = userRegistrationDto.getEmail();
 		String subject = "Authentication of new registered user";
 		token = jwtToken.generateToken(userRegistrationDto);
 		emailId = to;
@@ -145,7 +145,8 @@ public class UserServiceImplementation implements UserService {
 			return new ResponseEntity<Object>(new JwtResponseToken(token), HttpStatus.OK);
 		}
 
-		return new ResponseEntity<Object>(new JwtResponseToken(environment.getProperty("status.user.authentication.errorMessage")),
+		return new ResponseEntity<Object>(
+				new JwtResponseToken(environment.getProperty("status.user.authentication.errorMessage")),
 				HttpStatus.NON_AUTHORITATIVE_INFORMATION);
 	}
 
@@ -191,7 +192,7 @@ public class UserServiceImplementation implements UserService {
 		// Storing user's edited information to data base
 		if (resetPasswordDto.getPassword().equals(resetPasswordDto.getConfirmPassword())) {
 
-			Optional<UserDetails> userDetailsInfo = repository.findByEmailId(emailId);
+			Optional<UserDetails> userDetailsInfo = repository.findByEmail(emailId);
 
 			if (userDetailsInfo.isPresent()) {
 
@@ -215,7 +216,7 @@ public class UserServiceImplementation implements UserService {
 	@Override
 	public ResponseEntity<String> verification(String emailToken) {
 
-		Optional<UserDetails> userDetails = repository.findByEmailId(emailId);
+		Optional<UserDetails> userDetails = repository.findByEmail(emailId);
 
 		// Checking system generated token and email send token is equal or not
 		if (emailToken.equals(token)) {
