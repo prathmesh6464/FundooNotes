@@ -51,10 +51,10 @@ public class NotesServiceImplementation implements NotesService {
 	// notes repository object
 	@Autowired
 	private NotesRepository repository;
-	
+
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Autowired
 	private JwtToken jwtToken;
 
@@ -63,10 +63,10 @@ public class NotesServiceImplementation implements NotesService {
 
 		if (!token.getJwtToken().equals(userService.getJwtResponseToken())) {
 
-			throw new LabelException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
+			throw new NotesException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
 					environment.getProperty("status.user.loginErrorMessage"));
 		}
-		
+
 		entity.setUserDetails(userRepository.findByUserName(jwtToken.extractUserName(token.getJwtToken())).get());
 
 		// Using model mapper mapping dto object with user details entity
@@ -82,7 +82,7 @@ public class NotesServiceImplementation implements NotesService {
 
 		if (!token.getJwtToken().equals(userService.getJwtResponseToken())) {
 
-			throw new LabelException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
+			throw new NotesException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
 					environment.getProperty("status.user.loginErrorMessage"));
 		}
 
@@ -96,12 +96,12 @@ public class NotesServiceImplementation implements NotesService {
 
 		if (!token.getJwtToken().equals(userService.getJwtResponseToken())) {
 
-			throw new LabelException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
+			throw new NotesException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
 					environment.getProperty("status.user.loginErrorMessage"));
 		}
-		
+
 		listOfNotesDto.clear();
-		
+
 		repository.findAll().stream().forEach(notesDataObject -> {
 
 			listOfNotesDto.add(modelMapper.map(notesDataObject, NotesDto.class));
@@ -118,7 +118,7 @@ public class NotesServiceImplementation implements NotesService {
 
 		if (!token.getJwtToken().equals(userService.getJwtResponseToken())) {
 
-			throw new LabelException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
+			throw new NotesException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
 					environment.getProperty("status.user.loginErrorMessage"));
 		}
 
@@ -145,7 +145,7 @@ public class NotesServiceImplementation implements NotesService {
 
 		if (!token.getJwtToken().equals(userService.getJwtResponseToken())) {
 
-			throw new LabelException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
+			throw new NotesException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
 					environment.getProperty("status.user.loginErrorMessage"));
 		}
 
@@ -178,7 +178,7 @@ public class NotesServiceImplementation implements NotesService {
 
 		if (!token.getJwtToken().equals(userService.getJwtResponseToken())) {
 
-			throw new LabelException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
+			throw new NotesException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
 					environment.getProperty("status.user.loginErrorMessage"));
 		}
 
@@ -209,7 +209,7 @@ public class NotesServiceImplementation implements NotesService {
 
 		if (!token.getJwtToken().equals(userService.getJwtResponseToken())) {
 
-			throw new LabelException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
+			throw new NotesException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
 					environment.getProperty("status.user.loginErrorMessage"));
 		}
 
@@ -242,7 +242,7 @@ public class NotesServiceImplementation implements NotesService {
 
 		if (!token.getJwtToken().equals(userService.getJwtResponseToken())) {
 
-			throw new LabelException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
+			throw new NotesException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
 					environment.getProperty("status.user.loginErrorMessage"));
 		}
 
@@ -259,7 +259,7 @@ public class NotesServiceImplementation implements NotesService {
 
 		if (!token.getJwtToken().equals(userService.getJwtResponseToken())) {
 
-			throw new LabelException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
+			throw new NotesException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
 					environment.getProperty("status.user.loginErrorMessage"));
 		}
 
@@ -276,7 +276,7 @@ public class NotesServiceImplementation implements NotesService {
 
 		if (!token.getJwtToken().equals(userService.getJwtResponseToken())) {
 
-			throw new LabelException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
+			throw new NotesException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
 					environment.getProperty("status.user.loginErrorMessage"));
 		}
 
@@ -293,7 +293,7 @@ public class NotesServiceImplementation implements NotesService {
 
 		if (!token.getJwtToken().equals(userService.getJwtResponseToken())) {
 
-			throw new LabelException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
+			throw new NotesException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
 					environment.getProperty("status.user.loginErrorMessage"));
 		}
 
@@ -314,7 +314,7 @@ public class NotesServiceImplementation implements NotesService {
 
 		if (!token.getJwtToken().equals(userService.getJwtResponseToken())) {
 
-			throw new LabelException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
+			throw new NotesException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
 					environment.getProperty("status.user.loginErrorMessage"));
 		}
 
@@ -346,7 +346,7 @@ public class NotesServiceImplementation implements NotesService {
 
 		if (!token.getJwtToken().equals(userService.getJwtResponseToken())) {
 
-			throw new LabelException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
+			throw new NotesException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
 					environment.getProperty("status.user.loginErrorMessage"));
 		}
 
