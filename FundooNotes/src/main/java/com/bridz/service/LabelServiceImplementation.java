@@ -15,6 +15,7 @@ import com.bridz.dto.LabelDto;
 import com.bridz.exception.LabelException;
 import com.bridz.model.LabelData;
 import com.bridz.repository.LabelRepository;
+import com.bridz.repository.UserRepository;
 
 @Service
 public class LabelServiceImplementation implements LabelService {
@@ -35,18 +36,19 @@ public class LabelServiceImplementation implements LabelService {
 	LabelRepository repository;
 
 	@Autowired
+	UserRepository userRepository;
+
+	@Autowired
 	UserService userService;
 
 	@Override
 	public ResponseEntity<String> add(LabelDto labelDto, JwtResponseToken token) {
-		
+
 		if (!userService.getJwtResponseToken().equals(token.getJwtToken())) {
 
 			throw new LabelException(Integer.parseInt(environment.getProperty("status.user.loginErrorCode")),
 					environment.getProperty("status.user.loginErrorMessage"));
 		}
-
-		System.out.println(token.getJwtToken());
 
 		modelMapper.map(labelDto, entity);
 		repository.save(entity);
