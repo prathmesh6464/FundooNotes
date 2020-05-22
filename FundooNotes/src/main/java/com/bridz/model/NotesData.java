@@ -3,16 +3,20 @@ package com.bridz.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
+
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
+@Table(name = "notes")
+@JsonIgnoreProperties({ "userDetails", "labelData" })
 public class NotesData {
 
 	@Id
@@ -24,16 +28,43 @@ public class NotesData {
 	private boolean isArchive;
 	private boolean isPined;
 	private String reminderDateTime;
-
+	
+	
 	@ManyToOne
-	UserDetails userDetailsEntity;
-
-	@ManyToMany(mappedBy = "notesDataEntity", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	public List<LabelData> labelDataEnitiy = new ArrayList<>();
+	@JoinColumn(name = "userDetails_id", nullable = false)
+	private UserDetails userDetails;
+	
+	@ManyToMany
+	private List<LabelData> labelData = new ArrayList<LabelData>();
+	
 
 	// Default constructor
 	public NotesData() {
 		super();
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public UserDetails getUserDetails() {
+		return userDetails;
+	}
+
+	public void setUserDetails(UserDetails userDetails) {
+		this.userDetails = userDetails;
+	}
+
+	public List<LabelData> getLabelData() {
+		return labelData;
+	}
+
+	public void setLabelData(List<LabelData> labelData) {
+		this.labelData = labelData;
 	}
 
 	// @return the description
@@ -41,17 +72,6 @@ public class NotesData {
 		return description;
 	}
 
-	// Constructor
-	public NotesData(String title, String description, boolean isTrash, boolean isArchive, boolean isPined,
-			String reminderDateTime) {
-		super();
-		this.title = title;
-		this.description = description;
-		this.isTrash = isTrash;
-		this.isArchive = isArchive;
-		this.isPined = isPined;
-		this.reminderDateTime = reminderDateTime;
-	}
 
 	// @param description the description to set
 	public void setDescription(String description) {
@@ -109,19 +129,19 @@ public class NotesData {
 	}
 
 	public UserDetails getUserDetailEntity() {
-		return userDetailsEntity;
+		return userDetails;
 	}
 
 	public void setUserDetailEntity(UserDetails userDetailsEntity) {
-		this.userDetailsEntity = userDetailsEntity;
+		this.userDetails = userDetailsEntity;
 	}
 
 	public List<LabelData> getLabelDataEnitiy() {
-		return labelDataEnitiy;
+		return labelData;
 	}
 
 	public void setLabelDataEnitiy(List<LabelData> labelDataEnitiy) {
-		this.labelDataEnitiy = labelDataEnitiy;
+		this.labelData = labelDataEnitiy;
 	}
 
 }
