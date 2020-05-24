@@ -18,9 +18,6 @@ import com.bridz.dto.UserRegistrationDto;
 import com.bridz.model.UserDetails;
 import com.bridz.repository.UserRepository;
 
-//import org.springframework.amqp.core.Message;
-//import org.springframework.amqp.core.MessageProperties;
-//import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
@@ -170,9 +167,15 @@ public class UserServiceImplementation implements UserService {
 					Integer.parseInt(environment.getProperty("status.jms.send.mail.errorCode")),
 					environment.getProperty("status.jms.send.mail.errorMessage"));
 		}
+<<<<<<< HEAD
 		
 		rabbitService.publish(resetPasswordUrl);
 		
+=======
+
+		rabbitService.publish(resetPasswordUrl);
+
+>>>>>>> 1.Developement
 		return new ResponseEntity<String>(environment.getProperty("status.success.user.forgetpassword"), HttpStatus.OK);
 	}
 
