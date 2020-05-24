@@ -97,8 +97,6 @@ public class UserServiceImplementation implements UserService {
 
 	public void sendMail(UserRegistrationDto userRegistrationDto) {
 
-		// MessageProperties messageProperties = new MessageProperties();
-
 		// Email related variables
 		String to = userRegistrationDto.getEmail();
 		String subject = "Authentication of new registered user";
