@@ -9,6 +9,7 @@ import com.bridz.exception.JmsException;
 import com.bridz.exception.JwtTokenException;
 
 import com.bridz.dto.ResetPasswordDto;
+import com.bridz.RabbitMq.ProducerRabbitMq;
 import com.bridz.dto.ForgetPasswordDto;
 import com.bridz.dto.JwtResponseToken;
 import com.bridz.dto.LoginDto;
@@ -17,9 +18,6 @@ import com.bridz.dto.UserRegistrationDto;
 import com.bridz.model.UserDetails;
 import com.bridz.repository.UserRepository;
 
-//import org.springframework.amqp.core.Message;
-//import org.springframework.amqp.core.MessageProperties;
-//import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
@@ -36,8 +34,8 @@ public class UserServiceImplementation implements UserService {
 	@Autowired
 	private ModelMapper modelMapper;
 
-	// @Autowired
-	// private RabbitTemplate rabbitTemplate;
+	@Autowired
+	private ProducerRabbitMq rabbitService;
 
 	// Creating Object of user Details Entity
 	@Autowired
@@ -110,9 +108,6 @@ public class UserServiceImplementation implements UserService {
 		// User verification url
 		String userVerificationUrl = environment.getProperty("user.verification") + token;
 
-		// Message message = new Message(userVerificationUrl.getBytes(), new
-		// MessageProperties());
-
 		// Send email method called
 		try {
 
@@ -123,8 +118,7 @@ public class UserServiceImplementation implements UserService {
 					environment.getProperty("status.jms.send.mail.errorMessage"));
 		}
 
-		// rabbitTemplate.send(environment.getProperty("rabbitmq.exchangeName"),
-		// environment.getProperty("rabbitmq.event.topic"), message);
+		rabbitService.publish(userVerificationUrl);
 	}
 
 	@Override
@@ -173,6 +167,8 @@ public class UserServiceImplementation implements UserService {
 					Integer.parseInt(environment.getProperty("status.jms.send.mail.errorCode")),
 					environment.getProperty("status.jms.send.mail.errorMessage"));
 		}
+
+		rabbitService.publish(resetPasswordUrl);
 
 		return new ResponseEntity<String>(environment.getProperty("status.success.user.forgetpassword"), HttpStatus.OK);
 	}
