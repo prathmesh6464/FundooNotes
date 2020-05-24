@@ -167,15 +167,9 @@ public class UserServiceImplementation implements UserService {
 					Integer.parseInt(environment.getProperty("status.jms.send.mail.errorCode")),
 					environment.getProperty("status.jms.send.mail.errorMessage"));
 		}
-<<<<<<< HEAD
-		
-		rabbitService.publish(resetPasswordUrl);
-		
-=======
 
 		rabbitService.publish(resetPasswordUrl);
 
->>>>>>> 1.Developement
 		return new ResponseEntity<String>(environment.getProperty("status.success.user.forgetpassword"), HttpStatus.OK);
 	}
 
