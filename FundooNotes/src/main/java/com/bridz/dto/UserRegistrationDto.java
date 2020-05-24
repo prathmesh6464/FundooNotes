@@ -37,7 +37,7 @@ public class UserRegistrationDto {
 	@NotEmpty
 	@NotNull
 	@Pattern(regexp = "[a-zA-Z0-9]*@[a-zA-Z]+[.][a-zA-Z]+")
-	private String emailId;
+	private String email;
 
 	private NotesData notesData;
 
@@ -49,7 +49,7 @@ public class UserRegistrationDto {
 
 	// Parameterized constructor
 	public UserRegistrationDto(String firstName, String lastName, String userName, String password, String mobileNumber,
-			String emailId) {
+			String email) {
 
 		super();
 		this.firstName = firstName;
@@ -57,7 +57,7 @@ public class UserRegistrationDto {
 		this.userName = userName;
 		this.password = password;
 		this.mobileNumber = mobileNumber;
-		this.emailId = emailId;
+		this.email = email;
 	}
 
 	// @return the firstName
@@ -103,13 +103,13 @@ public class UserRegistrationDto {
 	}
 
 	// @return the emailId
-	public String getEmailId() {
-		return emailId;
+	public String getEmail() {
+		return email;
 	}
 
 	// @param emailId the emailId to set
-	public void setEmailId(String emailId) {
-		this.emailId = emailId;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	// @param password the password to set
